@@ -217,7 +217,7 @@ const StudentLife = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-16 text-center">
             <h2 className="text-3xl md:text-4xl font-serif text-white">
-              Concerts & <span className="italic text-white/90">Events</span>
+              Concerts & <span className="text-amber-100 italic">Events</span>
             </h2>
             <p className="text-white/90 max-w-2xl mx-auto mt-4 text-sm md:text-base leading-relaxed">
               Mark your calendar! Here is what's happening soon. Come hang out, jam, and support our amazing students.
@@ -295,7 +295,7 @@ const StudentLife = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-16 text-center">
             <h2 className="text-3xl md:text-4xl font-serif text-jd-black">
-              Moments of <span className="italic text-jd-burgundy">Inspiration</span>
+              Moments of Inspiration
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto mt-4 text-sm md:text-base leading-relaxed">
               Flip through our favorite moments! Take a look at our classes, stage performances, and the overall vibe at our Kajang studio.
@@ -406,7 +406,7 @@ const StudentLife = () => {
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">
-              See Our Students in Action
+              See Our Students <span className="text-amber-100 italic">in Action</span>
             </h2>
             <p className="text-sm text-white/80 leading-relaxed">
               Real video stories from the students who make our studio feel like home.

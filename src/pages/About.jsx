@@ -157,7 +157,7 @@ const About = () => {
       <section className="py-24 bg-jd-burgundy text-white border-t border-red-900/10">
         <div className="max-w-4xl mx-auto px-6 mb-16 text-center">
           <h2 className="text-xs font-bold tracking-widest text-white/80 uppercase mb-3">Our Story</h2>
-          <h3 className="text-3xl md:text-4xl font-serif text-white mb-6">How We Make Music Different</h3>
+          <h3 className="text-3xl md:text-4xl font-serif text-white mb-6">How We Make Music <span className="text-amber-100 italic">Different</span></h3>
           <p className="text-base md:text-lg text-white/95 leading-relaxed text-center max-w-3xl mx-auto">
             Founded in 2020, JD.Music Academy is built on a vibrant, performance-based learning approach. Our hands-on classes make mastering instrument fundamentals enjoyable and accessible by teaching students through the songs they love. With personalized attention from skilled instructors, we prioritize close relationships that ensure every student feels inspired, supported, and confident on their musical journey.
           </p>
@@ -234,7 +234,7 @@ const About = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-12 text-center">
             <h2 className="text-xs font-bold tracking-widest text-white/80 uppercase mb-2">Meet the Team</h2>
-            <h2 className="text-3xl md:text-4xl font-serif text-white">Our Passionate Instructors</h2>
+            <h2 className="text-3xl md:text-4xl font-serif text-white">Our <span className="text-amber-100 italic">Passionate</span> Instructors</h2>
           </div>
 
           {/* Desktop View: Grid */}

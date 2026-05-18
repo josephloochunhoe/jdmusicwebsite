@@ -88,7 +88,7 @@ const Home = () => {
       {/* About Us Section */}
       <section className="py-24 bg-jd-burgundy text-white">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-serif mb-6">Fall in love with playing, <span className="italic">your way</span></h2>
+          <h2 className="text-4xl md:text-5xl font-serif mb-6">Fall in love with playing, <span className="text-amber-100 italic">your way</span></h2>
           <p className="max-w-3xl mx-auto text-lg text-white/90 mb-10 leading-relaxed">
             We believe music lessons should build confidence, not performance stress. Our academy focuses on deep student-teacher relationships, creating a comfortable space where instructors become mentors and friends.
           </p>
@@ -171,7 +171,7 @@ const Home = () => {
       <section className="py-24 bg-jd-burgundy text-white">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h2 className="text-xs font-bold tracking-widest text-white/70 mb-4 uppercase">Investment</h2>
-          <h2 className="text-4xl md:text-5xl font-serif mb-6">Tuition & <span className="italic">Common Questions</span></h2>
+          <h2 className="text-4xl md:text-5xl font-serif mb-6">Tuition & <span className="text-amber-100 italic">Common Questions</span></h2>
           <p className="max-w-3xl mx-auto text-lg text-white/90 mb-10 leading-relaxed">
             Whether you want to learn in-person or online, we offer straightforward, stress-free lesson plan pricing tailored to your schedule.
           </p>

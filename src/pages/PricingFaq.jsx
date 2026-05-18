@@ -159,7 +159,7 @@ const PricingFaq = () => {
           <div className="text-center mb-12 relative z-10">
             <h2 className="text-xs font-bold tracking-widest text-red-200/90 uppercase mb-3">Tuition & Packages</h2>
             <h3 className="text-4xl md:text-5xl font-serif text-white mb-6">
-              Transparent, Flexible Rates
+              Transparent, Flexible <span className="text-amber-100 italic">Rates</span>
             </h3>
             <p className="text-red-100/80 max-w-2xl mx-auto leading-relaxed">
               At JD.Music, we offer flexible, engaging music lessons for everyone of all ages! Available within Klang Valley, whether at home, online, in preschools, schools, or community spaces.
@@ -278,9 +278,8 @@ const PricingFaq = () => {
                   </span>
                   <ChevronDown
                     size={20}
-                    className={`flex-shrink-0 text-jd-burgundy transition-transform duration-300 ${
-                      openId === item.id ? 'rotate-180' : 'rotate-0'
-                    }`}
+                    className={`flex-shrink-0 text-jd-burgundy transition-transform duration-300 ${openId === item.id ? 'rotate-180' : 'rotate-0'
+                      }`}
                   />
                 </button>
                 {openId === item.id && (
