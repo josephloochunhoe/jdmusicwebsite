@@ -27,12 +27,34 @@ const videoTestimonials = [
     name: "Alyssa",
     instrument: "Guitar",
     tenure: "⏱ 1 year with us"
-  }
+  },
+  {
+    id: 4,
+    src: "https://drive.google.com/file/d/12sIPRYxrMqOELbjJ_b9I6jAQgEmhI-GG/preview",
+    name: "Kamal",
+    instrument: "Drums",
+    tenure: "⏱ 9 months with us"
+  },
+  {
+    id: 5,
+    src: "https://drive.google.com/file/d/1bvQYk7DzgKA_xNmo_-6MSYV_OfdxAV1E/preview",
+    name: "Athaliya",
+    instrument: "Guitar",
+    tenure: "⏱ 2 years with us"
+  },
+  {
+    id: 6,
+    src: "https://drive.google.com/file/d/1ORgfANzL_HDM2FNJJe8-kjJGa8Y5bjOR/preview",
+    name: "Sahnjaayz",
+    instrument: "Drums",
+    tenure: "⏱ 4 years with us"
+  },
 ];
 
 const TestimonialVideoCard = ({ src, name, instrument, tenure }) => (
-  <div className="bg-white border border-gray-200 shadow-sm rounded-3xl overflow-hidden hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full">
-    <div className="relative pt-[56.25%] bg-black">
+  <div className="flex flex-col h-full group">
+    {/* Video Frame with perfect border fitting */}
+    <div className="relative aspect-video bg-black rounded-3xl overflow-hidden border border-gray-200/80 shadow-sm hover:-translate-y-1.5 hover:shadow-md transition-all duration-300 w-full flex-shrink-0">
       <iframe
         src={src}
         title="Video Testimonial"
@@ -41,13 +63,14 @@ const TestimonialVideoCard = ({ src, name, instrument, tenure }) => (
         className="absolute inset-0 w-full h-full border-0"
       />
     </div>
-    <div className="p-6 border-t border-gray-100 flex-grow flex flex-col justify-between">
+    {/* Info details clean outside of the border */}
+    <div className="pt-4 flex-grow flex flex-col justify-between">
       <div>
-        <p className="font-bold text-jd-black text-lg mb-1">{name}</p>
-        <p className="text-jd-burgundy text-xs font-semibold uppercase tracking-widest mb-4">{instrument}</p>
+        <p className="font-bold text-jd-black text-base mb-0.5 group-hover:text-jd-burgundy transition-colors duration-300">{name}</p>
+        <p className="text-jd-burgundy text-[11px] font-bold uppercase tracking-wider mb-3">{instrument}</p>
       </div>
       <div>
-        <span className="text-xs text-gray-600 bg-gray-50 rounded-full px-3 py-1 font-semibold border border-gray-100">{tenure}</span>
+        <span className="inline-block text-[11px] text-gray-500 bg-gray-50 rounded-full px-3 py-1 font-semibold border border-gray-100">{tenure}</span>
       </div>
     </div>
   </div>
@@ -384,14 +407,11 @@ const StudentLife = () => {
       </section>
 
       {/* STUDENT TESTIMONIALS SECTION */}
-      <section className="py-24 bg-gray-50/60 border-t border-b border-gray-100 relative overflow-hidden">
+      <section className="py-24 bg-white relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-jd-burgundy/10 blur-[120px] rounded-full pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-[10px] font-bold text-jd-burgundy uppercase tracking-widest bg-red-50 px-4 py-1.5 rounded-full border border-red-100">
-              Real Journeys & Progress
-            </span>
-            <h2 className="text-3xl md:text-4xl font-serif text-jd-black mt-4 mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif text-jd-black mb-4">
               See Our Students <span className="text-jd-burgundy italic">in Action</span>
             </h2>
             <p className="text-sm text-gray-500 leading-relaxed">
