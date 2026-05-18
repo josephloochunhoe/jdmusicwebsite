@@ -20,35 +20,7 @@ const videoTestimonials = [
     name: "Andrea",
     instrument: "Piano",
     tenure: "⏱ 5 months with us"
-  },
-  {
-    id: 3,
-    src: "https://drive.google.com/file/d/1aJEFAKeUM8KSZU2scc3-IwXH-yYE_n54/preview",
-    name: "Alyssa",
-    instrument: "Guitar",
-    tenure: "⏱ 1 year with us"
-  },
-  {
-    id: 4,
-    src: "https://drive.google.com/file/d/12sIPRYxrMqOELbjJ_b9I6jAQgEmhI-GG/preview",
-    name: "Kamal",
-    instrument: "Drums",
-    tenure: "⏱ 9 months with us"
-  },
-  {
-    id: 5,
-    src: "https://drive.google.com/file/d/1bvQYk7DzgKA_xNmo_-6MSYV_OfdxAV1E/preview",
-    name: "Athaliya",
-    instrument: "Guitar",
-    tenure: "⏱ 2 years with us"
-  },
-  {
-    id: 6,
-    src: "https://drive.google.com/file/d/1ORgfANzL_HDM2FNJJe8-kjJGa8Y5bjOR/preview",
-    name: "Sahnjaayz",
-    instrument: "Drums",
-    tenure: "⏱ 4 years with us"
-  },
+  }
 ];
 
 const TestimonialVideoCard = ({ src, name, instrument, tenure }) => (
@@ -409,7 +381,7 @@ const StudentLife = () => {
               See Our Students <span className="text-jd-burgundy italic">in Action</span>
             </h2>
             <p className="text-sm text-gray-500 leading-relaxed">
-              Real video stories and feedback from the students and parents who make our Kajang studio feel like home.
+              Real video stories from the students who make our studio feel like home.
             </p>
           </div>
 
