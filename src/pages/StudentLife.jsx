@@ -61,9 +61,10 @@ const StudentLife = () => {
     return 6;                   // Desktop (3 col) -> 2 rows = 6 items
   };
 
-  // Set initial visible count based on active screen size on mount
+  // Set initial visible count based on active screen size on mount and scroll to top
   React.useEffect(() => {
     setVisibleCount(getRowSize());
+    window.scrollTo(0, 0);
   }, []);
 
   // Handle resize dynamically to preserve exact row grids
