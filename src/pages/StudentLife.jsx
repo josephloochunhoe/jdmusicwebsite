@@ -405,10 +405,13 @@ const StudentLife = () => {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white/5 blur-[120px] rounded-full pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-16">
+            <span className="text-xs font-bold text-red-200/90 tracking-widest uppercase block mb-3">
+              Testimonials
+            </span>
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">
-              See Our Students <span className="text-red-200 italic">in Action</span>
+              See Our Students <span className="text-amber-100 italic">in Action</span>
             </h2>
-            <p className="text-sm text-white/80 leading-relaxed">
+            <p className="text-sm text-red-100/80 leading-relaxed">
               Real video stories from the students who make our studio feel like home.
             </p>
           </div>
