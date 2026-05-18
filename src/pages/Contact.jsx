@@ -117,8 +117,8 @@ const Contact = () => {
               {/* SOCIAL MEDIA CARD */}
               <div className="bg-white/10 border border-white/10 rounded-3xl p-8 backdrop-blur-sm flex-1">
                 <h3 className="font-bold text-white text-lg mb-1">Follow Us</h3>
-                <p className="text-sm text-white/70 mb-5">Stay connected for updates, events, and student spotlights.</p>
-                <div className="space-y-3">
+                <p className="text-sm text-white/70 mb-6">Stay connected for updates, events, and student spotlights.</p>
+                <div className="space-y-4">
                   {socialLinks.map((link) => {
                     const Icon = link.icon;
                     return (
@@ -127,18 +127,22 @@ const Contact = () => {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-between group hover:bg-white/5 rounded-xl px-3 py-2.5 -mx-3 transition-colors"
+                        className="flex items-center justify-between group bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/15 rounded-2xl p-4 transition-all duration-300 hover:-translate-y-0.5 shadow-sm cursor-pointer"
                       >
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-lg bg-white/10 group-hover:bg-white/20 flex items-center justify-center text-white group-hover:text-amber-100 transition-colors">
-                            <Icon size={16} />
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-xl bg-white/10 group-hover:bg-white/20 flex items-center justify-center text-white group-hover:text-amber-100 transition-colors flex-shrink-0">
+                            <Icon size={18} />
                           </div>
                           <div>
-                            <p className="font-bold text-white text-sm leading-none mb-0.5">{link.name}</p>
-                            <p className="text-white/60 text-xs">{link.handle}</p>
+                            <p className="font-bold text-white text-sm leading-none mb-1.5">{link.name}</p>
+                            <p className="text-amber-100/90 group-hover:text-amber-100 text-xs font-medium group-hover:underline transition-all">
+                              {link.handle}
+                            </p>
                           </div>
                         </div>
-                        <ArrowUpRight size={14} className="text-white/60 group-hover:text-amber-100 transition-colors" />
+                        <div className="w-8 h-8 rounded-full bg-white/10 group-hover:bg-amber-100 flex items-center justify-center text-white/80 group-hover:text-jd-burgundy transition-all duration-300 shadow-sm flex-shrink-0">
+                          <ArrowUpRight size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        </div>
                       </a>
                     );
                   })}
