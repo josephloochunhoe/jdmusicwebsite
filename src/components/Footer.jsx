@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, ArrowUpRight } from 'lucide-react';
+import { Phone, Mail, ArrowUpRight, MessageCircle } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 
 const InstagramIcon = (props) => (
@@ -24,6 +24,7 @@ const TikTokIcon = (props) => (
 const Footer = () => {
   const directorPhone = "019-2139210";
   const directorEmail = "jeevanmarcus@gmail.com";
+  const whatsappUrl = "https://wa.me/60192139210?text=Hi%20Jeevan!%20I%20was%20browsing%20your%20website%20and%20I'd%20love%20to%20get%20more%20details%20about%20your%20music%20lessons.%20Could%20you%20share%20more%20about%20available%20slots%20and%20programs%3F";
 
   const socialLinks = [
     { name: "Instagram", url: "https://www.instagram.com/jd.musicclass", icon: InstagramIcon },
@@ -52,6 +53,15 @@ const Footer = () => {
               className="flex items-center gap-2 text-sm text-gray-600 hover:text-jd-burgundy transition-colors font-medium self-start"
             >
               <Phone size={16} className="text-jd-burgundy" />
+              {directorPhone}
+            </a>
+            <a 
+              href={whatsappUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm text-gray-600 hover:text-jd-burgundy transition-colors font-medium self-start"
+            >
+              <MessageCircle size={16} className="text-jd-burgundy" />
               {directorPhone}
             </a>
             <a 
