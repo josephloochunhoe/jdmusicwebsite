@@ -30,7 +30,7 @@ const Navbar = () => {
             href="https://app.aoneschools.com/public/school/U2FsdGVkX199XQhZvkiBsMOriWUIFAJsDxv0wNjtOi1dpgzrFQSLN%252FnTCm9fokJr/online-student-registration" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="hidden md:inline-flex px-6 py-2 rounded-full bg-jd-burgundy text-white font-semibold text-sm hover:bg-red-900 transition-colors"
+            className="hidden md:inline-flex px-6 py-2 rounded-full bg-jd-black text-white font-semibold text-sm hover:bg-gray-800 transition-colors shadow-sm border border-white/10"
           >
             Register Now
           </a>

@@ -48,7 +48,7 @@ function App() {
           href="https://app.aoneschools.com/public/school/U2FsdGVkX199XQhZvkiBsMOriWUIFAJsDxv0wNjtOi1dpgzrFQSLN%252FnTCm9fokJr/online-student-registration" 
           target="_blank" 
           rel="noopener noreferrer"
-          className={`fixed bottom-6 right-6 z-50 px-8 py-4 rounded-full bg-jd-burgundy text-white font-bold shadow-2xl hover:bg-red-900 transition-all duration-300 flex items-center gap-2 ${
+          className={`fixed bottom-6 right-6 z-50 px-8 py-4 rounded-full bg-jd-black text-white font-bold shadow-2xl border-2 border-white/20 hover:bg-gray-800 transition-all duration-300 flex items-center gap-2 ${
             showFloatingCTA ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-16 opacity-0 scale-95 pointer-events-none'
           }`}
         >

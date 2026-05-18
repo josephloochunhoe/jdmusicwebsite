@@ -67,17 +67,17 @@ const Home = () => {
   return (
     <div className="w-full bg-white text-jd-black">
       {/* Hero Section */}
-      <section 
+      <section
         className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex flex-col items-center justify-center min-h-[90vh] bg-cover bg-center"
         style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
       >
         <div className="absolute inset-0 bg-white/85"></div>
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif leading-tight mb-8 text-jd-black">
-            BRINGING YOUR <br /> <span className="italic text-jd-burgundy">MUSIC INTO FOCUS</span>
+            MAKING MUSIC YOUR <br /> <span className="italic text-jd-burgundy">FAVORITE HOUR</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Discover your true potential at JD. Music Academy. We provide world-class instruction for students of all ages and skill levels.
+            Fun, stress-free music lessons tailored to your style. Learn guitar, piano, drums, or vocals from friendly instructors who make every class inspiring.
           </p>
           <div className="flex items-center justify-center">
             <a
@@ -86,7 +86,7 @@ const Home = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-jd-burgundy text-white text-lg font-bold hover:bg-red-900 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
             >
-              Register Now <ArrowRight size={20} />
+              Start Your Musical Journey <ArrowRight size={20} />
             </a>
           </div>
         </div>
@@ -95,9 +95,9 @@ const Home = () => {
       {/* About Us Section */}
       <section className="py-24 bg-jd-burgundy text-white">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-serif mb-6">Amplify your talent, <span className="italic">refine your craft</span></h2>
+          <h2 className="text-4xl md:text-5xl font-serif mb-6">Fall in love with playing, <span className="italic">your way</span></h2>
           <p className="max-w-3xl mx-auto text-lg text-white/90 mb-10 leading-relaxed">
-            JD. Music Academy is a premier institution helping aspiring artists, dedicated hobbyists, and creative minds grow through authentic, comprehensive training.
+            We believe music lessons should build confidence, not performance stress. Our academy focuses on deep student-teacher relationships, creating a comfortable space where instructors become mentors and friends.
           </p>
           <Link to="/about" className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-white text-jd-burgundy font-bold hover:bg-gray-100 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
             Discover About Us <ArrowRight size={18} />
@@ -110,8 +110,8 @@ const Home = () => {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-jd-burgundy/20 blur-[120px] rounded-full pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
           <div className="mb-16">
-            <h2 className="text-xs font-bold tracking-widest text-jd-burgundy mb-4 uppercase">Testimonials & Community</h2>
-            <h2 className="text-4xl md:text-5xl font-serif text-jd-black">Experience <span className="italic">Student Life</span></h2>
+            <h2 className="text-xs font-bold tracking-widest text-jd-burgundy mb-4 uppercase">Real Journeys & Progress</h2>
+            <h2 className="text-4xl md:text-5xl font-serif text-jd-black">See Our Students <span className="italic">in Action</span></h2>
           </div>
 
           {/* Desktop View: 3 Video Iframes */}
@@ -176,7 +176,7 @@ const Home = () => {
           <h2 className="text-xs font-bold tracking-widest text-white/70 mb-4 uppercase">Investment</h2>
           <h2 className="text-4xl md:text-5xl font-serif mb-6">Tuition & <span className="italic">Common Questions</span></h2>
           <p className="max-w-3xl mx-auto text-lg text-white/90 mb-10 leading-relaxed">
-            We offer competitive pricing and flexible packages to suit your goals. Have questions? We have answers.
+            Whether you want to learn in-person or online, we offer straightforward, stress-free lesson plan pricing tailored to your schedule.
           </p>
           <Link to="/pricing-faq" className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-white text-jd-burgundy font-bold hover:bg-gray-100 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
             View Pricing & FAQ <ArrowRight size={18} />
@@ -189,7 +189,7 @@ const Home = () => {
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-4xl md:text-5xl font-serif italic text-jd-black mb-6">Ready to play?</h2>
           <p className="text-lg text-gray-600 mb-10 leading-relaxed">
-            Get in touch with us today to schedule your first lesson or learn more about our programs.
+            Connect directly with Jeevan at 019-2139210 or email us at jeevanmarcus@gmail.com to learn more about lesson schedules, locations, and open trial slots.
           </p>
           <Link to="/contact" className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-jd-burgundy text-white font-bold hover:bg-red-900 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
             Contact Us Now <ArrowRight size={18} />
