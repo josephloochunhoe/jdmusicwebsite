@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, Play, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Play, ChevronLeft, ChevronRight, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const testimonials = [
@@ -72,14 +72,20 @@ const Home = () => {
           <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
             Fun, stress-free music lessons tailored to your style. Learn guitar, piano, drums, or vocals from friendly instructors who make every class inspiring.
           </p>
-          <div className="flex items-center justify-center">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="https://app.aoneschools.com/public/school/U2FsdGVkX199XQhZvkiBsMOriWUIFAJsDxv0wNjtOi1dpgzrFQSLN%252FnTCm9fokJr/online-student-registration"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-jd-burgundy text-white text-lg font-bold hover:bg-red-900 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-jd-burgundy text-white text-lg font-bold hover:bg-red-900 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
             >
               Start Your Musical Journey <ArrowRight size={20} />
+            </a>
+            <a
+              href="tel:0192139210"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white border-2 border-jd-burgundy text-jd-burgundy text-lg font-bold hover:bg-red-50 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+            >
+              <Phone size={20} /> Call to Inquire
             </a>
           </div>
         </div>
