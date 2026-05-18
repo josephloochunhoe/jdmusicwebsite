@@ -51,16 +51,35 @@ const videoTestimonials = [
   }
 ];
 
-const TestimonialVideoCard = ({ src, name, instrument, tenure }) => (
+const TestimonialVideoCard = ({ id, src, name, instrument, tenure, isActive, onPlayClick }) => (
   <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full">
-    <div className="relative aspect-video bg-black">
-      <iframe
-        src={src}
-        title="Video Testimonial"
-        allow="autoplay"
-        allowFullScreen
-        className="absolute inset-0 w-full h-full border-0"
-      />
+    <div className="relative aspect-video bg-gray-900">
+      {isActive ? (
+        <iframe
+          src={src}
+          title="Video Testimonial"
+          allow="autoplay"
+          allowFullScreen
+          className="absolute inset-0 w-full h-full border-0"
+        />
+      ) : (
+        <div
+          onClick={onPlayClick}
+          className="absolute inset-0 w-full h-full bg-black/90 flex flex-col items-center justify-center cursor-pointer p-4 group select-none text-center"
+        >
+          <div className="w-14 h-14 rounded-full bg-jd-burgundy text-white flex items-center justify-center mb-3 shadow-lg group-hover:scale-110 transition-transform duration-300">
+            <svg className="w-5 h-5 fill-current translate-x-0.5" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+          <span className="text-xs text-white bg-jd-burgundy/80 px-3 py-1 rounded-full font-bold tracking-wider mb-1">
+            Now watching: {name}
+          </span>
+          <span className="text-[10px] text-amber-100/90 font-medium uppercase tracking-widest">
+            {instrument}
+          </span>
+        </div>
+      )}
     </div>
     <div className="p-4 border-t border-gray-200 flex-grow">
       <p className="font-bold text-jd-black text-base mb-1">{name}</p>
@@ -76,6 +95,7 @@ const StudentLife = () => {
   const [activeCategory, setActiveCategory] = useState(galleryCategories[0]);
   const [visibleCount, setVisibleCount] = useState(6);
   const [lightboxImage, setLightboxImage] = useState(null);
+  const [activeVideoId, setActiveVideoId] = useState(null);
   const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0);
   const testimonialScrollRef = useRef(null);
 
@@ -365,34 +385,37 @@ const StudentLife = () => {
 
           {/* DYNAMIC IMAGE GRID */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {displayedItems.map((item) => (
-              <div
-                key={item.id}
-                onClick={() => item.src && setLightboxImage(item)}
-                className={`group relative bg-white border border-jd-burgundy shadow-sm rounded-3xl overflow-hidden hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-auto ${item.src ? 'cursor-pointer' : ''
-                  }`}
-              >
-                {/* Visual Area */}
-                <div className="relative overflow-hidden w-full h-auto flex-shrink-0">
-                  {item.src ? (
-                    <img
-                      src={item.src}
-                      alt={item.alt}
-                      className="w-full h-auto block group-hover:scale-105 transition-transform duration-500"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-b from-gray-50 to-gray-100/50 relative">
-                      <div className="w-14 h-14 rounded-full bg-jd-burgundy/5 text-jd-burgundy flex items-center justify-center mb-3">
-                        <Image size={28} className="opacity-80" />
+            {displayedItems.map((item) => {
+              const hasValidSrc = typeof item.src === 'string' && item.src.trim() !== '';
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => hasValidSrc && setLightboxImage(item)}
+                  className={`group relative bg-white border border-jd-burgundy shadow-sm rounded-3xl overflow-hidden hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-auto ${hasValidSrc ? 'cursor-pointer' : ''
+                    }`}
+                >
+                  {/* Visual Area */}
+                  <div className="relative overflow-hidden w-full h-auto flex-shrink-0">
+                    {hasValidSrc ? (
+                      <img
+                        src={item.src}
+                        alt={item.alt}
+                        className="w-full h-auto block group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="w-full min-h-[240px] flex flex-col items-center justify-center p-6 bg-gradient-to-b from-gray-50 to-gray-100/50 relative">
+                        <div className="w-14 h-14 rounded-full bg-jd-burgundy/5 text-jd-burgundy flex items-center justify-center mb-3">
+                          <Image size={28} className="opacity-80" />
+                        </div>
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                          Moment Capture
+                        </span>
                       </div>
-                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                        Moment Capture
-                      </span>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Empty Grid State (Fallback) */}
@@ -440,10 +463,13 @@ const StudentLife = () => {
             {videoTestimonials.map((t) => (
               <TestimonialVideoCard
                 key={t.id}
+                id={t.id}
                 src={t.src}
                 name={t.name}
                 instrument={t.instrument}
                 tenure={t.tenure}
+                isActive={activeVideoId === t.id}
+                onPlayClick={() => setActiveVideoId(t.id)}
               />
             ))}
           </div>
@@ -461,10 +487,13 @@ const StudentLife = () => {
                   className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center"
                 >
                   <TestimonialVideoCard
+                    id={t.id}
                     src={t.src}
                     name={t.name}
                     instrument={t.instrument}
                     tenure={t.tenure}
+                    isActive={activeVideoId === t.id}
+                    onPlayClick={() => setActiveVideoId(t.id)}
                   />
                 </div>
               ))}
