@@ -15,7 +15,12 @@ const FacebookIcon = (props) => (
 );
 
 const TikTokIcon = (props) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className="w-5 h-5 min-w-[20px] min-h-[20px] object-contain"
+    {...props}
+  >
     <path d="M12.525.02c1.31-.03 2.61-.01 3.91-.01.08 1.54.67 2.99 1.76 4.07 1.13 1.07 2.64 1.66 4.19 1.68v3.9c-1.72-.02-3.39-.62-4.73-1.71-.24-.2-.47-.41-.68-.64v6.84c.04 1.58-.37 3.16-1.19 4.49A7.329 7.329 0 0 1 7.42 22.13a7.173 7.173 0 0 1-5.32-2.12c-2.8-2.91-2.8-7.53 0-10.44 1.34-1.39 3.2-2.19 5.15-2.21.05 0 .09 0 .14.01v3.91c-.88-.01-1.74.33-2.37.96-1.19 1.25-1.19 3.23 0 4.48.64.66 1.53 1.02 2.45 1.01 1.06-.02 2.03-.63 2.51-1.57.37-.73.54-1.55.51-2.37l-.02-13.88z" />
   </svg>
 );
@@ -39,9 +44,7 @@ const Contact = () => {
       <section className="pt-32 pb-16 bg-white relative overflow-hidden">
         <div className="absolute top-0 left-1/4 w-[600px] h-[400px] bg-jd-burgundy/5 blur-[120px] rounded-full pointer-events-none"></div>
         <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
-          <span className="text-xs font-bold text-jd-burgundy tracking-widest uppercase block mb-4">
-            We'd love to hear from you
-          </span>
+
           <h1 className="text-5xl md:text-7xl font-serif mb-6 text-jd-black leading-tight">
             Get in <span className="text-jd-burgundy italic">Touch</span>
           </h1>
@@ -61,7 +64,7 @@ const Contact = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
             {/* COLUMN 1: PRIMARY WHATSAPP CTA CARD */}
-            <div className="bg-black/20 border border-white/10 rounded-3xl p-8 md:p-10 relative overflow-hidden flex flex-col justify-between backdrop-blur-sm">
+            <div className="bg-black/20 border border-white/10 rounded-3xl p-8 md:p-10 relative overflow-hidden flex flex-col justify-center backdrop-blur-sm">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[200px] bg-white/5 blur-[60px] rounded-full pointer-events-none"></div>
               <div className="relative z-10">
                 <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-white mb-6">
@@ -150,26 +153,6 @@ const Contact = () => {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* BOTTOM CTA */}
-      <section className="py-20 bg-white border-t border-gray-100 text-center">
-        <div className="max-w-2xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-serif text-jd-black mb-4">
-            Ready to make <span className="text-jd-burgundy italic">music?</span>
-          </h2>
-          <p className="text-gray-600 mb-8 leading-relaxed">
-            Whether you're a complete beginner or a seasoned player, there's a place for you at JD. Music Academy. Book your free trial today.
-          </p>
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-10 py-4 rounded-full bg-jd-burgundy text-white font-bold hover:bg-red-900 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
-          >
-            Book a Free Trial <ArrowUpRight size={18} />
-          </a>
         </div>
       </section>
 
