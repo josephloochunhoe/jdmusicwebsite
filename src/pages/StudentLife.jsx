@@ -1,15 +1,56 @@
 import React, { useState } from 'react';
-import { Calendar, Music, Image, ArrowRight, ChevronRight } from 'lucide-react';
+import { Calendar, Music, Image, ArrowRight, ChevronRight, ChevronLeft, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import rockfestImage from '../assets/events/rockfest.jpeg';
 import vdrumsImage from '../assets/events/vdrums.jpg';
 import guitarbassImage from '../assets/events/guitarbass.png';
+import { galleryCategories, galleryItems } from '../data/galleryData';
 
 // Component structured cleanly for Student Life & Gallery Features
 const StudentLife = () => {
   // 1. COMPONENT STATE & SCREEN DYNAMICS
-  const [activeCategory, setActiveCategory] = useState("Teachers & Students");
+  const [activeCategory, setActiveCategory] = useState(galleryCategories[0]);
   const [visibleCount, setVisibleCount] = useState(6);
+  const [lightboxImage, setLightboxImage] = useState(null);
+
+  // Filtering dynamic grid based on category state
+  const filteredGalleryItems = galleryItems.filter(item => item.category === activeCategory);
+  const displayedItems = filteredGalleryItems.slice(0, visibleCount);
+
+  // Lightbox loop navigation helpers
+  const handlePrevImage = (e) => {
+    e.stopPropagation();
+    if (!lightboxImage) return;
+    const currentIndex = filteredGalleryItems.findIndex(item => item.id === lightboxImage.id);
+    if (currentIndex > 0) {
+      setLightboxImage(filteredGalleryItems[currentIndex - 1]);
+    } else {
+      setLightboxImage(filteredGalleryItems[filteredGalleryItems.length - 1]);
+    }
+  };
+
+  const handleNextImage = (e) => {
+    e.stopPropagation();
+    if (!lightboxImage) return;
+    const currentIndex = filteredGalleryItems.findIndex(item => item.id === lightboxImage.id);
+    if (currentIndex < filteredGalleryItems.length - 1) {
+      setLightboxImage(filteredGalleryItems[currentIndex + 1]);
+    } else {
+      setLightboxImage(filteredGalleryItems[0]);
+    }
+  };
+
+  // Keyboard navigation listener
+  React.useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!lightboxImage) return;
+      if (e.key === 'Escape') setLightboxImage(null);
+      if (e.key === 'ArrowLeft') handlePrevImage(e);
+      if (e.key === 'ArrowRight') handleNextImage(e);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxImage, filteredGalleryItems]);
 
   // Dynamic row-multiple calculator
   const getRowSize = () => {
@@ -74,32 +115,6 @@ const StudentLife = () => {
       regLink: "https://rolandap.com/2026/01/30/v-drums-championship-2026/"
     }
   ];
-
-  const galleryCategories = [
-    "Teachers & Students",
-    "Church Lessons",
-    "Competitions",
-    "Concerts (2025)",
-    "Our Students"
-  ];
-
-  const galleryItems = [
-    { id: 1, category: "Teachers & Students", alt: "Gallery Image", src: null },
-    { id: 2, category: "Teachers & Students", alt: "Gallery Image", src: null },
-    { id: 3, category: "Church Lessons", alt: "Gallery Image", src: null },
-    { id: 4, category: "Church Lessons", alt: "Gallery Image", src: null },
-    { id: 5, category: "Competitions", alt: "Gallery Image", src: null },
-    { id: 6, category: "Competitions", alt: "Gallery Image", src: null },
-    { id: 7, category: "Concerts (2025)", alt: "Gallery Image", src: null },
-    { id: 8, category: "Concerts (2025)", alt: "Gallery Image", src: null },
-    { id: 9, category: "Our Students", alt: "Gallery Image", src: null },
-    { id: 10, category: "Our Students", alt: "Gallery Image", src: null }
-  ];
-
-  // Filtering dynamic grid based on category state
-  const filteredGalleryItems = galleryItems.filter(item => item.category === activeCategory);
-
-  const displayedItems = filteredGalleryItems.slice(0, visibleCount);
 
   return (
     <div className="w-full bg-white text-jd-black">
@@ -250,15 +265,17 @@ const StudentLife = () => {
             {displayedItems.map((item) => (
               <div
                 key={item.id}
-                className="group relative bg-white border-2 border-jd-burgundy shadow-sm rounded-3xl overflow-hidden hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full"
+                onClick={() => item.src && setLightboxImage(item)}
+                className={`group relative bg-white border border-jd-burgundy shadow-sm rounded-3xl overflow-hidden hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-auto ${item.src ? 'cursor-pointer' : ''
+                  }`}
               >
                 {/* Visual Area */}
-                <div className="relative aspect-video bg-gray-50 flex items-center justify-center overflow-hidden flex-shrink-0">
+                <div className="relative overflow-hidden w-full h-auto flex-shrink-0">
                   {item.src ? (
                     <img
                       src={item.src}
                       alt={item.alt}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-auto block group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
                     <div className="w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-b from-gray-50 to-gray-100/50 relative">
@@ -329,6 +346,57 @@ const StudentLife = () => {
           </div>
         </div>
       </section>
+
+      {/* PREMIUM IMAGE LIGHTBOX MODAL */}
+      {lightboxImage && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md transition-all duration-300 p-4"
+          onClick={() => setLightboxImage(null)}
+        >
+          {/* Close Button */}
+          <button
+            onClick={() => setLightboxImage(null)}
+            className="absolute top-6 right-6 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all shadow-md hover:scale-105"
+            aria-label="Close lightbox"
+          >
+            <X size={24} />
+          </button>
+
+          {/* Left Chevron Navigation */}
+          {filteredGalleryItems.length > 1 && (
+            <button
+              onClick={handlePrevImage}
+              className="absolute left-4 md:left-8 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all shadow-md hover:scale-105"
+              aria-label="Previous image"
+            >
+              <ChevronLeft size={28} />
+            </button>
+          )}
+
+          {/* Right Chevron Navigation */}
+          {filteredGalleryItems.length > 1 && (
+            <button
+              onClick={handleNextImage}
+              className="absolute right-4 md:right-8 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all shadow-md hover:scale-105"
+              aria-label="Next image"
+            >
+              <ChevronRight size={28} />
+            </button>
+          )}
+
+          {/* Main Image Container */}
+          <div
+            className="relative max-h-[85vh] max-w-[90vw] flex flex-col items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={lightboxImage.src}
+              alt={lightboxImage.alt}
+              className="max-h-[75vh] max-w-full object-contain rounded-2xl border border-white/10 shadow-2xl"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
