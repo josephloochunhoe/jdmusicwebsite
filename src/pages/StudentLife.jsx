@@ -24,7 +24,7 @@ const videoTestimonials = [
 ];
 
 const TestimonialVideoCard = ({ src, name, instrument, tenure }) => (
-  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full">
+  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full w-full max-w-md mx-auto">
     <div className="relative aspect-video bg-black">
       <iframe
         src={src}
@@ -386,7 +386,7 @@ const StudentLife = () => {
           </div>
 
           {/* Desktop View: 2 Video Iframes */}
-          <div className="hidden md:grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="hidden md:grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {videoTestimonials.map((t) => (
               <TestimonialVideoCard
                 key={t.id}

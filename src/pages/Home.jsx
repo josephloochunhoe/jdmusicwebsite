@@ -20,7 +20,7 @@ const testimonials = [
 ];
 
 const TestimonialCard = ({ src, name, instrument, tenure }) => (
-  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full">
+  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full w-full max-w-md mx-auto">
     <div className="relative aspect-video bg-black">
       <iframe
         src={src}
@@ -107,8 +107,8 @@ const Home = () => {
             <h2 className="text-4xl md:text-5xl font-serif text-jd-black">See Our Students <span className="italic">in Action</span></h2>
           </div>
 
-          {/* Desktop View: 3 Video Iframes */}
-          <div className="hidden md:grid md:grid-cols-3 gap-8 mb-12">
+          {/* Desktop View: 2 Video Iframes */}
+          <div className="hidden md:grid md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto">
             {testimonials.map((t) => (
               <TestimonialCard
                 key={t.id}
