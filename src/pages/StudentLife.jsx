@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Calendar, Music, Image, ArrowRight, ChevronRight, ChevronLeft, X, Quote } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Calendar, Music, Image, ArrowRight, X, Quote } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import rockfestImage from '../assets/events/rockfest.jpeg';
 import vdrumsImage from '../assets/events/vdrums.jpg';
@@ -76,20 +76,42 @@ const StudentLife = () => {
   const [activeCategory, setActiveCategory] = useState(galleryCategories[0]);
   const [visibleCount, setVisibleCount] = useState(6);
   const [lightboxImage, setLightboxImage] = useState(null);
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0);
+  const testimonialScrollRef = useRef(null);
 
-  const isPrevDisabled = currentTestimonial === 0;
-  const isNextDisabled = currentTestimonial === videoTestimonials.length - 1;
+  useEffect(() => {
+    const initScroll = () => {
+      if (testimonialScrollRef.current) {
+        const container = testimonialScrollRef.current;
+        const child = container.children[0];
+        if (child && child.offsetWidth > 0) {
+          const itemWidth = child.offsetWidth + 24;
+          container.scrollLeft = videoTestimonials.length * itemWidth;
+        } else {
+          requestAnimationFrame(initScroll);
+        }
+      }
+    };
+    const timer = setTimeout(initScroll, 50);
+    return () => clearTimeout(timer);
+  }, []);
 
-  const nextTestimonial = () => {
-    if (!isNextDisabled) {
-      setCurrentTestimonial((prev) => prev + 1);
-    }
-  };
+  const handleTestimonialScroll = (e) => {
+    const container = e.currentTarget;
+    const child = container.children[0];
+    if (!child) return;
 
-  const prevTestimonial = () => {
-    if (!isPrevDisabled) {
-      setCurrentTestimonial((prev) => prev - 1);
+    const itemWidth = child.offsetWidth + 24;
+    const scrollLeft = container.scrollLeft;
+
+    const rawIndex = Math.round(scrollLeft / itemWidth);
+    const index = (rawIndex % videoTestimonials.length + videoTestimonials.length) % videoTestimonials.length;
+    setActiveTestimonialIndex(index);
+
+    if (scrollLeft < itemWidth) {
+      container.scrollLeft = scrollLeft + (videoTestimonials.length * itemWidth);
+    } else if (scrollLeft > (videoTestimonials.length * 2 - 1) * itemWidth) {
+      container.scrollLeft = scrollLeft - (videoTestimonials.length * itemWidth);
     }
   };
 
@@ -426,40 +448,35 @@ const StudentLife = () => {
             ))}
           </div>
 
-          {/* Mobile View: Carousel */}
-          <div className="block md:hidden">
-            <div className="mb-8">
-              <TestimonialVideoCard
-                key={videoTestimonials[currentTestimonial].id}
-                src={videoTestimonials[currentTestimonial].src}
-                name={videoTestimonials[currentTestimonial].name}
-                instrument={videoTestimonials[currentTestimonial].instrument}
-                tenure={videoTestimonials[currentTestimonial].tenure}
-              />
+          {/* Mobile View: Infinite Swipeable Track */}
+          <div className="block md:hidden -mx-6 px-6">
+            <div 
+              ref={testimonialScrollRef}
+              onScroll={handleTestimonialScroll}
+              className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"
+            >
+              {[...videoTestimonials, ...videoTestimonials, ...videoTestimonials].map((t, i) => (
+                <div
+                  key={i}
+                  className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center"
+                >
+                  <TestimonialVideoCard
+                    src={t.src}
+                    name={t.name}
+                    instrument={t.instrument}
+                    tenure={t.tenure}
+                  />
+                </div>
+              ))}
             </div>
-            <div className="flex items-center justify-center gap-6">
-              <button
-                onClick={prevTestimonial}
-                disabled={isPrevDisabled}
-                className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${isPrevDisabled
-                  ? 'bg-white/10 text-white/30 cursor-not-allowed border border-white/10'
-                  : 'bg-white border border-transparent text-jd-black hover:bg-gray-100 shadow-sm'
-                  }`}
-                aria-label="Previous Testimonial"
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <button
-                onClick={nextTestimonial}
-                disabled={isNextDisabled}
-                className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${isNextDisabled
-                  ? 'bg-white/10 text-white/30 cursor-not-allowed border border-white/10'
-                  : 'bg-white border border-transparent text-jd-black hover:bg-gray-100 shadow-sm'
-                  }`}
-                aria-label="Next Testimonial"
-              >
-                <ChevronRight size={24} />
-              </button>
+            {/* Pagination Indicators */}
+            <div className="flex justify-center gap-2 mt-4">
+              {videoTestimonials.map((_, i) => (
+                <span
+                  key={i}
+                  className={`w-2.5 h-2.5 rounded-full transition-colors duration-250 ${i === activeTestimonialIndex ? 'bg-amber-100' : 'bg-white/25'}`}
+                />
+              ))}
             </div>
           </div>
         </div>

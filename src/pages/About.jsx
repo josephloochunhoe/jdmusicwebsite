@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ShieldCheck, GraduationCap, Heart, Music, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import jeevanImage from '../assets/portraits/jeevan.png';
@@ -60,6 +60,84 @@ const TeacherCard = ({ name, specialization, bio, image }) => (
 );
 
 const About = () => {
+  const [activeCoreIndex, setActiveCoreIndex] = useState(0);
+  const coreScrollRef = useRef(null);
+
+  useEffect(() => {
+    const initScroll = () => {
+      if (coreScrollRef.current) {
+        const container = coreScrollRef.current;
+        const child = container.children[0];
+        if (child && child.offsetWidth > 0) {
+          const itemWidth = child.offsetWidth + 24;
+          container.scrollLeft = coreMembers.length * itemWidth;
+        } else {
+          requestAnimationFrame(initScroll);
+        }
+      }
+    };
+    const timer = setTimeout(initScroll, 50);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleCoreScroll = (e) => {
+    const container = e.currentTarget;
+    const child = container.children[0];
+    if (!child) return;
+
+    const itemWidth = child.offsetWidth + 24;
+    const scrollLeft = container.scrollLeft;
+
+    const rawIndex = Math.round(scrollLeft / itemWidth);
+    const index = (rawIndex % coreMembers.length + coreMembers.length) % coreMembers.length;
+    setActiveCoreIndex(index);
+
+    if (scrollLeft < itemWidth) {
+      container.scrollLeft = scrollLeft + (coreMembers.length * itemWidth);
+    } else if (scrollLeft > (coreMembers.length * 2 - 1) * itemWidth) {
+      container.scrollLeft = scrollLeft - (coreMembers.length * itemWidth);
+    }
+  };
+
+  const [activeTeacherIndex, setActiveTeacherIndex] = useState(0);
+  const teacherScrollRef = useRef(null);
+
+  useEffect(() => {
+    const initScroll = () => {
+      if (teacherScrollRef.current) {
+        const container = teacherScrollRef.current;
+        const child = container.children[0];
+        if (child && child.offsetWidth > 0) {
+          const itemWidth = child.offsetWidth + 24;
+          container.scrollLeft = teachers.length * itemWidth;
+        } else {
+          requestAnimationFrame(initScroll);
+        }
+      }
+    };
+    const timer = setTimeout(initScroll, 50);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleTeacherScroll = (e) => {
+    const container = e.currentTarget;
+    const child = container.children[0];
+    if (!child) return;
+
+    const itemWidth = child.offsetWidth + 24;
+    const scrollLeft = container.scrollLeft;
+
+    const rawIndex = Math.round(scrollLeft / itemWidth);
+    const index = (rawIndex % teachers.length + teachers.length) % teachers.length;
+    setActiveTeacherIndex(index);
+
+    if (scrollLeft < itemWidth) {
+      container.scrollLeft = scrollLeft + (teachers.length * itemWidth);
+    } else if (scrollLeft > (teachers.length * 2 - 1) * itemWidth) {
+      container.scrollLeft = scrollLeft - (teachers.length * itemWidth);
+    }
+  };
+
   // Placeholder array structure for Core Members / Founders
   const coreMembers = [
     {
@@ -181,10 +259,14 @@ const About = () => {
             ))}
           </div>
 
-          {/* Mobile View: Swipeable Track */}
+          {/* Mobile View: Infinite Swipeable Track */}
           <div className="block md:hidden -mx-6 px-6">
-            <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none">
-              {coreMembers.map((member, i) => (
+            <div 
+              ref={coreScrollRef}
+              onScroll={handleCoreScroll}
+              className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"
+            >
+              {[...coreMembers, ...coreMembers, ...coreMembers].map((member, i) => (
                 <div
                   key={i}
                   className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center"
@@ -198,7 +280,7 @@ const About = () => {
               {coreMembers.map((_, i) => (
                 <span
                   key={i}
-                  className={`w-2.5 h-2.5 rounded-full ${i === 0 ? 'bg-jd-burgundy' : 'bg-gray-200'}`}
+                  className={`w-2.5 h-2.5 rounded-full transition-colors duration-250 ${i === activeCoreIndex ? 'bg-jd-burgundy' : 'bg-gray-200'}`}
                 />
               ))}
             </div>
@@ -221,10 +303,14 @@ const About = () => {
             ))}
           </div>
 
-          {/* Mobile View: Swipeable Track */}
+          {/* Mobile View: Infinite Swipeable Track */}
           <div className="block md:hidden -mx-6 px-6">
-            <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none">
-              {teachers.map((teacher, i) => (
+            <div 
+              ref={teacherScrollRef}
+              onScroll={handleTeacherScroll}
+              className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"
+            >
+              {[...teachers, ...teachers, ...teachers].map((teacher, i) => (
                 <div
                   key={i}
                   className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center"
@@ -238,7 +324,7 @@ const About = () => {
               {teachers.map((_, i) => (
                 <span
                   key={i}
-                  className={`w-2.5 h-2.5 rounded-full ${i === 0 ? 'bg-amber-100' : 'bg-white/25'}`}
+                  className={`w-2.5 h-2.5 rounded-full transition-colors duration-250 ${i === activeTeacherIndex ? 'bg-amber-100' : 'bg-white/25'}`}
                 />
               ))}
             </div>

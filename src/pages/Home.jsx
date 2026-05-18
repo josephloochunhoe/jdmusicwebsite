@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ArrowRight, Play, ChevronLeft, ChevronRight, Phone } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { ArrowRight, Play, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const testimonials = [
@@ -40,20 +40,42 @@ const TestimonialCard = ({ src, name, instrument, tenure }) => (
 
 
 const Home = () => {
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0);
+  const testimonialScrollRef = useRef(null);
 
-  const isPrevDisabled = currentTestimonial === 0;
-  const isNextDisabled = currentTestimonial === testimonials.length - 1;
+  useEffect(() => {
+    const initScroll = () => {
+      if (testimonialScrollRef.current) {
+        const container = testimonialScrollRef.current;
+        const child = container.children[0];
+        if (child && child.offsetWidth > 0) {
+          const itemWidth = child.offsetWidth + 24;
+          container.scrollLeft = testimonials.length * itemWidth;
+        } else {
+          requestAnimationFrame(initScroll);
+        }
+      }
+    };
+    const timer = setTimeout(initScroll, 50);
+    return () => clearTimeout(timer);
+  }, []);
 
-  const nextTestimonial = () => {
-    if (!isNextDisabled) {
-      setCurrentTestimonial((prev) => prev + 1);
-    }
-  };
+  const handleTestimonialScroll = (e) => {
+    const container = e.currentTarget;
+    const child = container.children[0];
+    if (!child) return;
 
-  const prevTestimonial = () => {
-    if (!isPrevDisabled) {
-      setCurrentTestimonial((prev) => prev - 1);
+    const itemWidth = child.offsetWidth + 24;
+    const scrollLeft = container.scrollLeft;
+
+    const rawIndex = Math.round(scrollLeft / itemWidth);
+    const index = (rawIndex % testimonials.length + testimonials.length) % testimonials.length;
+    setActiveTestimonialIndex(index);
+
+    if (scrollLeft < itemWidth) {
+      container.scrollLeft = scrollLeft + (testimonials.length * itemWidth);
+    } else if (scrollLeft > (testimonials.length * 2 - 1) * itemWidth) {
+      container.scrollLeft = scrollLeft - (testimonials.length * itemWidth);
     }
   };
 
@@ -130,40 +152,35 @@ const Home = () => {
             ))}
           </div>
 
-          {/* Mobile View: Carousel */}
-          <div className="block md:hidden mb-12">
-            <div className="mb-8">
-              <TestimonialCard
-                key={testimonials[currentTestimonial].id}
-                src={testimonials[currentTestimonial].src}
-                name={testimonials[currentTestimonial].name}
-                instrument={testimonials[currentTestimonial].instrument}
-                tenure={testimonials[currentTestimonial].tenure}
-              />
+          {/* Mobile View: Infinite Swipeable Track */}
+          <div className="block md:hidden mb-12 -mx-6 px-6">
+            <div 
+              ref={testimonialScrollRef}
+              onScroll={handleTestimonialScroll}
+              className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"
+            >
+              {[...testimonials, ...testimonials, ...testimonials].map((t, i) => (
+                <div
+                  key={i}
+                  className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center"
+                >
+                  <TestimonialCard
+                    src={t.src}
+                    name={t.name}
+                    instrument={t.instrument}
+                    tenure={t.tenure}
+                  />
+                </div>
+              ))}
             </div>
-            <div className="flex items-center justify-center gap-6">
-              <button
-                onClick={prevTestimonial}
-                disabled={isPrevDisabled}
-                className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${isPrevDisabled
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-white border border-gray-200 text-jd-black hover:bg-gray-50'
-                  }`}
-                aria-label="Previous Testimonial"
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <button
-                onClick={nextTestimonial}
-                disabled={isNextDisabled}
-                className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${isNextDisabled
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-white border border-gray-200 text-jd-black hover:bg-gray-50'
-                  }`}
-                aria-label="Next Testimonial"
-              >
-                <ChevronRight size={24} />
-              </button>
+            {/* Pagination Indicators */}
+            <div className="flex justify-center gap-2 mt-4">
+              {testimonials.map((_, i) => (
+                <span
+                  key={i}
+                  className={`w-2.5 h-2.5 rounded-full transition-colors duration-250 ${i === activeTestimonialIndex ? 'bg-jd-burgundy' : 'bg-gray-200'}`}
+                />
+              ))}
             </div>
           </div>
 
