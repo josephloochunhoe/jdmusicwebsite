@@ -20,11 +20,39 @@ const videoTestimonials = [
     name: "Andrea",
     instrument: "Piano",
     tenure: "⏱ 5 months with us"
+  },
+  {
+    id: 3,
+    src: "https://drive.google.com/file/d/1aJEFAKeUM8KSZU2scc3-IwXH-yYE_n54/preview",
+    name: "Alyssa",
+    instrument: "Guitar",
+    tenure: "⏱ 1 year with us"
+  },
+  {
+    id: 4,
+    src: "https://drive.google.com/file/d/12sIPRYxrMqOELbjJ_b9I6jAQgEmhI-GG/preview",
+    name: "Kamal",
+    instrument: "Drums",
+    tenure: "⏱ 9 months with us"
+  },
+  {
+    id: 5,
+    src: "https://drive.google.com/file/d/1bvQYk7DzgKA_xNmo_-6MSYV_OfdxAV1E/preview",
+    name: "Athaliya",
+    instrument: "Guitar",
+    tenure: "⏱ 2 years with us"
+  },
+  {
+    id: 6,
+    src: "https://drive.google.com/file/d/1ORgfANzL_HDM2FNJJe8-kjJGa8Y5bjOR/preview",
+    name: "Sahnjaayz",
+    instrument: "Drums",
+    tenure: "⏱ 4 years with us"
   }
 ];
 
 const TestimonialVideoCard = ({ src, name, instrument, tenure }) => (
-  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full w-full max-w-md mx-auto">
+  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full">
     <div className="relative aspect-video bg-black">
       <iframe
         src={src}
@@ -386,7 +414,7 @@ const StudentLife = () => {
           </div>
 
           {/* Desktop View: 2 Video Iframes */}
-          <div className="hidden md:grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="hidden md:grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {videoTestimonials.map((t) => (
               <TestimonialVideoCard
                 key={t.id}
