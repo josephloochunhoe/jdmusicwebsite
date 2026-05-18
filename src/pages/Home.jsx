@@ -20,7 +20,7 @@ const testimonials = [
 ];
 
 const TestimonialCard = ({ src, name, instrument, tenure }) => (
-  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full w-full max-w-md mx-auto">
+  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full">
     <div className="relative aspect-video bg-black">
       <iframe
         src={src}
@@ -99,16 +99,23 @@ const Home = () => {
       </section>
 
       {/* Student Life (Testimonials & Videos) Section */}
-      <section className="py-24 bg-white relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-jd-burgundy/20 blur-[120px] rounded-full pointer-events-none"></div>
+      <section className="py-24 bg-jd-burgundy text-white relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white/5 blur-[120px] rounded-full pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
-          <div className="mb-16">
-            <h2 className="text-xs font-bold tracking-widest text-jd-burgundy mb-4 uppercase">Real Journeys & Progress</h2>
-            <h2 className="text-4xl md:text-5xl font-serif text-jd-black">See Our Students <span className="italic">in Action</span></h2>
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <span className="text-xs font-bold text-red-200/90 tracking-widest uppercase block mb-3">
+              Real Journeys & Progress
+            </span>
+            <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">
+              See Our Students <span className="text-amber-100 italic">in Action</span>
+            </h2>
+            <p className="text-sm text-red-100/80 leading-relaxed">
+              Real video stories from the students who make our studio feel like home.
+            </p>
           </div>
 
           {/* Desktop View: 2 Video Iframes */}
-          <div className="hidden md:grid md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto">
+          <div className="hidden md:grid md:grid-cols-2 gap-8 mb-12 max-w-5xl mx-auto">
             {testimonials.map((t) => (
               <TestimonialCard
                 key={t.id}
@@ -136,8 +143,8 @@ const Home = () => {
                 onClick={prevTestimonial}
                 disabled={isPrevDisabled}
                 className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${isPrevDisabled
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-white border border-gray-200 text-jd-black hover:bg-gray-50'
+                  ? 'bg-white/10 text-white/30 cursor-not-allowed border border-white/10'
+                  : 'bg-white border border-transparent text-jd-black hover:bg-gray-100'
                   }`}
                 aria-label="Previous Testimonial"
               >
@@ -147,8 +154,8 @@ const Home = () => {
                 onClick={nextTestimonial}
                 disabled={isNextDisabled}
                 className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${isNextDisabled
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-white border border-gray-200 text-jd-black hover:bg-gray-50'
+                  ? 'bg-white/10 text-white/30 cursor-not-allowed border border-white/10'
+                  : 'bg-white border border-transparent text-jd-black hover:bg-gray-100'
                   }`}
                 aria-label="Next Testimonial"
               >
@@ -157,7 +164,7 @@ const Home = () => {
             </div>
           </div>
 
-          <Link to="/student-life" className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-jd-burgundy text-white font-bold hover:bg-red-900 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
+          <Link to="/student-life" className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-white text-jd-burgundy font-bold hover:bg-gray-100 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
             Explore Full Student Life <ArrowRight size={18} />
           </Link>
         </div>
