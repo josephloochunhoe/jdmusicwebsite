@@ -405,13 +405,10 @@ const StudentLife = () => {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white/5 blur-[120px] rounded-full pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs font-bold text-red-200/90 tracking-widest uppercase block mb-3">
-              Testimonials
-            </span>
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">
-              See Our Students <span className="text-amber-100 italic">in Action</span>
+              See Our Students in Action
             </h2>
-            <p className="text-sm text-red-100/80 leading-relaxed">
+            <p className="text-sm text-white/80 leading-relaxed">
               Real video stories from the students who make our studio feel like home.
             </p>
           </div>
@@ -466,10 +463,10 @@ const StudentLife = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* FINAL PAGE ACTION CTA */}
-      <section className="py-24 bg-white text-jd-black border-t border-gray-100">
+      < section className="py-24 bg-white text-jd-black border-t border-gray-100" >
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-serif text-jd-black mb-6">
             Become Part of <span className="text-jd-burgundy italic">Our Success Stories</span>
@@ -494,59 +491,61 @@ const StudentLife = () => {
             </Link>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* PREMIUM IMAGE LIGHTBOX MODAL */}
-      {lightboxImage && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md transition-all duration-300 p-4"
-          onClick={() => setLightboxImage(null)}
-        >
-          {/* Close Button */}
-          <button
-            onClick={() => setLightboxImage(null)}
-            className="absolute top-6 right-6 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all shadow-md hover:scale-105"
-            aria-label="Close lightbox"
-          >
-            <X size={24} />
-          </button>
-
-          {/* Left Chevron Navigation */}
-          {filteredGalleryItems.length > 1 && (
-            <button
-              onClick={handlePrevImage}
-              className="absolute left-4 md:left-8 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all shadow-md hover:scale-105"
-              aria-label="Previous image"
-            >
-              <ChevronLeft size={28} />
-            </button>
-          )}
-
-          {/* Right Chevron Navigation */}
-          {filteredGalleryItems.length > 1 && (
-            <button
-              onClick={handleNextImage}
-              className="absolute right-4 md:right-8 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all shadow-md hover:scale-105"
-              aria-label="Next image"
-            >
-              <ChevronRight size={28} />
-            </button>
-          )}
-
-          {/* Main Image Container */}
+      {
+        lightboxImage && (
           <div
-            className="relative max-h-[85vh] max-w-[90vw] flex flex-col items-center justify-center"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md transition-all duration-300 p-4"
+            onClick={() => setLightboxImage(null)}
           >
-            <img
-              src={lightboxImage.src}
-              alt={lightboxImage.alt}
-              className="max-h-[75vh] max-w-full object-contain rounded-2xl border border-white/10 shadow-2xl"
-            />
+            {/* Close Button */}
+            <button
+              onClick={() => setLightboxImage(null)}
+              className="absolute top-6 right-6 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all shadow-md hover:scale-105"
+              aria-label="Close lightbox"
+            >
+              <X size={24} />
+            </button>
+
+            {/* Left Chevron Navigation */}
+            {filteredGalleryItems.length > 1 && (
+              <button
+                onClick={handlePrevImage}
+                className="absolute left-4 md:left-8 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all shadow-md hover:scale-105"
+                aria-label="Previous image"
+              >
+                <ChevronLeft size={28} />
+              </button>
+            )}
+
+            {/* Right Chevron Navigation */}
+            {filteredGalleryItems.length > 1 && (
+              <button
+                onClick={handleNextImage}
+                className="absolute right-4 md:right-8 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all shadow-md hover:scale-105"
+                aria-label="Next image"
+              >
+                <ChevronRight size={28} />
+              </button>
+            )}
+
+            {/* Main Image Container */}
+            <div
+              className="relative max-h-[85vh] max-w-[90vw] flex flex-col items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={lightboxImage.src}
+                alt={lightboxImage.alt}
+                className="max-h-[75vh] max-w-full object-contain rounded-2xl border border-white/10 shadow-2xl"
+              />
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )
+      }
+    </div >
   );
 };
 
