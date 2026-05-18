@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -7,6 +7,17 @@ import About from './pages/About';
 import StudentLife from './pages/StudentLife';
 import PricingFaq from './pages/PricingFaq';
 import Contact from './pages/Contact';
+
+// Helper component to restore scroll position to top on route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   const [showFloatingCTA, setShowFloatingCTA] = useState(false);
@@ -27,6 +38,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="min-h-screen bg-white text-jd-black font-sans selection:bg-jd-burgundy selection:text-white flex flex-col">
         <Navbar />
         
