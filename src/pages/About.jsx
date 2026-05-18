@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ShieldCheck, GraduationCap, Heart, Music, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import React from 'react';
+import { ShieldCheck, GraduationCap, Heart, Music, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import jeevanImage from '../assets/portraits/jeevan.png';
 import achshaImage from '../assets/portraits/achsha.jpg';
@@ -60,9 +60,6 @@ const TeacherCard = ({ name, specialization, bio, image }) => (
 );
 
 const About = () => {
-  const [currentCore, setCurrentCore] = useState(0);
-  const [currentTeacher, setCurrentTeacher] = useState(0);
-
   // Placeholder array structure for Core Members / Founders
   const coreMembers = [
     {
@@ -125,20 +122,6 @@ const About = () => {
     }
   ];
 
-  const nextCore = () => {
-    setCurrentCore((prev) => (prev + 1) % coreMembers.length);
-  };
-  const prevCore = () => {
-    setCurrentCore((prev) => (prev - 1 + coreMembers.length) % coreMembers.length);
-  };
-
-  const nextTeacher = () => {
-    setCurrentTeacher((prev) => (prev + 1) % teachers.length);
-  };
-  const prevTeacher = () => {
-    setCurrentTeacher((prev) => (prev - 1 + teachers.length) % teachers.length);
-  };
-
   return (
     <div className="w-full bg-white text-jd-black">
       {/* Page Header (Minimalistic Overview) */}
@@ -198,34 +181,26 @@ const About = () => {
             ))}
           </div>
 
-          {/* Mobile View: Infinite Carousel */}
-          <div className="block md:hidden">
-            <div className="mb-6 grid grid-cols-1">
+          {/* Mobile View: Swipeable Track */}
+          <div className="block md:hidden -mx-6 px-6">
+            <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none">
               {coreMembers.map((member, i) => (
                 <div
                   key={i}
-                  className={`col-start-1 row-start-1 transition-opacity duration-300 ${i === currentCore ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none'
-                    } h-full`}
+                  className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center"
                 >
                   <CoreMemberCard {...member} />
                 </div>
               ))}
             </div>
-            <div className="flex items-center justify-center gap-6">
-              <button
-                onClick={prevCore}
-                className="w-12 h-12 rounded-full flex items-center justify-center bg-white border border-gray-200 text-jd-black hover:bg-gray-50 transition-colors shadow-sm"
-                aria-label="Previous Team Member"
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <button
-                onClick={nextCore}
-                className="w-12 h-12 rounded-full flex items-center justify-center bg-white border border-gray-200 text-jd-black hover:bg-gray-50 transition-colors shadow-sm"
-                aria-label="Next Team Member"
-              >
-                <ChevronRight size={24} />
-              </button>
+            {/* Pagination Indicators */}
+            <div className="flex justify-center gap-2 mt-4">
+              {coreMembers.map((_, i) => (
+                <span
+                  key={i}
+                  className={`w-2.5 h-2.5 rounded-full ${i === 0 ? 'bg-jd-burgundy' : 'bg-gray-200'}`}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -246,34 +221,26 @@ const About = () => {
             ))}
           </div>
 
-          {/* Mobile View: Infinite Carousel */}
-          <div className="block md:hidden">
-            <div className="mb-6 grid grid-cols-1">
+          {/* Mobile View: Swipeable Track */}
+          <div className="block md:hidden -mx-6 px-6">
+            <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none">
               {teachers.map((teacher, i) => (
                 <div
                   key={i}
-                  className={`col-start-1 row-start-1 transition-opacity duration-300 ${i === currentTeacher ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none'
-                    } h-full`}
+                  className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center"
                 >
                   <TeacherCard {...teacher} />
                 </div>
               ))}
             </div>
-            <div className="flex items-center justify-center gap-6">
-              <button
-                onClick={prevTeacher}
-                className="w-12 h-12 rounded-full flex items-center justify-center bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-colors"
-                aria-label="Previous Instructor"
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <button
-                onClick={nextTeacher}
-                className="w-12 h-12 rounded-full flex items-center justify-center bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-colors"
-                aria-label="Next Instructor"
-              >
-                <ChevronRight size={24} />
-              </button>
+            {/* Pagination Indicators */}
+            <div className="flex justify-center gap-2 mt-4">
+              {teachers.map((_, i) => (
+                <span
+                  key={i}
+                  className={`w-2.5 h-2.5 rounded-full ${i === 0 ? 'bg-amber-100' : 'bg-white/25'}`}
+                />
+              ))}
             </div>
           </div>
         </div>
