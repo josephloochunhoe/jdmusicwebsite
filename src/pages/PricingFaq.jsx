@@ -102,7 +102,7 @@ const PricingFaq = () => {
           <div className="text-center mb-12 relative z-10">
             <h2 className="text-xs font-bold tracking-widest text-red-200/90 uppercase mb-3">Tuition & Packages</h2>
             <h3 className="text-4xl md:text-5xl font-serif text-white mb-6">
-              Transparent, Flexible <span className="italic text-amber-100">Rates</span>
+              Transparent, Flexible Rates
             </h3>
             <p className="text-red-100/80 max-w-2xl mx-auto leading-relaxed">
               At JD.Music, we offer flexible, engaging music lessons for everyone of all ages! Available within Klang Valley, whether at home, online, in preschools, schools, or community spaces.
@@ -188,6 +188,12 @@ const PricingFaq = () => {
             <p className="text-sm text-red-200/70 italic mb-8">
               *Additional travel charges apply based on distance from base studio locations.
             </p>
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center gap-2 px-10 py-4 rounded-full bg-white text-jd-burgundy font-bold hover:bg-gray-100 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+            >
+              Contact Us to Inquire <ArrowRight size={18} />
+            </Link>
           </div>
         </div>
       </section>
@@ -197,7 +203,7 @@ const PricingFaq = () => {
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-xs font-bold tracking-widest text-jd-burgundy uppercase mb-3">Got Questions?</h2>
-            <h3 className="text-4xl md:text-5xl font-serif text-jd-black">Frequently Asked <span className="italic text-jd-burgundy">Questions</span></h3>
+            <h3 className="text-4xl md:text-5xl font-serif text-jd-black">Frequently Asked Questions</h3>
           </div>
           <div className="bg-gray-50 rounded-3xl p-12 text-center border border-gray-100">
             <p className="text-gray-600">Common questions about enrollment, scheduling, and policies will go here.</p>
@@ -209,9 +215,7 @@ const PricingFaq = () => {
       <section className="py-24 bg-jd-burgundy text-white relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white/5 blur-[120px] rounded-full pointer-events-none"></div>
         <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <span className="text-xs font-bold text-red-200/90 tracking-widest uppercase block mb-3">
-            Get Started Today
-          </span>
+
           <h2 className="text-3xl md:text-4xl font-serif text-white mb-6">
             Ready to Start Your <span className="text-amber-100 italic">Musical Journey?</span>
           </h2>
