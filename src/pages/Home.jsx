@@ -23,12 +23,33 @@ const testimonials = [
     name: "Alyssa",
     instrument: "Guitar",
     tenure: "⏱ 1 year with us"
+  },
+  {
+    id: 4,
+    src: "https://drive.google.com/file/d/12sIPRYxrMqOELbjJ_b9I6jAQgEmhI-GG/preview",
+    name: "Kamal",
+    instrument: "Drums",
+    tenure: "⏱ 9 months with us"
+  },
+  {
+    id: 5,
+    src: "https://drive.google.com/file/d/1bvQYk7DzgKA_xNmo_-6MSYV_OfdxAV1E/preview",
+    name: "Athaliya",
+    instrument: "Guitar",
+    tenure: "⏱ 2 years with us"
+  },
+  {
+    id: 6,
+    src: "https://drive.google.com/file/d/1ORgfANzL_HDM2FNJJe8-kjJGa8Y5bjOR/preview",
+    name: "Sahnjaayz",
+    instrument: "Drums",
+    tenure: "⏱ 4 years with us"
   }
 ];
 
 const TestimonialCard = ({ src, name, instrument, tenure }) => (
-  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full w-full max-w-[300px] mx-auto">
-    <div className="relative aspect-[9/16] bg-black">
+  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full">
+    <div className="relative aspect-video bg-black">
       <iframe
         src={src}
         title="Testimonial"
@@ -114,8 +135,8 @@ const Home = () => {
             <h2 className="text-4xl md:text-5xl font-serif text-jd-black">See Our Students <span className="italic">in Action</span></h2>
           </div>
 
-          {/* Desktop View: 3 Video Iframes */}
-          <div className="hidden md:grid md:grid-cols-3 gap-8 mb-12">
+          {/* Desktop View: 2 Video Iframes */}
+          <div className="hidden md:grid md:grid-cols-2 gap-8 mb-12 max-w-5xl mx-auto">
             {testimonials.map((t) => (
               <TestimonialCard
                 key={t.id}
