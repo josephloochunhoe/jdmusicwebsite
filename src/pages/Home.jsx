@@ -27,8 +27,8 @@ const testimonials = [
 ];
 
 const TestimonialCard = ({ src, name, instrument, tenure }) => (
-  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform">
-    <div className="relative pt-[56.25%] bg-black">
+  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full">
+    <div className="relative aspect-[9/16] bg-black">
       <iframe
         src={src}
         title="Testimonial"

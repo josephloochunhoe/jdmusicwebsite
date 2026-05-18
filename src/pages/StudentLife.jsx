@@ -52,9 +52,8 @@ const videoTestimonials = [
 ];
 
 const TestimonialVideoCard = ({ src, name, instrument, tenure }) => (
-  <div className="flex flex-col h-full group">
-    {/* Video Frame with perfect border fitting */}
-    <div className="relative aspect-video bg-black rounded-3xl overflow-hidden border border-gray-200/80 shadow-sm hover:-translate-y-1.5 hover:shadow-md transition-all duration-300 w-full flex-shrink-0">
+  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full">
+    <div className="relative aspect-[9/16] bg-black">
       <iframe
         src={src}
         title="Video Testimonial"
@@ -63,15 +62,10 @@ const TestimonialVideoCard = ({ src, name, instrument, tenure }) => (
         className="absolute inset-0 w-full h-full border-0"
       />
     </div>
-    {/* Info details clean outside of the border */}
-    <div className="pt-4 flex-grow flex flex-col justify-between">
-      <div>
-        <p className="font-bold text-jd-black text-base mb-0.5 group-hover:text-jd-burgundy transition-colors duration-300">{name}</p>
-        <p className="text-jd-burgundy text-[11px] font-bold uppercase tracking-wider mb-3">{instrument}</p>
-      </div>
-      <div>
-        <span className="inline-block text-[11px] text-gray-500 bg-gray-50 rounded-full px-3 py-1 font-semibold border border-gray-100">{tenure}</span>
-      </div>
+    <div className="p-4 border-t border-gray-200 flex-grow">
+      <p className="font-bold text-jd-black text-base mb-1">{name}</p>
+      <p className="text-jd-burgundy text-xs font-medium uppercase tracking-widest mb-2">{instrument}</p>
+      <span className="text-xs text-gray-600 bg-gray-100 rounded-full px-3 py-1">{tenure}</span>
     </div>
   </div>
 );
