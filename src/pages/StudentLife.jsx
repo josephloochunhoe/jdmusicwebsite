@@ -401,8 +401,8 @@ const StudentLife = () => {
       </section>
 
       {/* STUDENT TESTIMONIALS SECTION */}
-      <section className="py-24 bg-white relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-jd-burgundy/10 blur-[120px] rounded-full pointer-events-none"></div>
+      <section className="py-24 bg-gray-50/60 border-t border-b border-gray-100 relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-jd-burgundy/20 blur-[120px] rounded-full pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-serif text-jd-black mb-4">
