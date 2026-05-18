@@ -1,34 +1,344 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Calendar, Music, Image, ArrowRight, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import rockfestImage from '../assets/events/rockfest.jpeg';
+import vdrumsImage from '../assets/events/vdrums.jpg';
+import guitarbassImage from '../assets/events/guitarbass.png';
 
+// Component structured cleanly for Student Life & Gallery Features
 const StudentLife = () => {
-  return (
-    <div className="pt-32 pb-20 min-h-screen">
-      <div className="max-w-7xl mx-auto px-6">
-        <h1 className="text-5xl md:text-7xl font-serif mb-8 text-jd-black leading-tight">
-          Student <span className="text-jd-burgundy italic">Life</span>
-        </h1>
-        <p className="text-lg text-gray-600 max-w-3xl mb-12 leading-relaxed">
-          Experience the vibrant community at JD. Music Academy. From performances and recitals to our dedicated students and their inspiring stories.
-        </p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          <div className="bg-white border border-gray-200 shadow-sm p-8 rounded-2xl">
-            <h2 className="text-3xl font-serif mb-4 text-jd-black">Events</h2>
-            <p className="text-gray-600 leading-relaxed">Upcoming recitals, masterclasses, and community performances.</p>
-          </div>
-          <div className="bg-white border border-gray-200 shadow-sm p-8 rounded-2xl">
-            <h2 className="text-3xl font-serif mb-4 text-jd-black">Our Students</h2>
-            <p className="text-gray-600 leading-relaxed">Meet the talented individuals who make up our academy.</p>
-          </div>
-        </div>
+  // 1. COMPONENT STATE & SCREEN DYNAMICS
+  const [activeCategory, setActiveCategory] = useState("Teachers & Students");
+  const [visibleCount, setVisibleCount] = useState(6);
 
-        <div>
-          <h2 className="text-4xl font-serif mb-8 italic text-jd-black">More Testimonials</h2>
-          <div className="bg-white border border-gray-200 shadow-sm p-8 rounded-2xl">
-            <p className="text-gray-600 leading-relaxed">Additional student testimonials and success stories will be featured here.</p>
+  // Dynamic row-multiple calculator
+  const getRowSize = () => {
+    if (typeof window === 'undefined') return 6;
+    const width = window.innerWidth;
+    if (width < 640) return 2;  // Mobile (1 col) -> 2 rows = 2 items
+    if (width < 1024) return 4; // Tablet (2 col) -> 2 rows = 4 items
+    return 6;                   // Desktop (3 col) -> 2 rows = 6 items
+  };
+
+  // Set initial visible count based on active screen size on mount
+  React.useEffect(() => {
+    setVisibleCount(getRowSize());
+  }, []);
+
+  // Handle resize dynamically to preserve exact row grids
+  React.useEffect(() => {
+    const handleResize = () => {
+      const rowSize = getRowSize();
+      setVisibleCount((prev) => {
+        const currentRows = Math.ceil(prev / rowSize);
+        return Math.max(rowSize, currentRows * rowSize);
+      });
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Handle Category Change & Reset to dynamic 2-row count
+  const handleCategoryChange = (category) => {
+    setActiveCategory(category);
+    setVisibleCount(getRowSize());
+  };
+
+  // 2. CONTENT DATA MODELS
+  const events = [
+    {
+      id: 1,
+      title: "Guitar & Bass Group Lessons",
+      type: "current",
+      date: "Ongoing - July 2026",
+      description: "Learn guitar or bass in a fun group setting! Master chords, basslines, and rhythm techniques while jamming your favorite songs alongside other musicians.",
+      poster: guitarbassImage,
+      regLink: "https://docs.google.com/forms/d/e/1FAIpQLSdBa7FlBb4pTJKufN-ntDKnF7wVL2-pj84AdVVGY5GBWT4PFA/viewform"
+    },
+    {
+      id: 2,
+      title: "Rockfest 2026",
+      type: "upcoming",
+      date: "May - Sept 2026",
+      description: "RockFest is an annual music competition where participants can choose to compete digitally (via video submission), physically (via live performance), or both.",
+      poster: rockfestImage,
+      regLink: "https://linktr.ee/RockFestMalaysia"
+    },
+    {
+      id: 3,
+      title: "V-Drums Championship 2026",
+      type: "upcoming",
+      date: "May - June 2026",
+      description: "Unleash your rhythm, claim the spotlight! To Malaysian drummers, the V-Drums Championship has been the awaited contest of the year with great prizes to be won!",
+      poster: vdrumsImage,
+      regLink: "https://rolandap.com/2026/01/30/v-drums-championship-2026/"
+    }
+  ];
+
+  const galleryCategories = [
+    "Teachers & Students",
+    "Church Lessons",
+    "Competitions",
+    "Concerts (2025)",
+    "Our Students",
+    "Kajang Studio Space"
+  ];
+
+  const galleryItems = [
+    { id: 1, category: "Teachers & Students", alt: "Gallery Image", src: null },
+    { id: 2, category: "Teachers & Students", alt: "Gallery Image", src: null },
+    { id: 3, category: "Church Lessons", alt: "Gallery Image", src: null },
+    { id: 4, category: "Church Lessons", alt: "Gallery Image", src: null },
+    { id: 5, category: "Competitions", alt: "Gallery Image", src: null },
+    { id: 6, category: "Competitions", alt: "Gallery Image", src: null },
+    { id: 7, category: "Concerts (2025)", alt: "Gallery Image", src: null },
+    { id: 8, category: "Concerts (2025)", alt: "Gallery Image", src: null },
+    { id: 9, category: "Our Students", alt: "Gallery Image", src: null },
+    { id: 10, category: "Our Students", alt: "Gallery Image", src: null },
+    { id: 11, category: "Kajang Studio Space", alt: "Gallery Image", src: null },
+    { id: 12, category: "Kajang Studio Space", alt: "Gallery Image", src: null }
+  ];
+
+  // Filtering dynamic grid based on category state
+  const filteredGalleryItems = galleryItems.filter(item => item.category === activeCategory);
+
+  const displayedItems = filteredGalleryItems.slice(0, visibleCount);
+
+  return (
+    <div className="w-full bg-white text-jd-black">
+      {/* HERO HEADER */}
+      <section className="pt-32 pb-16 bg-white relative overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[300px] bg-jd-burgundy/5 blur-[120px] rounded-full pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
+          <h1 className="text-5xl md:text-7xl font-serif mb-6 text-jd-black leading-tight">
+            Student <span className="text-jd-burgundy italic">Life</span>
+          </h1>
+          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            See what our students are up to! From cool events to fun classroom moments, here's a peek into life at our academy.
+          </p>
+        </div>
+      </section>
+
+      {/* EVENTS BOARD SECTION */}
+      <section className="py-24 bg-jd-burgundy text-white border-t border-red-900/10">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="mb-16 text-center">
+            <h2 className="text-3xl md:text-4xl font-serif text-white">
+              Concerts & <span className="italic text-white/90">Events</span>
+            </h2>
+            <p className="text-white/90 max-w-2xl mx-auto mt-4 text-sm md:text-base leading-relaxed">
+              Mark your calendar! Here is what's happening soon. Come hang out, jam, and support our amazing students.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {events.map((event) => (
+              <div
+                key={event.id}
+                className="bg-white border border-white/10 shadow-sm rounded-3xl overflow-hidden flex flex-col md:flex-row hover:shadow-md transition-shadow duration-300 text-jd-black"
+              >
+                {/* Visual Poster Area */}
+                <div className="w-full md:w-2/5 h-80 md:h-auto bg-gray-50 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-100 flex-shrink-0 relative overflow-hidden">
+                  {event.poster ? (
+                    <img
+                      src={event.poster}
+                      alt={event.title}
+                      className="w-full h-full object-contain bg-gray-50"
+                    />
+                  ) : (
+                    <div className="text-center p-6">
+                      <div className="w-16 h-16 rounded-full bg-jd-burgundy/10 text-jd-burgundy flex items-center justify-center mx-auto mb-3">
+                        {event.type === 'current' ? <Music size={28} className="animate-pulse" /> : <Calendar size={28} />}
+                      </div>
+                      <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+                        {event.type === 'current' ? 'Happening Now' : 'Event Poster'}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Details Area */}
+                <div className="p-8 flex flex-col justify-between flex-grow">
+                  <div>
+                    <div className="mb-3.5">
+                      <span className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border inline-block mb-2 ${event.type === 'current'
+                        ? 'bg-red-50 text-jd-burgundy border-red-100'
+                        : 'bg-emerald-50 text-emerald-700 border-emerald-100'
+                        }`}>
+                        {event.type}
+                      </span>
+                      <span className="text-xs font-bold text-jd-burgundy tracking-wider uppercase block">
+                        {event.date}
+                      </span>
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-serif text-jd-black mb-3">
+                      {event.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 leading-relaxed mb-6">
+                      {event.description}
+                    </p>
+                  </div>
+
+                  {/* Conditional Action Button */}
+                  <div>
+                    <a
+                      href={event.regLink || "#"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-jd-burgundy text-white text-sm font-bold hover:bg-red-900 transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
+                    >
+                      {event.type === 'current' ? 'Join Us Now' : 'Register Now'} <ArrowRight size={16} />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* PHOTO GALLERY FILTER BAR & DYNAMIC IMAGE GRID */}
+      <section className="py-24 bg-white border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="mb-16 text-center">
+            <h2 className="text-3xl md:text-4xl font-serif text-jd-black">
+              Moments of <span className="italic text-jd-burgundy">Inspiration</span>
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto mt-4 text-sm md:text-base leading-relaxed">
+              Flip through our favorite moments! Take a look at our classes, stage performances, and the overall vibe at our Kajang studio.
+            </p>
+          </div>
+
+          {/* DYNAMIC RESPONSIVE FILTER BAR */}
+          {/* Mobile dropdown selector */}
+          <div className="block md:hidden mb-8">
+            <label htmlFor="category-select" className="sr-only">Select Category</label>
+            <select
+              id="category-select"
+              value={activeCategory}
+              onChange={(e) => handleCategoryChange(e.target.value)}
+              className="w-full bg-white border border-gray-200 text-jd-black rounded-2xl px-4 py-3.5 text-sm font-semibold shadow-sm focus:outline-none focus:ring-2 focus:ring-jd-burgundy cursor-pointer"
+            >
+              {galleryCategories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Desktop/Tablet Horizontal layout */}
+          <div
+            className="hidden md:flex items-center justify-center flex-wrap gap-2.5 pb-6 mb-12 border-b border-gray-200/60"
+          >
+            {galleryCategories.map((category) => {
+              const isActive = activeCategory === category;
+              return (
+                <button
+                  key={category}
+                  onClick={() => handleCategoryChange(category)}
+                  className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 ${isActive
+                    ? 'bg-jd-burgundy text-white border border-jd-burgundy shadow-sm'
+                    : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 shadow-[0_1px_2px_rgba(0,0,0,0.02)]'
+                    }`}
+                >
+                  {category}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* DYNAMIC IMAGE GRID */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {displayedItems.map((item) => (
+              <div
+                key={item.id}
+                className="group relative bg-white border border-gray-200 shadow-sm rounded-3xl overflow-hidden hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full"
+              >
+                {/* Visual Area */}
+                <div className="relative aspect-video bg-gray-50 flex items-center justify-center overflow-hidden border-b border-gray-100 flex-shrink-0">
+                  {item.src ? (
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-b from-gray-50 to-gray-100/50 relative">
+                      <div className="w-14 h-14 rounded-full bg-jd-burgundy/5 text-jd-burgundy flex items-center justify-center mb-3">
+                        <Image size={28} className="opacity-80" />
+                      </div>
+                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                        Moment Capture
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Card Tag outside the image */}
+                <div className="py-4 flex items-center justify-center bg-white border-t border-gray-50">
+                  <span className="text-xs font-bold text-jd-black tracking-widest uppercase text-center block">
+                    {item.category}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Empty Grid State (Fallback) */}
+          {filteredGalleryItems.length === 0 && (
+            <div className="text-center py-20 bg-white border border-gray-100 rounded-3xl p-8">
+              <div className="w-16 h-16 rounded-full bg-gray-50 text-gray-300 flex items-center justify-center mx-auto mb-4">
+                <Image size={32} />
+              </div>
+              <h3 className="text-lg font-bold text-jd-black mb-1">No Moments Found</h3>
+              <p className="text-sm text-gray-500">
+                Check back soon! We are actively adding memories to the "{activeCategory}" library.
+              </p>
+            </div>
+          )}
+
+          {/* LAZY LOAD "VIEW MORE" BUTTON */}
+          {visibleCount < filteredGalleryItems.length && (
+            <div className="mt-16 text-center">
+              <button
+                onClick={() => setVisibleCount(prev => prev + getRowSize())}
+                className="inline-flex items-center justify-center px-10 py-3.5 rounded-full bg-white border border-gray-200 text-jd-black text-sm font-bold hover:bg-gray-50 transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
+              >
+                View More Media
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* FINAL PAGE ACTION CTA */}
+      <section className="py-24 bg-jd-burgundy text-white border-t border-red-900/10">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-serif text-white mb-6">
+            Become Part of <span className="text-white/95 italic">Our Success Stories</span>
+          </h2>
+          <p className="text-base md:text-lg text-white/90 mb-10 leading-relaxed max-w-2xl mx-auto">
+            Want to make some music and cool memories with us? Sign up for a class or drop us a message to get started!
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="https://app.aoneschools.com/public/school/U2FsdGVkX199XQhZvkiBsMOriWUIFAJsDxv0wNjtOi1dpgzrFQSLN%252FnTCm9fokJr/online-student-registration"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white text-jd-burgundy font-bold hover:bg-gray-50 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+            >
+              Register Now <ArrowRight size={18} />
+            </a>
+            <Link
+              to="/contact"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white/10 border border-white/20 text-white font-bold hover:bg-white/20 transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
+            >
+              Contact Us <ArrowRight size={18} />
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
