@@ -52,7 +52,7 @@ const videoTestimonials = [
 ];
 
 const TestimonialVideoCard = ({ src, name, instrument, tenure }) => (
-  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full">
+  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full w-full max-w-[300px] mx-auto">
     <div className="relative aspect-[9/16] bg-black">
       <iframe
         src={src}
