@@ -186,7 +186,9 @@ const About = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-12 text-center">
             <h2 className="text-xs font-bold tracking-widest text-jd-burgundy uppercase mb-2">Leadership</h2>
-            <h2 className="text-3xl md:text-4xl font-serif text-jd-black">Our Core Team</h2>
+            <h2 className="text-3xl md:text-4xl font-serif text-jd-black">
+              Our <span className="text-jd-burgundy italic">Core Team</span>
+            </h2>
           </div>
 
           {/* Desktop View: Vertical Stack */}

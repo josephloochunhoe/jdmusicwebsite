@@ -295,7 +295,7 @@ const StudentLife = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-16 text-center">
             <h2 className="text-3xl md:text-4xl font-serif text-jd-black">
-              Moments of Inspiration
+              Moments of <span className="text-jd-burgundy italic">Inspiration</span>
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto mt-4 text-sm md:text-base leading-relaxed">
               Flip through our favorite moments! Take a look at our classes, stage performances, and the overall vibe at our Kajang studio.

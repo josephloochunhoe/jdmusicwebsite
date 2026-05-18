@@ -260,7 +260,9 @@ const PricingFaq = () => {
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-xs font-bold tracking-widest text-jd-burgundy uppercase mb-3">Have Questions?</h2>
-            <h3 className="text-4xl md:text-5xl font-serif text-jd-black">Frequently Asked Questions</h3>
+            <h3 className="text-4xl md:text-5xl font-serif text-jd-black">
+              Frequently Asked <span className="text-jd-burgundy italic">Questions</span>
+            </h3>
           </div>
 
           <div className="space-y-3">

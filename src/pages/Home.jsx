@@ -107,7 +107,7 @@ const Home = () => {
               Real Journeys & Progress
             </h2>
             <h2 className="text-4xl md:text-5xl font-serif text-jd-black">
-              See Our Students in Action
+              See Our Students <span className="text-jd-burgundy italic">in Action</span>
             </h2>
           </div>
 
@@ -184,9 +184,11 @@ const Home = () => {
       {/* Contact Us Section */}
       <section className="py-24 bg-white border-t border-gray-200">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-serif italic text-jd-black mb-6">Ready to play?</h2>
+          <h2 className="text-4xl md:text-5xl font-serif text-jd-black mb-6">
+            Ready to <span className="text-jd-burgundy italic">Play?</span>
+          </h2>
           <p className="text-lg text-gray-600 mb-10 leading-relaxed">
-            Connect directly with Jeevan at 019-2139210 or email us at jeevanmarcus@gmail.com to learn more about lesson schedules, locations, and open trial slots.
+            Connect directly with Jeevan to learn more about lesson schedules, locations, and open trial slots.
           </p>
           <Link to="/contact" className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-jd-burgundy text-white font-bold hover:bg-red-900 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
             Contact Us Now <ArrowRight size={18} />
