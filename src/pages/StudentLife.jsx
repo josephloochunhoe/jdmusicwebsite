@@ -6,12 +6,75 @@ import vdrumsImage from '../assets/events/vdrums.jpg';
 import guitarbassImage from '../assets/events/guitarbass.png';
 import { galleryCategories, galleryItems } from '../data/galleryData';
 
+const videoTestimonials = [
+  {
+    id: 1,
+    src: "https://drive.google.com/file/d/1d-xArepU9MD-ACsdrgy5-YL83rSRr7la/preview",
+    name: "Hareesh",
+    instrument: "Guitar",
+    tenure: "⏱ 5 months with us"
+  },
+  {
+    id: 2,
+    src: "https://drive.google.com/file/d/1kLiZQxkLiU5O64jjdX-JxPA61qAo7a5W/preview",
+    name: "Andrea",
+    instrument: "Piano",
+    tenure: "⏱ 5 months with us"
+  },
+  {
+    id: 3,
+    src: "https://drive.google.com/file/d/1aJEFAKeUM8KSZU2scc3-IwXH-yYE_n54/preview",
+    name: "Alyssa",
+    instrument: "Guitar",
+    tenure: "⏱ 1 year with us"
+  }
+];
+
+const TestimonialVideoCard = ({ src, name, instrument, tenure }) => (
+  <div className="bg-white border border-gray-200 shadow-sm rounded-3xl overflow-hidden hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full">
+    <div className="relative pt-[56.25%] bg-black">
+      <iframe
+        src={src}
+        title="Video Testimonial"
+        allow="autoplay"
+        allowFullScreen
+        className="absolute inset-0 w-full h-full border-0"
+      />
+    </div>
+    <div className="p-6 border-t border-gray-100 flex-grow flex flex-col justify-between">
+      <div>
+        <p className="font-bold text-jd-black text-lg mb-1">{name}</p>
+        <p className="text-jd-burgundy text-xs font-semibold uppercase tracking-widest mb-4">{instrument}</p>
+      </div>
+      <div>
+        <span className="text-xs text-gray-600 bg-gray-50 rounded-full px-3 py-1 font-semibold border border-gray-100">{tenure}</span>
+      </div>
+    </div>
+  </div>
+);
+
 // Component structured cleanly for Student Life & Gallery Features
 const StudentLife = () => {
   // 1. COMPONENT STATE & SCREEN DYNAMICS
   const [activeCategory, setActiveCategory] = useState(galleryCategories[0]);
   const [visibleCount, setVisibleCount] = useState(6);
   const [lightboxImage, setLightboxImage] = useState(null);
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  const isPrevDisabled = currentTestimonial === 0;
+  const isNextDisabled = currentTestimonial === videoTestimonials.length - 1;
+
+  const nextTestimonial = () => {
+    if (!isNextDisabled) {
+      setCurrentTestimonial((prev) => prev + 1);
+    }
+  };
+
+  const prevTestimonial = () => {
+    if (!isPrevDisabled) {
+      setCurrentTestimonial((prev) => prev - 1);
+    }
+  };
 
   // Filtering dynamic grid based on category state
   const filteredGalleryItems = galleryItems.filter(item => item.category === activeCategory);
@@ -321,67 +384,68 @@ const StudentLife = () => {
       </section>
 
       {/* STUDENT TESTIMONIALS SECTION */}
-      <section className="py-24 bg-gray-50/60 border-t border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-24 bg-gray-50/60 border-t border-b border-gray-100 relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-jd-burgundy/10 blur-[120px] rounded-full pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <span className="text-[10px] font-bold text-jd-burgundy uppercase tracking-widest bg-red-50 px-4 py-1.5 rounded-full border border-red-100">
-              Community Voices
+              Real Journeys & Progress
             </span>
             <h2 className="text-3xl md:text-4xl font-serif text-jd-black mt-4 mb-4">
-              Hear from Our <span className="text-jd-burgundy italic">Community</span>
+              See Our Students <span className="text-jd-burgundy italic">in Action</span>
             </h2>
             <p className="text-sm text-gray-500 leading-relaxed">
-              Real stories and feedback from the students and parents who make our Kajang studio feel like home.
+              Real video stories and feedback from the students and parents who make our Kajang studio feel like home.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Testimonial 1 */}
-            <div className="group bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
-              <div>
-                <div className="w-10 h-10 rounded-full bg-jd-burgundy/5 text-jd-burgundy flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Quote size={18} fill="currentColor" className="opacity-80" />
-                </div>
-                <p className="text-sm md:text-base text-gray-600 italic leading-relaxed mb-6">
-                  "Learning piano here has been an incredible journey. The teachers don't just teach notes; they teach you how to feel and love the music."
-                </p>
-              </div>
-              <div className="border-t border-gray-100 pt-6 mt-2">
-                <h4 className="text-sm font-bold text-jd-black">Sarah Lim</h4>
-                <p className="text-xs font-semibold text-jd-burgundy mt-0.5">Adult Piano Student</p>
-              </div>
-            </div>
+          {/* Desktop View: 3 Video Iframes */}
+          <div className="hidden md:grid md:grid-cols-3 gap-8">
+            {videoTestimonials.map((t) => (
+              <TestimonialVideoCard
+                key={t.id}
+                src={t.src}
+                name={t.name}
+                instrument={t.instrument}
+                tenure={t.tenure}
+              />
+            ))}
+          </div>
 
-            {/* Testimonial 2 */}
-            <div className="group bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
-              <div>
-                <div className="w-10 h-10 rounded-full bg-jd-burgundy/5 text-jd-burgundy flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Quote size={18} fill="currentColor" className="opacity-80" />
-                </div>
-                <p className="text-sm md:text-base text-gray-600 italic leading-relaxed mb-6">
-                  "Our son was shy about playing in public. After joining the JD. Music Concerts, his confidence skyrocketed! We love the supportive studio culture."
-                </p>
-              </div>
-              <div className="border-t border-gray-100 pt-6 mt-2">
-                <h4 className="text-sm font-bold text-jd-black">Mr. & Mrs. Tan</h4>
-                <p className="text-xs font-semibold text-jd-burgundy mt-0.5">Parents of Lucas (Age 8)</p>
-              </div>
+          {/* Mobile View: Carousel */}
+          <div className="block md:hidden">
+            <div className="mb-8">
+              <TestimonialVideoCard
+                key={videoTestimonials[currentTestimonial].id}
+                src={videoTestimonials[currentTestimonial].src}
+                name={videoTestimonials[currentTestimonial].name}
+                instrument={videoTestimonials[currentTestimonial].instrument}
+                tenure={videoTestimonials[currentTestimonial].tenure}
+              />
             </div>
-
-            {/* Testimonial 3 */}
-            <div className="group bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
-              <div>
-                <div className="w-10 h-10 rounded-full bg-jd-burgundy/5 text-jd-burgundy flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Quote size={18} fill="currentColor" className="opacity-80" />
-                </div>
-                <p className="text-sm md:text-base text-gray-600 italic leading-relaxed mb-6">
-                  "The stage opportunities at JD. Music are unmatched. Performing at live concerts pushed my skills to the next level and helped me conquer stage fright."
-                </p>
-              </div>
-              <div className="border-t border-gray-100 pt-6 mt-2">
-                <h4 className="text-sm font-bold text-jd-black">Ryan Marcus</h4>
-                <p className="text-xs font-semibold text-jd-burgundy mt-0.5">Violin Student (3 Years)</p>
-              </div>
+            <div className="flex items-center justify-center gap-6">
+              <button
+                onClick={prevTestimonial}
+                disabled={isPrevDisabled}
+                className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${isPrevDisabled
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200/40'
+                  : 'bg-white border border-gray-200 text-jd-black hover:bg-gray-50 shadow-sm'
+                  }`}
+                aria-label="Previous Testimonial"
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button
+                onClick={nextTestimonial}
+                disabled={isNextDisabled}
+                className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${isNextDisabled
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200/40'
+                  : 'bg-white border border-gray-200 text-jd-black hover:bg-gray-50 shadow-sm'
+                  }`}
+                aria-label="Next Testimonial"
+              >
+                <ChevronRight size={24} />
+              </button>
             </div>
           </div>
         </div>
