@@ -401,14 +401,14 @@ const StudentLife = () => {
       </section>
 
       {/* STUDENT TESTIMONIALS SECTION */}
-      <section className="py-24 bg-gray-50/60 border-t border-b border-gray-100 relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-jd-burgundy/20 blur-[120px] rounded-full pointer-events-none"></div>
+      <section className="py-24 bg-jd-burgundy text-white relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white/5 blur-[120px] rounded-full pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif text-jd-black mb-4">
-              See Our Students <span className="text-jd-burgundy italic">in Action</span>
+            <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">
+              See Our Students <span className="text-red-200 italic">in Action</span>
             </h2>
-            <p className="text-sm text-gray-500 leading-relaxed">
+            <p className="text-sm text-white/80 leading-relaxed">
               Real video stories from the students who make our studio feel like home.
             </p>
           </div>
@@ -442,8 +442,8 @@ const StudentLife = () => {
                 onClick={prevTestimonial}
                 disabled={isPrevDisabled}
                 className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${isPrevDisabled
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200/40'
-                  : 'bg-white border border-gray-200 text-jd-black hover:bg-gray-50 shadow-sm'
+                  ? 'bg-white/10 text-white/30 cursor-not-allowed border border-white/10'
+                  : 'bg-white border border-transparent text-jd-black hover:bg-gray-100 shadow-sm'
                   }`}
                 aria-label="Previous Testimonial"
               >
@@ -453,8 +453,8 @@ const StudentLife = () => {
                 onClick={nextTestimonial}
                 disabled={isNextDisabled}
                 className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${isNextDisabled
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200/40'
-                  : 'bg-white border border-gray-200 text-jd-black hover:bg-gray-50 shadow-sm'
+                  ? 'bg-white/10 text-white/30 cursor-not-allowed border border-white/10'
+                  : 'bg-white border border-transparent text-jd-black hover:bg-gray-100 shadow-sm'
                   }`}
                 aria-label="Next Testimonial"
               >
@@ -466,12 +466,12 @@ const StudentLife = () => {
       </section>
 
       {/* FINAL PAGE ACTION CTA */}
-      <section className="py-24 bg-jd-burgundy text-white border-t border-red-900/10">
+      <section className="py-24 bg-white text-jd-black border-t border-gray-100">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-serif text-white mb-6">
-            Become Part of <span className="text-white/95 italic">Our Success Stories</span>
+          <h2 className="text-3xl md:text-4xl font-serif text-jd-black mb-6">
+            Become Part of <span className="text-jd-burgundy italic">Our Success Stories</span>
           </h2>
-          <p className="text-base md:text-lg text-white/90 mb-10 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-gray-600 mb-10 leading-relaxed max-w-2xl mx-auto">
             Want to make some music and cool memories with us? Sign up for a class or drop us a message to get started!
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -479,13 +479,13 @@ const StudentLife = () => {
               href="https://app.aoneschools.com/public/school/U2FsdGVkX199XQhZvkiBsMOriWUIFAJsDxv0wNjtOi1dpgzrFQSLN%252FnTCm9fokJr/online-student-registration"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white text-jd-burgundy font-bold hover:bg-gray-50 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-jd-burgundy text-white font-bold hover:bg-red-900 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
             >
               Register Now <ArrowRight size={18} />
             </a>
             <Link
               to="/contact"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white/10 border border-white/20 text-white font-bold hover:bg-white/20 transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white border border-gray-200 text-jd-black font-bold hover:bg-gray-50 transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
             >
               Contact Us <ArrowRight size={18} />
             </Link>
