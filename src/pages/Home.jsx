@@ -50,7 +50,7 @@ const Home = () => {
         const child = container.children[0];
         if (child && child.offsetWidth > 0) {
           const itemWidth = child.offsetWidth + 24;
-          container.scrollLeft = testimonials.length * itemWidth;
+          container.scrollLeft = testimonials.length * 2 * itemWidth;
         } else {
           requestAnimationFrame(initScroll);
         }
@@ -72,10 +72,10 @@ const Home = () => {
     const index = (rawIndex % testimonials.length + testimonials.length) % testimonials.length;
     setActiveTestimonialIndex(index);
 
-    if (scrollLeft < itemWidth) {
-      container.scrollLeft = scrollLeft + (testimonials.length * itemWidth);
-    } else if (scrollLeft > (testimonials.length * 2 - 1) * itemWidth) {
-      container.scrollLeft = scrollLeft - (testimonials.length * itemWidth);
+    if (scrollLeft < testimonials.length * itemWidth) {
+      container.scrollLeft = scrollLeft + (testimonials.length * 2 * itemWidth);
+    } else if (scrollLeft > testimonials.length * 3 * itemWidth) {
+      container.scrollLeft = scrollLeft - (testimonials.length * 2 * itemWidth);
     }
   };
 
@@ -159,7 +159,7 @@ const Home = () => {
               onScroll={handleTestimonialScroll}
               className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"
             >
-              {[...testimonials, ...testimonials, ...testimonials].map((t, i) => (
+              {[...testimonials, ...testimonials, ...testimonials, ...testimonials, ...testimonials].map((t, i) => (
                 <div
                   key={i}
                   className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center"

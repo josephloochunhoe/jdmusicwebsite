@@ -70,7 +70,7 @@ const About = () => {
         const child = container.children[0];
         if (child && child.offsetWidth > 0) {
           const itemWidth = child.offsetWidth + 24;
-          container.scrollLeft = coreMembers.length * itemWidth;
+          container.scrollLeft = coreMembers.length * 2 * itemWidth;
         } else {
           requestAnimationFrame(initScroll);
         }
@@ -92,10 +92,10 @@ const About = () => {
     const index = (rawIndex % coreMembers.length + coreMembers.length) % coreMembers.length;
     setActiveCoreIndex(index);
 
-    if (scrollLeft < itemWidth) {
-      container.scrollLeft = scrollLeft + (coreMembers.length * itemWidth);
-    } else if (scrollLeft > (coreMembers.length * 2 - 1) * itemWidth) {
-      container.scrollLeft = scrollLeft - (coreMembers.length * itemWidth);
+    if (scrollLeft < coreMembers.length * itemWidth) {
+      container.scrollLeft = scrollLeft + (coreMembers.length * 2 * itemWidth);
+    } else if (scrollLeft > coreMembers.length * 3 * itemWidth) {
+      container.scrollLeft = scrollLeft - (coreMembers.length * 2 * itemWidth);
     }
   };
 
@@ -109,7 +109,7 @@ const About = () => {
         const child = container.children[0];
         if (child && child.offsetWidth > 0) {
           const itemWidth = child.offsetWidth + 24;
-          container.scrollLeft = teachers.length * itemWidth;
+          container.scrollLeft = teachers.length * 2 * itemWidth;
         } else {
           requestAnimationFrame(initScroll);
         }
@@ -131,10 +131,10 @@ const About = () => {
     const index = (rawIndex % teachers.length + teachers.length) % teachers.length;
     setActiveTeacherIndex(index);
 
-    if (scrollLeft < itemWidth) {
-      container.scrollLeft = scrollLeft + (teachers.length * itemWidth);
-    } else if (scrollLeft > (teachers.length * 2 - 1) * itemWidth) {
-      container.scrollLeft = scrollLeft - (teachers.length * itemWidth);
+    if (scrollLeft < teachers.length * itemWidth) {
+      container.scrollLeft = scrollLeft + (teachers.length * 2 * itemWidth);
+    } else if (scrollLeft > teachers.length * 3 * itemWidth) {
+      container.scrollLeft = scrollLeft - (teachers.length * 2 * itemWidth);
     }
   };
 
@@ -266,7 +266,7 @@ const About = () => {
               onScroll={handleCoreScroll}
               className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"
             >
-              {[...coreMembers, ...coreMembers, ...coreMembers].map((member, i) => (
+              {[...coreMembers, ...coreMembers, ...coreMembers, ...coreMembers, ...coreMembers].map((member, i) => (
                 <div
                   key={i}
                   className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center"
@@ -310,7 +310,7 @@ const About = () => {
               onScroll={handleTeacherScroll}
               className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"
             >
-              {[...teachers, ...teachers, ...teachers].map((teacher, i) => (
+              {[...teachers, ...teachers, ...teachers, ...teachers, ...teachers].map((teacher, i) => (
                 <div
                   key={i}
                   className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center"

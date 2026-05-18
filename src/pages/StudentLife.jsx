@@ -106,7 +106,7 @@ const StudentLife = () => {
         const child = container.children[0];
         if (child && child.offsetWidth > 0) {
           const itemWidth = child.offsetWidth + 24;
-          container.scrollLeft = videoTestimonials.length * itemWidth;
+          container.scrollLeft = videoTestimonials.length * 2 * itemWidth;
         } else {
           requestAnimationFrame(initScroll);
         }
@@ -128,10 +128,10 @@ const StudentLife = () => {
     const index = (rawIndex % videoTestimonials.length + videoTestimonials.length) % videoTestimonials.length;
     setActiveTestimonialIndex(index);
 
-    if (scrollLeft < itemWidth) {
-      container.scrollLeft = scrollLeft + (videoTestimonials.length * itemWidth);
-    } else if (scrollLeft > (videoTestimonials.length * 2 - 1) * itemWidth) {
-      container.scrollLeft = scrollLeft - (videoTestimonials.length * itemWidth);
+    if (scrollLeft < videoTestimonials.length * itemWidth) {
+      container.scrollLeft = scrollLeft + (videoTestimonials.length * 2 * itemWidth);
+    } else if (scrollLeft > videoTestimonials.length * 3 * itemWidth) {
+      container.scrollLeft = scrollLeft - (videoTestimonials.length * 2 * itemWidth);
     }
   };
 
@@ -481,7 +481,7 @@ const StudentLife = () => {
               onScroll={handleTestimonialScroll}
               className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"
             >
-              {[...videoTestimonials, ...videoTestimonials, ...videoTestimonials].map((t, i) => (
+              {[...videoTestimonials, ...videoTestimonials, ...videoTestimonials, ...videoTestimonials, ...videoTestimonials].map((t, i) => (
                 <div
                   key={i}
                   className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center"
