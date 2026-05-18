@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Music, Image, ArrowRight, ChevronRight, ChevronLeft, X } from 'lucide-react';
+import { Calendar, Music, Image, ArrowRight, ChevronRight, ChevronLeft, X, Quote } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import rockfestImage from '../assets/events/rockfest.jpeg';
 import vdrumsImage from '../assets/events/vdrums.jpg';
@@ -317,6 +317,73 @@ const StudentLife = () => {
               </button>
             </div>
           )}
+        </div>
+      </section>
+
+      {/* STUDENT TESTIMONIALS SECTION */}
+      <section className="py-24 bg-gray-50/60 border-t border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <span className="text-[10px] font-bold text-jd-burgundy uppercase tracking-widest bg-red-50 px-4 py-1.5 rounded-full border border-red-100">
+              Community Voices
+            </span>
+            <h2 className="text-3xl md:text-4xl font-serif text-jd-black mt-4 mb-4">
+              Hear from Our <span className="text-jd-burgundy italic">Community</span>
+            </h2>
+            <p className="text-sm text-gray-500 leading-relaxed">
+              Real stories and feedback from the students and parents who make our Kajang studio feel like home.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Testimonial 1 */}
+            <div className="group bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-full bg-jd-burgundy/5 text-jd-burgundy flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Quote size={18} fill="currentColor" className="opacity-80" />
+                </div>
+                <p className="text-sm md:text-base text-gray-600 italic leading-relaxed mb-6">
+                  "Learning piano here has been an incredible journey. The teachers don't just teach notes; they teach you how to feel and love the music."
+                </p>
+              </div>
+              <div className="border-t border-gray-100 pt-6 mt-2">
+                <h4 className="text-sm font-bold text-jd-black">Sarah Lim</h4>
+                <p className="text-xs font-semibold text-jd-burgundy mt-0.5">Adult Piano Student</p>
+              </div>
+            </div>
+
+            {/* Testimonial 2 */}
+            <div className="group bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-full bg-jd-burgundy/5 text-jd-burgundy flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Quote size={18} fill="currentColor" className="opacity-80" />
+                </div>
+                <p className="text-sm md:text-base text-gray-600 italic leading-relaxed mb-6">
+                  "Our son was shy about playing in public. After joining the JD. Music Concerts, his confidence skyrocketed! We love the supportive studio culture."
+                </p>
+              </div>
+              <div className="border-t border-gray-100 pt-6 mt-2">
+                <h4 className="text-sm font-bold text-jd-black">Mr. & Mrs. Tan</h4>
+                <p className="text-xs font-semibold text-jd-burgundy mt-0.5">Parents of Lucas (Age 8)</p>
+              </div>
+            </div>
+
+            {/* Testimonial 3 */}
+            <div className="group bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-full bg-jd-burgundy/5 text-jd-burgundy flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Quote size={18} fill="currentColor" className="opacity-80" />
+                </div>
+                <p className="text-sm md:text-base text-gray-600 italic leading-relaxed mb-6">
+                  "The stage opportunities at JD. Music are unmatched. Performing at live concerts pushed my skills to the next level and helped me conquer stage fright."
+                </p>
+              </div>
+              <div className="border-t border-gray-100 pt-6 mt-2">
+                <h4 className="text-sm font-bold text-jd-black">Ryan Marcus</h4>
+                <p className="text-xs font-semibold text-jd-burgundy mt-0.5">Violin Student (3 Years)</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
