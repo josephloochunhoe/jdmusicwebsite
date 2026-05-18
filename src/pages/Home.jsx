@@ -43,23 +43,6 @@ const Home = () => {
   const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0);
   const testimonialScrollRef = useRef(null);
 
-  useEffect(() => {
-    const initScroll = () => {
-      if (testimonialScrollRef.current) {
-        const container = testimonialScrollRef.current;
-        const child = container.children[0];
-        if (child && child.offsetWidth > 0) {
-          const itemWidth = child.offsetWidth + 24;
-          container.scrollLeft = testimonials.length * 2 * itemWidth;
-        } else {
-          requestAnimationFrame(initScroll);
-        }
-      }
-    };
-    const timer = setTimeout(initScroll, 50);
-    return () => clearTimeout(timer);
-  }, []);
-
   const handleTestimonialScroll = (e) => {
     const container = e.currentTarget;
     const child = container.children[0];
@@ -68,15 +51,8 @@ const Home = () => {
     const itemWidth = child.offsetWidth + 24;
     const scrollLeft = container.scrollLeft;
 
-    const rawIndex = Math.round(scrollLeft / itemWidth);
-    const index = (rawIndex % testimonials.length + testimonials.length) % testimonials.length;
-    setActiveTestimonialIndex(index);
-
-    if (scrollLeft < testimonials.length * itemWidth) {
-      container.scrollLeft = scrollLeft + (testimonials.length * 2 * itemWidth);
-    } else if (scrollLeft > testimonials.length * 3 * itemWidth) {
-      container.scrollLeft = scrollLeft - (testimonials.length * 2 * itemWidth);
-    }
+    const index = Math.round(scrollLeft / itemWidth);
+    setActiveTestimonialIndex(Math.min(Math.max(index, 0), testimonials.length - 1));
   };
 
   return (
@@ -159,7 +135,7 @@ const Home = () => {
               onScroll={handleTestimonialScroll}
               className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"
             >
-              {[...testimonials, ...testimonials, ...testimonials, ...testimonials, ...testimonials].map((t, i) => (
+              {testimonials.map((t, i) => (
                 <div
                   key={i}
                   className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center"

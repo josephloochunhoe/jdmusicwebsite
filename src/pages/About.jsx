@@ -63,23 +63,6 @@ const About = () => {
   const [activeCoreIndex, setActiveCoreIndex] = useState(0);
   const coreScrollRef = useRef(null);
 
-  useEffect(() => {
-    const initScroll = () => {
-      if (coreScrollRef.current) {
-        const container = coreScrollRef.current;
-        const child = container.children[0];
-        if (child && child.offsetWidth > 0) {
-          const itemWidth = child.offsetWidth + 24;
-          container.scrollLeft = coreMembers.length * 2 * itemWidth;
-        } else {
-          requestAnimationFrame(initScroll);
-        }
-      }
-    };
-    const timer = setTimeout(initScroll, 50);
-    return () => clearTimeout(timer);
-  }, []);
-
   const handleCoreScroll = (e) => {
     const container = e.currentTarget;
     const child = container.children[0];
@@ -88,36 +71,12 @@ const About = () => {
     const itemWidth = child.offsetWidth + 24;
     const scrollLeft = container.scrollLeft;
 
-    const rawIndex = Math.round(scrollLeft / itemWidth);
-    const index = (rawIndex % coreMembers.length + coreMembers.length) % coreMembers.length;
-    setActiveCoreIndex(index);
-
-    if (scrollLeft < coreMembers.length * itemWidth) {
-      container.scrollLeft = scrollLeft + (coreMembers.length * 2 * itemWidth);
-    } else if (scrollLeft > coreMembers.length * 3 * itemWidth) {
-      container.scrollLeft = scrollLeft - (coreMembers.length * 2 * itemWidth);
-    }
+    const index = Math.round(scrollLeft / itemWidth);
+    setActiveCoreIndex(Math.min(Math.max(index, 0), coreMembers.length - 1));
   };
 
   const [activeTeacherIndex, setActiveTeacherIndex] = useState(0);
   const teacherScrollRef = useRef(null);
-
-  useEffect(() => {
-    const initScroll = () => {
-      if (teacherScrollRef.current) {
-        const container = teacherScrollRef.current;
-        const child = container.children[0];
-        if (child && child.offsetWidth > 0) {
-          const itemWidth = child.offsetWidth + 24;
-          container.scrollLeft = teachers.length * 2 * itemWidth;
-        } else {
-          requestAnimationFrame(initScroll);
-        }
-      }
-    };
-    const timer = setTimeout(initScroll, 50);
-    return () => clearTimeout(timer);
-  }, []);
 
   const handleTeacherScroll = (e) => {
     const container = e.currentTarget;
@@ -127,15 +86,8 @@ const About = () => {
     const itemWidth = child.offsetWidth + 24;
     const scrollLeft = container.scrollLeft;
 
-    const rawIndex = Math.round(scrollLeft / itemWidth);
-    const index = (rawIndex % teachers.length + teachers.length) % teachers.length;
-    setActiveTeacherIndex(index);
-
-    if (scrollLeft < teachers.length * itemWidth) {
-      container.scrollLeft = scrollLeft + (teachers.length * 2 * itemWidth);
-    } else if (scrollLeft > teachers.length * 3 * itemWidth) {
-      container.scrollLeft = scrollLeft - (teachers.length * 2 * itemWidth);
-    }
+    const index = Math.round(scrollLeft / itemWidth);
+    setActiveTeacherIndex(Math.min(Math.max(index, 0), teachers.length - 1));
   };
 
   // Placeholder array structure for Core Members / Founders
@@ -266,7 +218,7 @@ const About = () => {
               onScroll={handleCoreScroll}
               className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"
             >
-              {[...coreMembers, ...coreMembers, ...coreMembers, ...coreMembers, ...coreMembers].map((member, i) => (
+              {coreMembers.map((member, i) => (
                 <div
                   key={i}
                   className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center"
@@ -310,7 +262,7 @@ const About = () => {
               onScroll={handleTeacherScroll}
               className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"
             >
-              {[...teachers, ...teachers, ...teachers, ...teachers, ...teachers].map((teacher, i) => (
+              {teachers.map((teacher, i) => (
                 <div
                   key={i}
                   className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center"

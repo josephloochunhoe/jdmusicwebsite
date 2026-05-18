@@ -99,23 +99,6 @@ const StudentLife = () => {
   const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0);
   const testimonialScrollRef = useRef(null);
 
-  useEffect(() => {
-    const initScroll = () => {
-      if (testimonialScrollRef.current) {
-        const container = testimonialScrollRef.current;
-        const child = container.children[0];
-        if (child && child.offsetWidth > 0) {
-          const itemWidth = child.offsetWidth + 24;
-          container.scrollLeft = videoTestimonials.length * 2 * itemWidth;
-        } else {
-          requestAnimationFrame(initScroll);
-        }
-      }
-    };
-    const timer = setTimeout(initScroll, 50);
-    return () => clearTimeout(timer);
-  }, []);
-
   const handleTestimonialScroll = (e) => {
     const container = e.currentTarget;
     const child = container.children[0];
@@ -124,15 +107,8 @@ const StudentLife = () => {
     const itemWidth = child.offsetWidth + 24;
     const scrollLeft = container.scrollLeft;
 
-    const rawIndex = Math.round(scrollLeft / itemWidth);
-    const index = (rawIndex % videoTestimonials.length + videoTestimonials.length) % videoTestimonials.length;
-    setActiveTestimonialIndex(index);
-
-    if (scrollLeft < videoTestimonials.length * itemWidth) {
-      container.scrollLeft = scrollLeft + (videoTestimonials.length * 2 * itemWidth);
-    } else if (scrollLeft > videoTestimonials.length * 3 * itemWidth) {
-      container.scrollLeft = scrollLeft - (videoTestimonials.length * 2 * itemWidth);
-    }
+    const index = Math.round(scrollLeft / itemWidth);
+    setActiveTestimonialIndex(Math.min(Math.max(index, 0), videoTestimonials.length - 1));
   };
 
   // Filtering dynamic grid based on category state
@@ -474,14 +450,14 @@ const StudentLife = () => {
             ))}
           </div>
 
-          {/* Mobile View: Infinite Swipeable Track */}
+          {/* Mobile View: Swipeable Track */}
           <div className="block md:hidden -mx-6 px-6">
             <div 
               ref={testimonialScrollRef}
               onScroll={handleTestimonialScroll}
               className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"
             >
-              {[...videoTestimonials, ...videoTestimonials, ...videoTestimonials, ...videoTestimonials, ...videoTestimonials].map((t, i) => (
+              {videoTestimonials.map((t, i) => (
                 <div
                   key={i}
                   className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center"
