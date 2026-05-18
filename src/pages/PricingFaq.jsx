@@ -31,12 +31,25 @@ const faqItems = [
   {
     id: 6,
     question: "What types of lessons do you provide?",
-    answer: "We offer fun, performance-based lessons tailored to your style and pace in: Guitar (Acoustic & Electric), Drums & Cajon, Vocals, Bass, and Ukulele. Perfect for total beginners or those looking to level up."
+    intro: "We offer fun, performance-based lessons tailored to your style and pace. Perfect for total beginners or those looking to level up:",
+    answer: [
+      "Guitar (Acoustic & Electric)",
+      "Drums & Cajon",
+      "Vocals",
+      "Bass",
+      "Ukulele"
+    ]
   },
   {
     id: 7,
     question: "What packages do you offer?",
-    answer: "We offer tailored paths including Individual & Group Lessons (Kajang, Sri Hartamas, or Online), School & Kindergarten Programs (weekly enrichment), Church Music Lessons (worship team setups), and interactive Masterclass Workshops."
+    intro: "We offer tailored paths including:",
+    answer: [
+      "Individual & Group Lessons (Kajang, Sri Hartamas, or Online)",
+      "School & Kindergarten Programs (weekly enrichment)",
+      "Church Music Lessons (worship team setups)",
+      "Interactive Masterclass Workshops"
+    ]
   },
   {
     id: 8,
@@ -273,7 +286,23 @@ const PricingFaq = () => {
                 {openId === item.id && (
                   <div className="px-6 pb-6">
                     <div className="border-t border-gray-100 pt-4">
-                      <p className="text-gray-600 leading-relaxed text-sm md:text-base">{item.answer}</p>
+                      {Array.isArray(item.answer) ? (
+                        <div>
+                          {item.intro && (
+                            <p className="text-gray-600 leading-relaxed text-sm md:text-base mb-3">{item.intro}</p>
+                          )}
+                          <ul className="space-y-2">
+                            {item.answer.map((point, i) => (
+                              <li key={i} className="flex items-start gap-3">
+                                <div className="w-1.5 h-1.5 rounded-full bg-jd-burgundy mt-2 flex-shrink-0"></div>
+                                <span className="text-gray-600 text-sm md:text-base">{point}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ) : (
+                        <p className="text-gray-600 leading-relaxed text-sm md:text-base">{item.answer}</p>
+                      )}
                     </div>
                   </div>
                 )}
