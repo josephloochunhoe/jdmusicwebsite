@@ -107,7 +107,7 @@ const Home = () => {
               Real Journeys & Progress
             </span>
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">
-              See Our Students <span className="text-amber-100 italic">in Action</span>
+              See Our Students in Action
             </h2>
             <p className="text-sm text-red-100/80 leading-relaxed">
               Real video stories from the students who make our studio feel like home.
