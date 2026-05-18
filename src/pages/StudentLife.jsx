@@ -56,7 +56,7 @@ const StudentLife = () => {
   const getRowSize = () => {
     if (typeof window === 'undefined') return 6;
     const width = window.innerWidth;
-    if (width < 640) return 2;  // Mobile (1 col) -> 2 rows = 2 items
+    if (width < 640) return 3;  // Mobile (1 col) -> 3 items initially / load increments
     if (width < 1024) return 4; // Tablet (2 col) -> 2 rows = 4 items
     return 6;                   // Desktop (3 col) -> 2 rows = 6 items
   };
