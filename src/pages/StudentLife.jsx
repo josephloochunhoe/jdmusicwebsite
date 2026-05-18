@@ -80,8 +80,7 @@ const StudentLife = () => {
     "Church Lessons",
     "Competitions",
     "Concerts (2025)",
-    "Our Students",
-    "Kajang Studio Space"
+    "Our Students"
   ];
 
   const galleryItems = [
@@ -94,9 +93,7 @@ const StudentLife = () => {
     { id: 7, category: "Concerts (2025)", alt: "Gallery Image", src: null },
     { id: 8, category: "Concerts (2025)", alt: "Gallery Image", src: null },
     { id: 9, category: "Our Students", alt: "Gallery Image", src: null },
-    { id: 10, category: "Our Students", alt: "Gallery Image", src: null },
-    { id: 11, category: "Kajang Studio Space", alt: "Gallery Image", src: null },
-    { id: 12, category: "Kajang Studio Space", alt: "Gallery Image", src: null }
+    { id: 10, category: "Our Students", alt: "Gallery Image", src: null }
   ];
 
   // Filtering dynamic grid based on category state
@@ -253,10 +250,10 @@ const StudentLife = () => {
             {displayedItems.map((item) => (
               <div
                 key={item.id}
-                className="group relative bg-white border border-gray-200 shadow-sm rounded-3xl overflow-hidden hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full"
+                className="group relative bg-white border-2 border-jd-burgundy shadow-sm rounded-3xl overflow-hidden hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full"
               >
                 {/* Visual Area */}
-                <div className="relative aspect-video bg-gray-50 flex items-center justify-center overflow-hidden border-b border-gray-100 flex-shrink-0">
+                <div className="relative aspect-video bg-gray-50 flex items-center justify-center overflow-hidden flex-shrink-0">
                   {item.src ? (
                     <img
                       src={item.src}
@@ -273,13 +270,6 @@ const StudentLife = () => {
                       </span>
                     </div>
                   )}
-                </div>
-
-                {/* Card Tag outside the image */}
-                <div className="py-4 flex items-center justify-center bg-white border-t border-gray-50">
-                  <span className="text-xs font-bold text-jd-black tracking-widest uppercase text-center block">
-                    {item.category}
-                  </span>
                 </div>
               </div>
             ))}
