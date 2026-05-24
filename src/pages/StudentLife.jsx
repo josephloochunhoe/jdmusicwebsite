@@ -298,7 +298,7 @@ const StudentLife = () => {
               Moments of <span className="text-jd-burgundy italic">Inspiration</span>
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto mt-4 text-sm md:text-base leading-relaxed">
-              Flip through our favorite moments! Take a look at our classes, stage performances, and the overall vibe at our Kajang studio.
+              Flip through our favorite moments! Take a look at our classes and stage performances.
             </p>
           </div>
 
