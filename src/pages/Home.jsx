@@ -6,18 +6,18 @@ import SEO from '../components/SEO';
 const testimonials = [
   {
     id: 1,
-    src: "https://drive.google.com/file/d/1d-xArepU9MD-ACsdrgy5-YL83rSRr7la/preview",
-    name: "Hareesh",
-    instrument: "Guitar",
-    tenure: "⏱ 5 months with us"
+    src: "https://drive.google.com/file/d/1ORgfANzL_HDM2FNJJe8-kjJGa8Y5bjOR/preview",
+    name: "Sahnjaayz",
+    instrument: "Drums",
+    tenure: "⏱ 4 years with us"
   },
   {
     id: 2,
-    src: "https://drive.google.com/file/d/1kLiZQxkLiU5O64jjdX-JxPA61qAo7a5W/preview",
-    name: "Andrea",
-    instrument: "Piano",
-    tenure: "⏱ 5 months with us"
-  }
+    src: "https://drive.google.com/file/d/1bvQYk7DzgKA_xNmo_-6MSYV_OfdxAV1E/preview",
+    name: "Athaliya",
+    instrument: "Guitar",
+    tenure: "⏱ 2 years with us"
+  },
 ];
 
 const TestimonialCard = ({ src, name, instrument, tenure, isActive, onPlayClick }) => (
@@ -219,7 +219,7 @@ const Home = () => {
 
           {/* Mobile View: Infinite Swipeable Track */}
           <div className="block md:hidden mb-12 -mx-6 px-6">
-            <div 
+            <div
               ref={testimonialScrollRef}
               onScroll={handleTestimonialScroll}
               className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"
