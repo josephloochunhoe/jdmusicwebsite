@@ -195,24 +195,6 @@ const StudentLife = () => {
       poster: guitarbassImage,
       regLink: "https://docs.google.com/forms/d/e/1FAIpQLSdBa7FlBb4pTJKufN-ntDKnF7wVL2-pj84AdVVGY5GBWT4PFA/viewform"
     },
-    {
-      id: 2,
-      title: "Rockfest 2026",
-      type: "upcoming",
-      date: "May - Sept 2026",
-      description: "RockFest is an annual music competition where participants can choose to compete digitally (via video submission), physically (via live performance), or both.",
-      poster: rockfestImage,
-      regLink: "https://linktr.ee/RockFestMalaysia"
-    },
-    {
-      id: 3,
-      title: "V-Drums Championship 2026",
-      type: "upcoming",
-      date: "May - June 2026",
-      description: "Unleash your rhythm, claim the spotlight! To Malaysian drummers, the V-Drums Championship has been the awaited contest of the year with great prizes to be won!",
-      poster: vdrumsImage,
-      regLink: "https://rolandap.com/2026/01/30/v-drums-championship-2026/"
-    }
   ];
 
   return (
@@ -452,7 +434,7 @@ const StudentLife = () => {
 
           {/* Mobile View: Swipeable Track */}
           <div className="block md:hidden -mx-6 px-6">
-            <div 
+            <div
               ref={testimonialScrollRef}
               onScroll={handleTestimonialScroll}
               className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"

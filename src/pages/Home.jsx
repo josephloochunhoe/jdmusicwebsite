@@ -19,16 +19,35 @@ const testimonials = [
   }
 ];
 
-const TestimonialCard = ({ src, name, instrument, tenure }) => (
+const TestimonialCard = ({ src, name, instrument, tenure, isActive, onPlayClick }) => (
   <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full">
-    <div className="relative aspect-video bg-black">
-      <iframe
-        src={src}
-        title="Testimonial"
-        allow="autoplay"
-        allowFullScreen
-        className="absolute inset-0 w-full h-full border-0"
-      />
+    <div className="relative aspect-video bg-gray-900">
+      {isActive ? (
+        <iframe
+          src={src}
+          title="Video Testimonial"
+          allow="autoplay"
+          allowFullScreen
+          className="absolute inset-0 w-full h-full border-0"
+        />
+      ) : (
+        <div
+          onClick={onPlayClick}
+          className="absolute inset-0 w-full h-full bg-black/90 flex flex-col items-center justify-center cursor-pointer p-4 group select-none text-center"
+        >
+          <div className="w-14 h-14 rounded-full bg-jd-burgundy text-white flex items-center justify-center mb-3 shadow-lg group-hover:scale-110 transition-transform duration-300">
+            <svg className="w-5 h-5 fill-current translate-x-0.5" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+          <span className="text-xs text-white bg-jd-burgundy/80 px-3 py-1 rounded-full font-bold tracking-wider mb-1">
+            Now watching: {name}
+          </span>
+          <span className="text-[10px] text-amber-100/90 font-medium uppercase tracking-widest">
+            {instrument}
+          </span>
+        </div>
+      )}
     </div>
     <div className="p-4 border-t border-gray-200 flex-grow">
       <p className="font-bold text-jd-black text-base mb-1">{name}</p>
@@ -41,6 +60,7 @@ const TestimonialCard = ({ src, name, instrument, tenure }) => (
 
 const Home = () => {
   const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0);
+  const [activeVideoId, setActiveVideoId] = useState(null);
   const testimonialScrollRef = useRef(null);
 
   const handleTestimonialScroll = (e) => {
@@ -124,6 +144,8 @@ const Home = () => {
                 name={t.name}
                 instrument={t.instrument}
                 tenure={t.tenure}
+                isActive={activeVideoId === t.id}
+                onPlayClick={() => setActiveVideoId(t.id)}
               />
             ))}
           </div>
@@ -145,6 +167,8 @@ const Home = () => {
                     name={t.name}
                     instrument={t.instrument}
                     tenure={t.tenure}
+                    isActive={activeVideoId === t.id}
+                    onPlayClick={() => setActiveVideoId(t.id)}
                   />
                 </div>
               ))}

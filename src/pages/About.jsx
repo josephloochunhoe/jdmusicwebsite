@@ -10,6 +10,7 @@ import boazImage from '../assets/portraits/boaz.png';
 import angelineImage from '../assets/portraits/angeline.jpg';
 import aidilImage from '../assets/portraits/aidil.jpg';
 import joshuaImage from '../assets/portraits/joshua.jpg';
+import teamGroupImage from '../assets/portraits/team_group.jpg';
 
 // Reusable Sub-Component for Leadership / Core Members
 const CoreMemberCard = ({ name, specialization, bio, image }) => (
@@ -194,8 +195,21 @@ const About = () => {
         </div>
       </section>
 
+      {/* Team Group Photo Showcase Section */}
+      <section className="bg-white py-12">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="shadow-xl rounded-3xl overflow-hidden border border-gray-100">
+            <img 
+              src={teamGroupImage} 
+              alt="The JD. Music Academy Team" 
+              className="w-full h-auto block" 
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Core Leadership Section */}
-      <section className="py-24 bg-white text-jd-black">
+      <section className="pt-12 pb-24 bg-white text-jd-black">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-12 text-center">
             <h2 className="text-xs font-bold tracking-widest text-jd-burgundy uppercase mb-2">Leadership</h2>

@@ -30,7 +30,7 @@ const TikTokIcon = ({ size = 18, ...props }) => (
 const Contact = () => {
   const directorName = "Jeevan Devamarcus";
   const directorPhone = "019-2139210";
-  const directorEmail = "jeevanmarcus@gmail.com";
+  const directorEmail = "jdmusicacademy0320@gmail.com";
   const whatsappUrl = "https://wa.me/60192139210?text=Hi%20Jeevan!%20I%20was%20browsing%20your%20website%20and%20I'd%20love%20to%20get%20more%20details%20about%20your%20music%20lessons.%20Could%20you%20share%20more%20about%20available%20slots%20and%20programs%3F";
 
   const socialLinks = [
