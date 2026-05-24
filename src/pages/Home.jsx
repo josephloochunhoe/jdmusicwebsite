@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ArrowRight, Play, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 const testimonials = [
   {
@@ -77,6 +78,72 @@ const Home = () => {
 
   return (
     <div className="w-full bg-white text-jd-black">
+      <SEO title="JD. Music Academy | Affordable Music Lessons in Kajang">
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "MusicInstructionBusiness",
+              "@id": "https://www.jd-musicacademy.com/#business",
+              "name": "JD. Music Academy",
+              "url": "https://www.jd-musicacademy.com",
+              "telephone": "+6019-213-9210",
+              "priceRange": "$",
+              "description": "Affordable, low-commitment music lessons for kids and beginners in Kajang and Klang Valley. Learn piano, guitar, and instruments through fun, stress-free methods without rigid exam pressures.",
+              "openingHoursSpecification": [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+                  "opens": "10:00",
+                  "closes": "22:00"
+                }
+              ],
+              "areaServed": [
+                {
+                  "@type": "AdministrativeArea",
+                  "name": "Kajang",
+                  "description": "Primary service area for localized music classes and events"
+                },
+                {"@type": "AdministrativeArea", "name": "Selangor"},
+                {"@type": "AdministrativeArea", "name": "Kuala Lumpur"},
+                {"@type": "AdministrativeArea", "name": "Bangi"},
+                {"@type": "AdministrativeArea", "name": "Cheras"},
+                {"@type": "AdministrativeArea", "name": "Balakong"},
+                {"@type": "AdministrativeArea", "name": "Damansara"},
+                {"@type": "AdministrativeArea", "name": "Subang Jaya"},
+                {"@type": "AdministrativeArea", "name": "Petaling Jaya"}
+              ],
+              "sameAs": [
+                "https://www.instagram.com/jd.musicclass",
+                "https://www.tiktok.com/@jd.musicclass",
+                "https://www.facebook.com/share/1DTvbVk4Tu/"
+              ],
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Music Classes",
+                "itemListElement": [
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Beginner Music Lessons for Kids",
+                      "description": "Fun, zero-stress introductory music classes customized for children to build instrument confidence without strict exams."
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Low-Commitment Flexible Music Courses",
+                      "description": "Affordable basic music instruction with a flexible drop-in, drop-out framework and regular community social events."
+                    }
+                  }
+                ]
+              }
+            }
+          `}
+        </script>
+      </SEO>
       {/* Hero Section */}
       <section
         className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex flex-col items-center justify-center min-h-[90vh] bg-cover bg-center"
