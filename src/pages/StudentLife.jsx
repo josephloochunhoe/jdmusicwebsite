@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Calendar, Music, Image, ArrowRight, X, Quote } from 'lucide-react';
+import { Calendar, Music, Image, ArrowRight, X, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import rockfestImage from '../assets/events/rockfest.jpeg';
 import vdrumsImage from '../assets/events/vdrums.jpg';
