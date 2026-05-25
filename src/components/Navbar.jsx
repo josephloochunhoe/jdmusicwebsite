@@ -19,6 +19,7 @@ const Navbar = () => {
         <div className="hidden md:flex space-x-2">
           <Link to="/about" className="px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition-colors">About Us</Link>
           <Link to="/student-life" className="px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition-colors">Student Life</Link>
+          <Link to="/events-competitions" className="px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition-colors">Events & Competitions</Link>
           <Link to="/pricing-faq" className="px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition-colors">Pricing & FAQ</Link>
           <Link to="/contact" className="px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition-colors">Contact Us</Link>
         </div>
@@ -42,6 +43,7 @@ const Navbar = () => {
         <div className="md:hidden bg-white border-b border-gray-200 shadow-lg px-6 py-4 flex flex-col space-y-4">
           <Link to="/about" className="text-lg font-medium hover:text-jd-burgundy transition-colors" onClick={closeMenu}>About Us</Link>
           <Link to="/student-life" className="text-lg font-medium hover:text-jd-burgundy transition-colors" onClick={closeMenu}>Student Life</Link>
+          <Link to="/events-competitions" className="text-lg font-medium hover:text-jd-burgundy transition-colors" onClick={closeMenu}>Events & Competitions</Link>
           <Link to="/pricing-faq" className="text-lg font-medium hover:text-jd-burgundy transition-colors" onClick={closeMenu}>Pricing & FAQ</Link>
           <Link to="/contact" className="text-lg font-medium hover:text-jd-burgundy transition-colors" onClick={closeMenu}>Contact Us</Link>
         </div>

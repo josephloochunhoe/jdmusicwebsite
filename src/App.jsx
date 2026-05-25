@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import StudentLife from './pages/StudentLife';
+import EventsAndCompetitions from './pages/EventsAndCompetitions';
 import PricingFaq from './pages/PricingFaq';
 import Contact from './pages/Contact';
 
@@ -48,6 +49,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/student-life" element={<StudentLife />} />
+            <Route path="/events-competitions" element={<EventsAndCompetitions />} />
             <Route path="/pricing-faq" element={<PricingFaq />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>

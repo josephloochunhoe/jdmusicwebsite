@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ArrowRight, Play, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
+import heroBg from '../assets/hero.jpg';
 
 const testimonials = [
   {
@@ -78,7 +79,11 @@ const Home = () => {
 
   return (
     <div className="w-full bg-white text-jd-black">
-      <SEO title="JD. Music Academy | Affordable Music Lessons in Kajang">
+      <SEO
+        title="JD Music Academy | Premier Music Classes & Lessons in Kajang"
+        description="Looking for the best music academy in Kajang? JD Music Academy offers professional music classes including piano, guitar, drums, keyboard, vocal, and singing lessons. Book your lesson today!"
+      >
+        <meta name="keywords" content="music academy Kajang, music class Kajang, piano lesson Kajang, guitar class Kajang, drum lesson Kajang, drum class Kajang, keyboard lesson Kajang, vocal lesson Kajang, singing class Kajang" />
         <script type="application/ld+json">
           {`
             {
@@ -145,17 +150,22 @@ const Home = () => {
         </script>
       </SEO>
       {/* Hero Section */}
-      <section
-        className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex flex-col items-center justify-center min-h-[90vh] bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-white/85"></div>
+      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex flex-col items-center justify-center min-h-[90vh]">
+        {/* Blurred background image */}
+        <img
+          src={heroBg}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover scale-110"
+        />
+        {/* White gradient overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/55 via-white/45 to-white/55"></div>
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif leading-tight mb-8 text-jd-black">
             MAKING MUSIC YOUR <br /> <span className="italic text-jd-burgundy">FAVORITE HOUR</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Fun, stress-free music lessons tailored to your style. Learn guitar, piano, drums, or vocals from friendly instructors who make every class inspiring.
+            Fun, stress-free music lessons in Kajang tailored to your style. Learn guitar, piano, drums, or vocals from friendly instructors who make every class inspiring.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
@@ -181,7 +191,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h2 className="text-4xl md:text-5xl font-serif mb-6">Fall in love with playing, <span className="text-amber-100 italic">your way</span></h2>
           <p className="max-w-3xl mx-auto text-lg text-white/90 mb-10 leading-relaxed">
-            We believe music lessons should build confidence, not performance stress. Our academy focuses on deep student-teacher relationships, creating a comfortable space where instructors become mentors and friends.
+            We believe music lessons in Kajang should build confidence, not performance stress. As Kajang's premier music academy, we focus on deep student-teacher relationships, creating a comfortable space where instructors become mentors and friends.
           </p>
           <Link to="/about" className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-white text-jd-burgundy font-bold hover:bg-gray-100 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
             Discover About Us <ArrowRight size={18} />

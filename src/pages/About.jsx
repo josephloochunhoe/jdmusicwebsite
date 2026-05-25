@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ShieldCheck, GraduationCap, Heart, Music, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import jeevanImage from '../assets/portraits/jeevan.png';
 import achshaImage from '../assets/portraits/achsha.jpg';
 import elishaImage from '../assets/portraits/elisha.png';
@@ -142,7 +143,7 @@ const About = () => {
     {
       name: "Aidil",
       specialization: ["Guitar", "Bass"],
-      bio: "I am a dedicated and versatile music instructor specializing in guitar, bass, and vocals, with a strong performance background and a diverse repertoire spanning multiple genres. My teaching philosophy combines technical foundation with artistic expression, ensuring that each student not only improves their skills but also builds confidence and a genuine love for music. Whether preparing students for performances, auditions, or personal enrichment, I tailor my lessons to meet individual goals and learning styles.",
+      bio: "I am a dedicated and versatile music instructor specializing in guitar, bass, and vocals, with a performance background and a diverse repertoire spanning multiple genres. My teaching philosophy combines technical foundation with artistic expression, ensuring that each student not only improves their skills but also builds confidence and a genuine love for music. Whether preparing students for performances, auditions, or personal enrichment, I tailor my lessons to meet individual goals and learning styles.",
       image: aidilImage
     },
     {
@@ -155,6 +156,12 @@ const About = () => {
 
   return (
     <div className="w-full bg-white text-jd-black">
+      <SEO 
+        title="About Our Music Academy in Kajang | JD Music Academy"
+        description="Discover the story behind JD Music Academy in Kajang. Meet our professional team of instructors providing top piano, guitar, drums, keyboard, vocal, and singing lessons."
+      >
+        <meta name="keywords" content="music academy Kajang, music class Kajang, piano lesson Kajang, guitar class Kajang, drum lesson Kajang, drum class Kajang, keyboard lesson Kajang, vocal lesson Kajang, singing class Kajang" />
+      </SEO>
       {/* Page Header (Minimalistic Overview) */}
       <section className="pt-32 pb-16 bg-white">
         <div className="max-w-4xl mx-auto px-6 text-center">
@@ -199,10 +206,10 @@ const About = () => {
       <section className="bg-white py-12">
         <div className="max-w-7xl mx-auto px-6">
           <div className="shadow-xl rounded-3xl overflow-hidden border border-gray-100">
-            <img 
-              src={teamGroupImage} 
-              alt="The JD. Music Academy Team" 
-              className="w-full h-auto block" 
+            <img
+              src={teamGroupImage}
+              alt="The JD. Music Academy Team"
+              className="w-full h-auto block"
             />
           </div>
         </div>
@@ -227,7 +234,7 @@ const About = () => {
 
           {/* Mobile View: Infinite Swipeable Track */}
           <div className="block md:hidden -mx-6 px-6">
-            <div 
+            <div
               ref={coreScrollRef}
               onScroll={handleCoreScroll}
               className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"
@@ -271,7 +278,7 @@ const About = () => {
 
           {/* Mobile View: Infinite Swipeable Track */}
           <div className="block md:hidden -mx-6 px-6">
-            <div 
+            <div
               ref={teacherScrollRef}
               onScroll={handleTeacherScroll}
               className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"
