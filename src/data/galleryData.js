@@ -50,9 +50,31 @@ import jd3_20 from '../assets/gallery/jd3/jd3-20.jpg';
 import jd3_21 from '../assets/gallery/jd3/jd3-21.jpg';
 import jd3_22 from '../assets/gallery/jd3/jd3-22.jpg';
 
+// Import VDrums 2026 Images
+import vdrums1 from '../assets/gallery/vdrums2026/vdrums1.jpg';
+import vdrums2 from '../assets/gallery/vdrums2026/vdrums2.jpg';
+import vdrums3 from '../assets/gallery/vdrums2026/vdrums3.jpg';
+
+// Import Open Day 2025 Images
+import openday25_1 from '../assets/gallery/openday2025/openday25_1.jpg';
+import openday25_2 from '../assets/gallery/openday2025/openday25_2.jpg';
+import openday25_3 from '../assets/gallery/openday2025/openday25_3.jpg';
+import openday25_4 from '../assets/gallery/openday2025/openday25_4.jpg';
+import openday25_5 from '../assets/gallery/openday2025/openday25_5.jpg';
+import openday25_6 from '../assets/gallery/openday2025/openday25_6.jpg';
+import openday25_7 from '../assets/gallery/openday2025/openday25_7.jpg';
+import openday25_8 from '../assets/gallery/openday2025/openday25_8.jpg';
+import openday25_9 from '../assets/gallery/openday2025/openday25_9.jpg';
+import openday25_10 from '../assets/gallery/openday2025/openday25_10.jpg';
+import openday25_11 from '../assets/gallery/openday2025/openday25_11.jpg';
+import openday25_12 from '../assets/gallery/openday2025/openday25_12.jpg';
+import openday25_13 from '../assets/gallery/openday2025/openday25_13.jpg';
+
 export const galleryCategories = [
   "3.1 Live Concert JD.Music",
   "3.0 Live Concert JD.Music",
+  "VDrums 2026",
+  "Open Day 2025",
   "Concerts (2025)",
   "Competitions"
 ];
@@ -109,5 +131,25 @@ export const galleryItems = [
   { id: 42, category: "3.0 Live Concert JD.Music", alt: "3.0 Live Concert - 19", src: jd3_19 },
   { id: 43, category: "3.0 Live Concert JD.Music", alt: "3.0 Live Concert - 20", src: jd3_20 },
   { id: 44, category: "3.0 Live Concert JD.Music", alt: "3.0 Live Concert - 21", src: jd3_21 },
-  { id: 45, category: "3.0 Live Concert JD.Music", alt: "3.0 Live Concert - 22", src: jd3_22 }
+  { id: 45, category: "3.0 Live Concert JD.Music", alt: "3.0 Live Concert - 22", src: jd3_22 },
+
+  // VDrums 2026
+  { id: 46, category: "VDrums 2026", alt: "VDrums 2026 - 1", src: vdrums1 },
+  { id: 47, category: "VDrums 2026", alt: "VDrums 2026 - 2", src: vdrums2 },
+  { id: 48, category: "VDrums 2026", alt: "VDrums 2026 - 3", src: vdrums3 },
+
+  // Open Day 2025
+  { id: 49, category: "Open Day 2025", alt: "Open Day 2025 - 1", src: openday25_1 },
+  { id: 50, category: "Open Day 2025", alt: "Open Day 2025 - 2", src: openday25_2 },
+  { id: 51, category: "Open Day 2025", alt: "Open Day 2025 - 3", src: openday25_3 },
+  { id: 52, category: "Open Day 2025", alt: "Open Day 2025 - 4", src: openday25_4 },
+  { id: 53, category: "Open Day 2025", alt: "Open Day 2025 - 5", src: openday25_5 },
+  { id: 54, category: "Open Day 2025", alt: "Open Day 2025 - 6", src: openday25_6 },
+  { id: 55, category: "Open Day 2025", alt: "Open Day 2025 - 7", src: openday25_7 },
+  { id: 56, category: "Open Day 2025", alt: "Open Day 2025 - 8", src: openday25_8 },
+  { id: 57, category: "Open Day 2025", alt: "Open Day 2025 - 9", src: openday25_9 },
+  { id: 58, category: "Open Day 2025", alt: "Open Day 2025 - 10", src: openday25_10 },
+  { id: 59, category: "Open Day 2025", alt: "Open Day 2025 - 11", src: openday25_11 },
+  { id: 60, category: "Open Day 2025", alt: "Open Day 2025 - 12", src: openday25_12 },
+  { id: 61, category: "Open Day 2025", alt: "Open Day 2025 - 13", src: openday25_13 }
 ];
