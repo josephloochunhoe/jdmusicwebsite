@@ -1,20 +1,109 @@
 import React, { useState } from 'react';
-import { Calendar, Music, ArrowRight, Sparkles, MapPin, X } from 'lucide-react';
-import guitarbassImage from '../assets/events/guitarbass.png';
+import { Calendar, Music, ArrowRight, Sparkles, MapPin, X, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import guitarClasses1 from '../assets/events/guitarclasses1.webp';
+import guitarClasses2 from '../assets/events/guitarclasses2.webp';
+import nextAceImage from '../assets/events/nextace4.webp';
+
+const whatsappUrl = "https://wa.me/60192139210?text=" + encodeURIComponent("Hi Jeevan! I came from your website and I am interested in your group guitar lessons and I would like to ask more about it!");
 
 const eventsData = [
   {
     id: 1,
-    title: "Guitar & Bass Group Lessons",
+    title: "Group Guitar Classes",
     type: "current",
-    date: "Ongoing - July 2026",
-    location: "Studio A, Main Campus",
-    description: "Learn guitar or bass in a fun group setting! Master chords, basslines, and rhythm techniques while jamming your favorite songs alongside other musicians.",
-    poster: guitarbassImage,
+    date: "Every Sat 2-3pm OR Sun 3-4pm",
+    location: "Kajang Home Studio",
+    description: "Learn guitar in a fun group setting! Master chords, basslines, and rhythm techniques while jamming your favorite songs alongside other musicians.",
+    posters: [guitarClasses1, guitarClasses2],
     posterPlaceholder: "bg-neutral-200",
-    regLink: "https://docs.google.com/forms/d/e/1FAIpQLSdBa7FlBb4pTJKufN-ntDKnF7wVL2-pj84AdVVGY5GBWT4PFA/viewform"
+    regLink: whatsappUrl
+  },
+  {
+    id: 2,
+    title: "Who Is The Next ACE 4.0",
+    type: "upcoming",
+    date: "20 September 2026",
+    badge: "Registration closes 2 Aug 2026",
+    description: "A cash prize-winning talent competition open to any genre, celebrating kids brave enough to take the stage. Two categories: Dance and Music. Held at Atria Shopping Gallery.",
+    poster: nextAceImage,
+    regLink: "https://mylink.la/nextacecompetition",
+    ctaLabel: "Register Now"
   }
 ];
+
+const PosterCarousel = ({ images, title, onImageClick }) => {
+  const [index, setIndex] = useState(0);
+  const trackRef = React.useRef(null);
+
+  const scrollToIndex = (i) => {
+    const track = trackRef.current;
+    if (!track) return;
+    track.scrollTo({ left: track.clientWidth * i, behavior: 'smooth' });
+    setIndex(i);
+  };
+
+  const handleScroll = (e) => {
+    const track = e.target;
+    const newIndex = Math.round(track.scrollLeft / track.clientWidth);
+    if (newIndex !== index) setIndex(newIndex);
+  };
+
+  return (
+    <div className="w-full space-y-3">
+      <div className="relative rounded-2xl overflow-hidden shadow-md bg-gray-50 group">
+        <div
+          ref={trackRef}
+          onScroll={handleScroll}
+          className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-none"
+        >
+          {images.map((img, i) => (
+            <div
+              key={i}
+              className="w-full flex-shrink-0 snap-center cursor-pointer"
+              onClick={() => onImageClick(img)}
+            >
+              <img src={img} alt={`${title} poster ${i + 1}`} className="w-full h-auto block hover:scale-105 transition-transform duration-700" />
+            </div>
+          ))}
+        </div>
+
+        {images.length > 1 && (
+          <>
+            <button
+              onClick={() => scrollToIndex(Math.max(0, index - 1))}
+              disabled={index === 0}
+              className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 hover:bg-white text-jd-black shadow-md opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0"
+              aria-label="Previous poster"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={() => scrollToIndex(Math.min(images.length - 1, index + 1))}
+              disabled={index === images.length - 1}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 hover:bg-white text-jd-black shadow-md opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0"
+              aria-label="Next poster"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </>
+        )}
+      </div>
+
+      {images.length > 1 && (
+        <div className="flex justify-center gap-2">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => scrollToIndex(i)}
+              className={`h-2 rounded-full transition-all ${i === index ? 'w-6 bg-jd-burgundy' : 'w-2 bg-gray-300 hover:bg-gray-400'}`}
+              aria-label={`Go to poster ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const EventsAndCompetitions = () => {
   const [lightboxImage, setLightboxImage] = useState(null);
@@ -53,15 +142,12 @@ const EventsAndCompetitions = () => {
             {currentEvents.length > 0 ? (
               currentEvents.map((event) => (
                 <div key={event.id} className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center lg:items-start bg-white rounded-3xl p-6 md:p-10 shadow-2xl border border-gray-100 text-jd-black">
-                  {/* Left: Large Visual Poster */}
-                  <div 
-                    className={`w-full lg:w-1/2 rounded-2xl overflow-hidden shadow-md ${event.posterPlaceholder || 'bg-gray-50'} ${event.poster ? 'cursor-pointer' : ''}`}
-                    onClick={() => event.poster && setLightboxImage(event.poster)}
-                  >
-                    {event.poster ? (
-                      <img src={event.poster} alt={event.title} className="w-full h-auto block hover:scale-105 transition-transform duration-700" />
+                  {/* Left: Large Visual Poster Slider */}
+                  <div className="w-full lg:w-1/2">
+                    {event.posters && event.posters.length > 0 ? (
+                      <PosterCarousel images={event.posters} title={event.title} onImageClick={setLightboxImage} />
                     ) : (
-                      <div className="w-full min-h-[300px] flex items-center justify-center bg-gray-100 text-gray-400">
+                      <div className={`rounded-2xl overflow-hidden shadow-md min-h-[300px] flex items-center justify-center bg-gray-100 text-gray-400 ${event.posterPlaceholder || ''}`}>
                         <Music size={64} opacity={0.2} />
                       </div>
                     )}
@@ -100,7 +186,7 @@ const EventsAndCompetitions = () => {
                         rel="noopener noreferrer"
                         className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-jd-burgundy text-white rounded-full font-medium hover:bg-red-900 transition-colors shadow-lg hover:shadow-xl w-full sm:w-auto"
                       >
-                        Register Now <ArrowRight size={20} />
+                        <MessageCircle size={20} /> Chat on WhatsApp
                       </a>
                     </div>
                   </div>
@@ -140,7 +226,7 @@ const EventsAndCompetitions = () => {
                     <div>
                       <div className="flex justify-between items-start mb-6">
                         <span className="px-3 py-1 bg-red-50 text-jd-burgundy rounded-full text-sm font-semibold uppercase">
-                          Coming Soon
+                          {event.badge || "Coming Soon"}
                         </span>
                         <Calendar className="text-gray-400 group-hover:text-jd-burgundy transition-colors" size={24} />
                       </div>
@@ -150,8 +236,13 @@ const EventsAndCompetitions = () => {
                     </div>
 
                     {event.regLink && (
-                      <a href={event.regLink} className="inline-flex items-center text-jd-burgundy font-semibold hover:text-red-900 transition-colors self-start mt-auto">
-                        Learn More <ArrowRight size={16} className="ml-2" />
+                      <a
+                        href={event.regLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-jd-burgundy font-semibold hover:text-red-900 transition-colors self-start mt-auto"
+                      >
+                        {event.ctaLabel || "Learn More"} <ArrowRight size={16} className="ml-2" />
                       </a>
                     )}
                   </div>
