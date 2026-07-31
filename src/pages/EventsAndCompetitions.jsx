@@ -33,54 +33,36 @@ const eventsData = [
 
 const PosterCarousel = ({ images, title, onImageClick }) => {
   const [index, setIndex] = useState(0);
-  const trackRef = React.useRef(null);
 
-  const scrollToIndex = (i) => {
-    const track = trackRef.current;
-    if (!track) return;
-    track.scrollTo({ left: track.clientWidth * i, behavior: 'smooth' });
-    setIndex(i);
+  const goTo = (i) => {
+    setIndex((i + images.length) % images.length);
   };
 
-  const handleScroll = (e) => {
-    const track = e.target;
-    const newIndex = Math.round(track.scrollLeft / track.clientWidth);
-    if (newIndex !== index) setIndex(newIndex);
-  };
+  const currentImage = images[index];
 
   return (
     <div className="w-full space-y-3">
       <div className="relative rounded-2xl overflow-hidden shadow-md bg-gray-50 group">
-        <div
-          ref={trackRef}
-          onScroll={handleScroll}
-          className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-none"
-        >
-          {images.map((img, i) => (
-            <div
-              key={i}
-              className="w-full flex-shrink-0 snap-center cursor-pointer"
-              onClick={() => onImageClick(img)}
-            >
-              <img src={img} alt={`${title} poster ${i + 1}`} className="w-full h-auto block hover:scale-105 transition-transform duration-700" />
-            </div>
-          ))}
-        </div>
+        <img
+          key={index}
+          src={currentImage}
+          alt={`${title} poster ${index + 1}`}
+          className="w-full h-auto block cursor-pointer hover:scale-105 transition-transform duration-700"
+          onClick={() => onImageClick(currentImage)}
+        />
 
         {images.length > 1 && (
           <>
             <button
-              onClick={() => scrollToIndex(Math.max(0, index - 1))}
-              disabled={index === 0}
-              className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 hover:bg-white text-jd-black shadow-md opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0"
+              onClick={() => goTo(index - 1)}
+              className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 hover:bg-white text-jd-black shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
               aria-label="Previous poster"
             >
               <ChevronLeft size={20} />
             </button>
             <button
-              onClick={() => scrollToIndex(Math.min(images.length - 1, index + 1))}
-              disabled={index === images.length - 1}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 hover:bg-white text-jd-black shadow-md opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0"
+              onClick={() => goTo(index + 1)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 hover:bg-white text-jd-black shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
               aria-label="Next poster"
             >
               <ChevronRight size={20} />
@@ -94,7 +76,7 @@ const PosterCarousel = ({ images, title, onImageClick }) => {
           {images.map((_, i) => (
             <button
               key={i}
-              onClick={() => scrollToIndex(i)}
+              onClick={() => goTo(i)}
               className={`h-2 rounded-full transition-all ${i === index ? 'w-6 bg-jd-burgundy' : 'w-2 bg-gray-300 hover:bg-gray-400'}`}
               aria-label={`Go to poster ${i + 1}`}
             />
