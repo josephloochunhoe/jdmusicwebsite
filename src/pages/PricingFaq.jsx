@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapPin, Home, Users, Building, GraduationCap, Baby, HeartHandshake, Mic2, ArrowRight, ChevronDown } from 'lucide-react';
+import { MapPin, Users, Building, GraduationCap, Baby, HeartHandshake, Mic2, ArrowRight, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 
@@ -65,31 +65,48 @@ const PricingFaq = () => {
 
   const individualPlans = [
     {
-      location: "Kajang Studio & Online",
+      location: "Kajang Home Studio",
       icon: MapPin,
-      rates: [
-        "RM 35 per session (30 mins)",
-        "RM 50 per session (1 hr)"
-      ],
-      note: "Our primary base for immersive in-person learning, plus flexible online options."
+      note: "Our home base for immersive, in-person learning.",
+      membership: {
+        label: "Academy Membership",
+        recommended: true,
+        rates: [
+          "RM150 / month (30 mins)",
+          "RM200 / month (1 hr)"
+        ],
+        note: "Reserved weekly slot, priority scheduling & up to 2 make-up lessons per month."
+      },
+      flexPass: {
+        label: "Flex Pass",
+        rates: [
+          "RM45 / lesson (30 mins)",
+          "RM60 / lesson (1 hr)"
+        ],
+        note: "Pay-per-class. Bookings subject to teacher availability."
+      }
     },
     {
-      location: "Sri Hartamas, KL",
+      location: "Sri Hartamas Studio",
       icon: MapPin,
-      rates: [
-        "RM 50 per session (30 mins)",
-        "RM 100 per session (1 hr)"
-      ],
-      note: "Conveniently located lessons for students based in the Kuala Lumpur area."
-    },
-    {
-      location: "In-House Lessons",
-      icon: Home,
-      rates: [
-        "RM 35 per session (30 mins)",
-        "RM 50 per session (1 hr)"
-      ],
-      note: "Learn comfortably in your own home. Within Klang Valley."
+      note: "Conveniently located lessons for students based in the Kuala Lumpur area.",
+      membership: {
+        label: "Academy Membership",
+        recommended: true,
+        rates: [
+          "RM200 / month (30 mins)",
+          "RM400 / month (1 hr)"
+        ],
+        note: "Reserved weekly slot, priority scheduling & up to 2 make-up lessons per month."
+      },
+      flexPass: {
+        label: "Flex Pass",
+        rates: [
+          "RM50 / lesson (30 mins)",
+          "RM100 / lesson (1 hr)"
+        ],
+        note: "Pay-per-class. Bookings subject to teacher availability."
+      }
     }
   ];
 
@@ -198,7 +215,7 @@ const PricingFaq = () => {
           {/* VIEW RENDERER */}
           <div className="min-h-[400px] relative z-10">
             {activeView === 'individual' ? (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 {individualPlans.map((plan, idx) => {
                   const Icon = plan.icon;
                   return (
@@ -207,12 +224,31 @@ const PricingFaq = () => {
                         <Icon size={28} />
                       </div>
                       <h4 className="text-xl font-bold text-jd-black mb-2">{plan.location}</h4>
-                      <p className="text-sm text-gray-500 mb-8 flex-grow">{plan.note}</p>
-                      <div className="space-y-4 mb-4">
-                        {plan.rates.map((rate, rIdx) => (
-                          <div key={rIdx} className="flex items-start">
-                            <div className="w-1.5 h-1.5 rounded-full bg-jd-burgundy mt-2 mr-3 flex-shrink-0"></div>
-                            <span className="font-bold text-jd-black">{rate}</span>
+                      <p className="text-sm text-gray-500 mb-6">{plan.note}</p>
+
+                      <div className="space-y-4">
+                        {[plan.membership, plan.flexPass].map((tier, tIdx) => (
+                          <div
+                            key={tIdx}
+                            className={`rounded-2xl p-5 border ${tier.recommended ? 'border-jd-burgundy/20 bg-red-50/40' : 'border-gray-100 bg-gray-50/60'}`}
+                          >
+                            <div className="flex items-center gap-2 mb-3">
+                              <span className="font-bold text-jd-black text-sm">{tier.label}</span>
+                              {tier.recommended && (
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-white bg-jd-burgundy px-2 py-0.5 rounded-full">
+                                  Recommended
+                                </span>
+                              )}
+                            </div>
+                            <div className="space-y-2 mb-3">
+                              {tier.rates.map((rate, rIdx) => (
+                                <div key={rIdx} className="flex items-start">
+                                  <div className="w-1.5 h-1.5 rounded-full bg-jd-burgundy mt-2 mr-3 flex-shrink-0"></div>
+                                  <span className="font-bold text-jd-black text-sm">{rate}</span>
+                                </div>
+                              ))}
+                            </div>
+                            <p className="text-xs text-gray-500 leading-relaxed">{tier.note}</p>
                           </div>
                         ))}
                       </div>
