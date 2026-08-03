@@ -1,13 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Home from './pages/Home';
-import About from './pages/About';
-import StudentLife from './pages/StudentLife';
-import EventsAndCompetitions from './pages/EventsAndCompetitions';
-import PricingFaq from './pages/PricingFaq';
-import Contact from './pages/Contact';
+
+const Home = lazy(() => import('./pages/Home'));
+const About = lazy(() => import('./pages/About'));
+const StudentLife = lazy(() => import('./pages/StudentLife'));
+const EventsAndCompetitions = lazy(() => import('./pages/EventsAndCompetitions'));
+const PricingFaq = lazy(() => import('./pages/PricingFaq'));
+const Contact = lazy(() => import('./pages/Contact'));
+
+// Shown briefly while a page's code loads on a fresh/direct visit.
+// Kept minimal and on a white background so there is no flash of an
+// unstyled or mismatched-color screen while the chunk downloads.
+function PageLoader() {
+  return (
+    <div className="w-full min-h-[60vh] flex items-center justify-center bg-white">
+      <div className="w-10 h-10 border-4 border-jd-burgundy/20 border-t-jd-burgundy rounded-full animate-spin" />
+    </div>
+  );
+}
 
 // Helper component to restore scroll position to top on route change
 function ScrollToTop() {
@@ -45,14 +57,16 @@ function App() {
         
         {/* Main content wrapper */}
         <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/student-life" element={<StudentLife />} />
-            <Route path="/events-competitions" element={<EventsAndCompetitions />} />
-            <Route path="/pricing-faq" element={<PricingFaq />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/student-life" element={<StudentLife />} />
+              <Route path="/events-competitions" element={<EventsAndCompetitions />} />
+              <Route path="/pricing-faq" element={<PricingFaq />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </Suspense>
         </main>
 
         <Footer />
