@@ -5,7 +5,7 @@
 
 @layer base {
   body {
-    @apply bg-jd-black text-jd-white antialiased font-sans;
+    @apply bg-white text-jd-black antialiased font-sans;
   }
 }
 
