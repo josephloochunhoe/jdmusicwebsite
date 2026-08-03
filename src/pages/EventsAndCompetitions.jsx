@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, Music, ArrowRight, Sparkles, MapPin, X, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import guitarClasses1 from '../assets/events/guitarclasses1.webp';
 import guitarClasses2 from '../assets/events/guitarclasses2.webp';
@@ -33,6 +33,25 @@ const eventsData = [
 
 const PosterCarousel = ({ images, title, onImageClick }) => {
   const [index, setIndex] = useState(0);
+  const [aspectRatio, setAspectRatio] = useState(null);
+
+  // Preload every poster up front so switching slides never triggers a fresh,
+  // un-sized network fetch that collapses the layout mid-load.
+  useEffect(() => {
+    let cancelled = false;
+    images.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        if (!cancelled) {
+          setAspectRatio((prev) => prev ?? img.naturalWidth / img.naturalHeight);
+        }
+      };
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [images]);
 
   const goTo = (i) => {
     setIndex((i + images.length) % images.length);
@@ -42,12 +61,14 @@ const PosterCarousel = ({ images, title, onImageClick }) => {
 
   return (
     <div className="w-full space-y-3">
-      <div className="relative rounded-2xl overflow-hidden shadow-md bg-gray-50 group">
+      <div
+        className="relative rounded-2xl overflow-hidden shadow-md bg-gray-50 group"
+        style={aspectRatio ? { aspectRatio } : undefined}
+      >
         <img
-          key={index}
           src={currentImage}
           alt={`${title} poster ${index + 1}`}
-          className="w-full h-auto block cursor-pointer hover:scale-105 transition-transform duration-700"
+          className={`w-full block cursor-pointer hover:scale-105 transition-transform duration-700 ${aspectRatio ? 'h-full object-cover' : 'h-auto'}`}
           onClick={() => onImageClick(currentImage)}
         />
 
