@@ -48,4 +48,13 @@ https://www.jd-musicacademy.com/?utm_source=partner_blog&utm_medium=referral&utm
 
 Visitor numbers estimate browsers/users, not verified individual people. Blocking software, missing referrers and cookie settings can affect counts. Data starts after activation; previous Vercel history is not imported. Google Analytics uses cookies; review the site's privacy notice and applicable consent requirements before activating collection.
 
+## Monthly analytics email
+
+The Google Apps Script in `automation/monthly-analytics` emails a report on the
+last day of every month. It includes visitors, sessions, page views, top pages,
+traffic sources, and external referring pages. The recipient and GA4 Property
+ID are configured through private Apps Script properties. It must be authorized
+once by a Google account with access to the property; follow the activation
+steps in that folder.
+
 Reference: https://developers.google.com/analytics/devguides/collection/ga4/views
