@@ -1,14 +1,19 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { useState, useEffect, Suspense, lazy } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import SEO from './components/SEO';
+import Analytics from './components/Analytics';
+import NotFound from './pages/NotFound';
 
-const Home = lazy(() => import('./pages/Home'));
-const About = lazy(() => import('./pages/About'));
-const StudentLife = lazy(() => import('./pages/StudentLife'));
-const EventsAndCompetitions = lazy(() => import('./pages/EventsAndCompetitions'));
-const PricingFaq = lazy(() => import('./pages/PricingFaq'));
-const Contact = lazy(() => import('./pages/Contact'));
+const lazyPages = {
+  Home: lazy(() => import('./pages/Home')),
+  About: lazy(() => import('./pages/About')),
+  StudentLife: lazy(() => import('./pages/StudentLife')),
+  EventsAndCompetitions: lazy(() => import('./pages/EventsAndCompetitions')),
+  PricingFaq: lazy(() => import('./pages/PricingFaq')),
+  Contact: lazy(() => import('./pages/Contact')),
+};
 
 // Shown briefly while a page's code loads on a fresh/direct visit.
 // Kept minimal and on a white background so there is no flash of an
@@ -32,7 +37,8 @@ function ScrollToTop() {
   return null;
 }
 
-function App() {
+function App({ routeComponents = lazyPages }) {
+  const { Home, About, StudentLife, EventsAndCompetitions, PricingFaq, Contact } = routeComponents;
   const [showFloatingCTA, setShowFloatingCTA] = useState(false);
 
   useEffect(() => {
@@ -50,7 +56,9 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <>
+      <SEO />
+      <Analytics />
       <ScrollToTop />
       <div className="min-h-screen bg-white text-jd-black font-sans selection:bg-jd-burgundy selection:text-white flex flex-col">
         <Navbar />
@@ -65,6 +73,7 @@ function App() {
               <Route path="/events-competitions" element={<EventsAndCompetitions />} />
               <Route path="/pricing-faq" element={<PricingFaq />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
         </main>
@@ -83,7 +92,7 @@ function App() {
           Register Now
         </a>
       </div>
-    </BrowserRouter>
+    </>
   );
 }
 

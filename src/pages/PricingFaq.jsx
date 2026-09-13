@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { MapPin, Users, Building, GraduationCap, Baby, HeartHandshake, Mic2, ArrowRight, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import SEO from '../components/SEO';
 
 const faqItems = [
   {
@@ -157,10 +156,6 @@ const PricingFaq = () => {
 
   return (
     <div className="w-full bg-white text-jd-black">
-      <SEO 
-        title="Affordable Music Class Pricing & FAQ | Kajang & Klang Valley" 
-        description="Explore our transparent and affordable rates for individual, group, and institutional music lessons across Kajang and the Klang Valley."
-      />
       {/* PAGE HEADER */}
       <section className="pt-32 pb-16 bg-white relative overflow-hidden">
         <div className="absolute top-0 left-1/4 w-[500px] h-[300px] bg-jd-burgundy/5 blur-[120px] rounded-full pointer-events-none"></div>
