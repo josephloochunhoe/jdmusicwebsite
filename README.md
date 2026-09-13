@@ -19,7 +19,7 @@ Page metadata and the list of public URLs live in `src/site.js`. When adding a p
 
 The production site uses the existing JD.Music GA4 web stream (`G-3SHJQNBENP`). `VITE_GA_MEASUREMENT_ID` can override it if the property changes later.
 
-1. In the GA4 Web data stream, turn **Enhanced measurement OFF**. This site sends page views itself. Automatic page-load/history tracking, a second Google tag, or another GTM page-view tag would duplicate counts. Automatic first-visit/session/user-engagement events from the Google tag remain available.
+1. In the GA4 Web data stream, open **Enhanced measurement → Page views → Show advanced settings** and turn off **Page changes based on browser history events**. This site sends those page views itself; leaving that option on, adding a second Google tag, or adding another GTM page-view tag would duplicate counts. Other enhanced-measurement events can stay enabled.
 2. Deploy the production build.
 3. Open the public site and navigate between pages. Verify a single page-view event per page in GA Realtime/DebugView (use Google Tag Assistant to enable debugging). Regular reports may take 24–48 hours to populate.
 
