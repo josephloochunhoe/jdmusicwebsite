@@ -9,6 +9,7 @@ const TRIGGER_HANDLER = 'sendMonthlyAnalyticsEmailIfDue';
 const LAST_SENT_KEY = 'monthlyAnalyticsLastSent';
 const PROPERTY_ID_KEY = 'GA4_PROPERTY_ID';
 const RECIPIENT_KEY = 'REPORT_RECIPIENT_EMAIL';
+const CC_KEY = 'REPORT_CC_EMAIL';
 
 /**
  * Run once after copying this project into Google Apps Script.
@@ -83,7 +84,7 @@ function sendAnalyticsEmail_(now, isTest, privateConfig) {
   const subject = `${isTest ? '[TEST] ' : ''}${CONFIG.reportName} — ${range.label}`;
 
   MailApp.sendEmail({
-    to: privateConfig.recipient,
+    ...emailRecipients_(privateConfig),
     subject,
     name: 'JD.Music Analytics',
     body: plainTextReport_(period, summary, pages, sources, referrers),
@@ -241,7 +242,21 @@ function getPrivateConfiguration_() {
   return {
     propertyId: properties.getProperty(PROPERTY_ID_KEY) || '',
     recipient: properties.getProperty(RECIPIENT_KEY) || '',
+    cc: properties.getProperty(CC_KEY) || '',
   };
+}
+
+/** Preserve the original recipient and avoid sending duplicate copies. */
+function emailRecipients_(privateConfig) {
+  const to = privateConfig.recipient.trim();
+  const seen = new Set([to.toLowerCase()]);
+  const cc = (privateConfig.cc || '').split(',').map((email) => email.trim())
+    .filter((email) => {
+      if (!email || seen.has(email.toLowerCase())) return false;
+      seen.add(email.toLowerCase());
+      return true;
+    }).join(',');
+  return cc ? { to, cc } : { to };
 }
 
 function validateConfiguration_(privateConfig) {
@@ -250,6 +265,9 @@ function validateConfiguration_(privateConfig) {
   }
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(privateConfig.recipient)) {
     throw new Error(`Set a valid ${RECIPIENT_KEY} in Apps Script Properties.`);
+  }
+  if ((privateConfig.cc || '').trim() && privateConfig.cc.split(',').some((email) => !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim()))) {
+    throw new Error(`Set valid comma-separated email addresses in ${CC_KEY}, or leave it empty.`);
   }
   if (Session.getScriptTimeZone() !== CONFIG.timeZone) {
     throw new Error(`Set the Apps Script project time zone to ${CONFIG.timeZone}.`);

@@ -262,7 +262,12 @@ const StudentLife = () => {
                 >
                   {/* Visual Area */}
                   <div className="relative overflow-hidden w-full h-auto flex-shrink-0">
-                    {hasValidSrc ? (
+                    {item.type === 'video' ? (
+                      <video controls playsInline preload="none" poster={item.poster} aria-label={item.alt} onClick={(e) => e.stopPropagation()} className="w-full max-h-[500px] bg-black">
+                        <source src={item.src} type="video/mp4" />
+                        Your browser does not support video playback. <a href={item.src}>Download the video</a>.
+                      </video>
+                    ) : hasValidSrc ? (
                       <img
                         src={item.src}
                         alt={item.alt}
@@ -427,7 +432,7 @@ const StudentLife = () => {
               <button
                 onClick={handlePrevImage}
                 className="absolute left-4 md:left-8 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all shadow-md hover:scale-105"
-                aria-label="Previous image"
+                aria-label="Previous media"
               >
                 <ChevronLeft size={28} />
               </button>
@@ -438,7 +443,7 @@ const StudentLife = () => {
               <button
                 onClick={handleNextImage}
                 className="absolute right-4 md:right-8 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all shadow-md hover:scale-105"
-                aria-label="Next image"
+                aria-label="Next media"
               >
                 <ChevronRight size={28} />
               </button>
@@ -449,11 +454,16 @@ const StudentLife = () => {
               className="relative max-h-[85vh] max-w-[90vw] flex flex-col items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <img
+              {lightboxImage.type === 'video' ? (
+                <video key={lightboxImage.src} controls playsInline preload="metadata" poster={lightboxImage.poster} aria-label={lightboxImage.alt} className="max-h-[75vh] max-w-full rounded-2xl bg-black">
+                  <source src={lightboxImage.src} type="video/mp4" />
+                  Your browser does not support video playback. <a href={lightboxImage.src}>Download the video</a>.
+                </video>
+              ) : <img
                 src={lightboxImage.src}
                 alt={lightboxImage.alt}
                 className="max-h-[75vh] max-w-full object-contain rounded-2xl border border-white/10 shadow-2xl"
-              />
+              />}
             </div>
           </div>
         )

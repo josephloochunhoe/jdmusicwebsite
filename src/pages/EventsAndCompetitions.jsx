@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, Music, ArrowRight, Sparkles, MapPin, X, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import guitarClasses1 from '../assets/events/guitarclasses1.webp';
 import guitarClasses2 from '../assets/events/guitarclasses2.webp';
-import nextAceImage from '../assets/events/nextace4.webp';
+import { nextAce4 } from '../data/nextAce4';
 
 const whatsappUrl = "https://wa.me/60192139210?text=" + encodeURIComponent("Hi Jeevan! I came from your website and I am interested in your group guitar lessons and I would like to ask more about it!");
 
@@ -17,17 +17,6 @@ const eventsData = [
     posters: [guitarClasses1, guitarClasses2],
     posterPlaceholder: "bg-neutral-200",
     regLink: whatsappUrl
-  },
-  {
-    id: 2,
-    title: "Who Is The Next ACE 4.0",
-    type: "upcoming",
-    date: "20 September 2026",
-    badge: "Registration closes 2 Aug 2026",
-    description: "A cash prize-winning talent competition open to any genre, celebrating kids brave enough to take the stage. Two categories: Dance and Music. Held at Atria Shopping Gallery.",
-    poster: nextAceImage,
-    regLink: "https://mylink.la/nextacecompetition",
-    ctaLabel: "Register Now"
   }
 ];
 
@@ -264,6 +253,34 @@ const EventsAndCompetitions = () => {
               </p>
             </div>
           )}
+        </div>
+      </section>
+      <section className="py-24 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-serif text-jd-black mb-10">Past Competition Highlights</h2>
+          <div className="bg-white rounded-3xl p-6 md:p-10 shadow-md border border-gray-100">
+            <span className="inline-block px-3 py-1 bg-red-50 text-jd-burgundy rounded-full text-sm font-semibold uppercase mb-4">Completed</span>
+            <h3 className="text-3xl font-bold text-jd-black mb-4">{nextAce4.title}</h3>
+            <div className="flex flex-wrap gap-x-6 gap-y-3 text-gray-600 mb-5">
+              <p className="flex items-center gap-2"><Calendar size={20} className="text-jd-burgundy" />{nextAce4.date}</p>
+              <p className="flex items-center gap-2"><MapPin size={20} className="text-jd-burgundy" />{nextAce4.location}</p>
+            </div>
+            <p className="text-gray-600 text-lg mb-8">{nextAce4.description}</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {nextAce4.photos.map((photo) => (
+                <button key={photo.src} type="button" onClick={() => setLightboxImage(photo.src)} aria-label={`Enlarge photo: ${photo.alt}`} className="rounded-2xl overflow-hidden bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-jd-burgundy">
+                  <img src={photo.src} alt={photo.alt} loading="lazy" className="w-full h-72 object-contain hover:scale-105 transition-transform duration-300" />
+                </button>
+              ))}
+            </div>
+            <div className="mt-10">
+              <h4 className="text-xl font-bold text-jd-black mb-4">A Moment from ACE 4.0</h4>
+              <video controls playsInline preload="none" poster={nextAce4.videoPoster} aria-label="Who Is The Next ACE 4.0 video highlight" className="w-full max-w-sm max-h-[70vh] rounded-2xl bg-black mx-auto">
+                <source src={nextAce4.video} type="video/mp4" />
+                Your browser does not support video playback. <a href={nextAce4.video}>Download the video</a>.
+              </video>
+            </div>
+          </div>
         </div>
       </section>
       {/* PREMIUM IMAGE LIGHTBOX MODAL */}

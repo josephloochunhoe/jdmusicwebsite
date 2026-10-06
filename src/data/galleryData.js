@@ -1,3 +1,4 @@
+import { nextAce4 } from './nextAce4';
 import concert1 from '../assets/gallery/concerts2025/concert25-1.png';
 import concert2 from '../assets/gallery/concerts2025/concert25-2.png';
 import concert3 from '../assets/gallery/concerts2025/concert25-3.png';
@@ -71,6 +72,7 @@ import openday25_12 from '../assets/gallery/openday2025/openday25_12.jpg';
 import openday25_13 from '../assets/gallery/openday2025/openday25_13.jpg';
 
 export const galleryCategories = [
+  nextAce4.title,
   "3.1 Live Concert JD.Music",
   "3.0 Live Concert JD.Music",
   "VDrums 2026",
@@ -80,6 +82,8 @@ export const galleryCategories = [
 ];
 
 export const galleryItems = [
+  ...nextAce4.photos.map((photo, index) => ({ id: 62 + index, category: nextAce4.title, ...photo })),
+  { id: 69, category: nextAce4.title, alt: 'Who Is The Next ACE 4.0 video highlight', src: nextAce4.video, type: 'video', poster: nextAce4.videoPoster },
   // Concerts (2025)
   { id: 1, category: "Concerts (2025)", alt: "Concerts (2025) - 1", src: concert1 },
   { id: 2, category: "Concerts (2025)", alt: "Concerts (2025) - 2", src: concert2 },

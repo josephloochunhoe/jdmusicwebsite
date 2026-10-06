@@ -19,8 +19,15 @@ const context = {
   },
 };
 vm.createContext(context);
-vm.runInContext(`${source}\n;globalThis.__test = { isLastDayInTimeZone_, reportRangeFor_, dateRangeForApi_, isExternalReferrer_, escapeHtml_ };`, context);
+vm.runInContext(`${source}\n;globalThis.__test = { isLastDayInTimeZone_, reportRangeFor_, dateRangeForApi_, isExternalReferrer_, escapeHtml_, emailRecipients_, validateConfiguration_ };`, context);
 const helpers = context.__test;
+
+test('keeps the primary recipient and adds distinct copy recipients', () => {
+  const plain = (value) => JSON.parse(JSON.stringify(value));
+  assert.deepEqual(plain(helpers.emailRecipients_({ recipient: 'primary@example.com' })), { to: 'primary@example.com' });
+  assert.deepEqual(plain(helpers.emailRecipients_({ recipient: 'primary@example.com', cc: ' copy@example.com, PRIMARY@example.com, COPY@example.com ' })), { to: 'primary@example.com', cc: 'copy@example.com' });
+  assert.throws(() => helpers.validateConfiguration_({ propertyId: '12345', recipient: 'primary@example.com', cc: 'valid@example.com,invalid' }), /REPORT_CC_EMAIL/);
+});
 
 test('recognizes variable month endings in Malaysia', () => {
   assert.equal(helpers.isLastDayInTimeZone_(new Date('2026-09-30T12:00:00Z')), true);
