@@ -8,7 +8,6 @@ import adrianImage from '../assets/portraits/adrian.png';
 import shireenImage from '../assets/portraits/shireen.jpg';
 import boazImage from '../assets/portraits/boaz.png';
 import angelineImage from '../assets/portraits/angeline.jpg';
-import aidilImage from '../assets/portraits/aidil.jpg';
 import joshuaImage from '../assets/portraits/joshua.jpg';
 import teamGroupImage from '../assets/portraits/team_group.jpg';
 
@@ -138,12 +137,6 @@ const About = () => {
       specialization: ["Piano", "Keyboard"],
       bio: "There’s something special about finding your way around the keys especially when turning simple notes into music that feels personal and alive. Whether you’re a complete beginner or returning after a break, we’ll move at a pace that feels comfortable and encouraging. With a balance of technique, creativity, and expression, you’ll build real skills while enjoying the process. Each lesson is a step toward making music that truly feels like yours.",
       image: angelineImage
-    },
-    {
-      name: "Aidil",
-      specialization: ["Guitar", "Bass"],
-      bio: "I am a dedicated and versatile music instructor specializing in guitar, bass, and vocals, with a performance background and a diverse repertoire spanning multiple genres. My teaching philosophy combines technical foundation with artistic expression, ensuring that each student not only improves their skills but also builds confidence and a genuine love for music. Whether preparing students for performances, auditions, or personal enrichment, I tailor my lessons to meet individual goals and learning styles.",
-      image: aidilImage
     },
     {
       name: "Johanan Joshua",

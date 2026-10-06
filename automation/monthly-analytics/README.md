@@ -17,6 +17,9 @@ newest figures can still change.
 2. Set the project time zone to **Asia/Kuala_Lumpur** in Project Settings.
 3. Under **Script properties**, add `GA4_PROPERTY_ID` with the numeric GA4
    Property ID and `REPORT_RECIPIENT_EMAIL` with the destination email address.
+   Optionally add `REPORT_CC_EMAIL` with an additional destination (or a
+   comma-separated list) to copy the report to others while keeping the original
+   recipient. Duplicate addresses are sent only one copy.
 4. Copy `Code.gs` into the editor. Enable **Show "appsscript.json" manifest file
    in editor** and replace the manifest with the included `appsscript.json`.
    If the Analytics Data service does not appear automatically, add
@@ -35,3 +38,12 @@ The email is sent by the Google account that authorizes the Apps Script; no
 recipient address, property identifier, email password, API key, or
 service-account key is stored in this repository.
 To disable delivery, delete the trigger in the Apps Script project.
+
+## Add a recipient to an existing automation
+
+Replace the deployed `Code.gs` with this version, then add the additional email
+address as `REPORT_CC_EMAIL` in Project Settings → Script properties. Keep
+`REPORT_RECIPIENT_EMAIL` unchanged. The existing daily trigger will use the new
+copy recipient on its next monthly send; no extra trigger is needed. Run
+`sendTestAnalyticsEmail` once to verify both recipients receive the same report.
+Updating the GitHub repository does not update a deployed Apps Script project.
