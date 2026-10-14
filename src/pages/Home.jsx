@@ -1,232 +1,227 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { ArrowRight, Play, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import heroBg from '../assets/hero.jpg';
+import heroBand from '../assets/home/hero-band.webp';
+import heroDrums from '../assets/home/hero-drums.webp';
+import heroGuitar from '../assets/home/hero-guitar.webp';
+import stage1 from '../assets/home/stage-1.webp';
+import stage2 from '../assets/home/stage-2.webp';
+import stage3 from '../assets/home/stage-3.webp';
+import stage4 from '../assets/home/stage-4.webp';
+import stage5 from '../assets/home/stage-5.webp';
+import stage6 from '../assets/home/stage-6.webp';
+import stage7 from '../assets/home/stage-7.webp';
+import stage8 from '../assets/home/stage-8.webp';
+import stage9 from '../assets/home/stage-9.webp';
+import stage10 from '../assets/home/stage-10.webp';
+import VideoReel from '../components/VideoReel';
+import InstrumentPicker from '../components/InstrumentPicker';
+import FeeExplorer from '../components/FeeExplorer';
+import Faq from '../components/Faq';
+import { TrialButton, TextLink, ClosingCTA, SectionHead } from '../components/ui';
+import { ArrowIcon, CalendarIcon, PinIcon } from '../components/icons';
+import { PHONE_DISPLAY, PHONE_TEL } from '../lib/contact';
+import { founder } from '../data/team';
+import { faqItems } from '../data/faq';
+import { nextAce4 } from '../data/nextAce4';
 
-const testimonials = [
-  {
-    id: 1,
-    src: "https://drive.google.com/file/d/1ORgfANzL_HDM2FNJJe8-kjJGa8Y5bjOR/preview",
-    name: "Sahnjaayz",
-    instrument: "Drums",
-    tenure: "⏱ 4 years with us"
-  },
-  {
-    id: 2,
-    src: "https://drive.google.com/file/d/1bvQYk7DzgKA_xNmo_-6MSYV_OfdxAV1E/preview",
-    name: "Athaliya",
-    instrument: "Guitar",
-    tenure: "⏱ 2 years with us"
-  },
+const stageRows = [
+  [
+    { src: stage1, alt: 'Two guitarists at JD.Music Live Concert 3.0', tag: 'Live Concert 3.0' },
+    { src: stage2, alt: 'Singer and guitarist at Open Day 2025', tag: 'Open Day 2025' },
+    { src: stage3, alt: 'Drummer at Live Concert 3.0', tag: 'Live Concert 3.0' },
+    { src: stage4, alt: 'Keyboard player at Open Day 2025', tag: 'Open Day 2025' },
+    { src: stage5, alt: 'Acoustic guitarist singing at Live Concert 3.0', tag: 'Live Concert 3.0' },
+  ],
+  [
+    { src: stage6, alt: 'Band performing at JD.Music Live Concert 3.1', tag: 'Live Concert 3.1' },
+    { src: stage7, alt: 'Keyboard player at Open Day 2025', tag: 'Open Day 2025' },
+    { src: stage8, alt: 'Full band on stage at Live Concert 3.0', tag: 'Live Concert 3.0' },
+    { src: stage9, alt: 'Young drummer at Live Concert 3.0', tag: 'Live Concert 3.0' },
+    { src: stage10, alt: 'Guitar, vocals and keys trio at Live Concert 3.0', tag: 'Live Concert 3.0' },
+  ],
 ];
 
-const TestimonialCard = ({ src, name, instrument, tenure, isActive, onPlayClick }) => (
-  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full">
-    <div className="relative aspect-video bg-gray-900">
-      {isActive ? (
-        <iframe
-          src={src}
-          title="Video Testimonial"
-          allow="autoplay"
-          allowFullScreen
-          className="absolute inset-0 w-full h-full border-0"
-        />
-      ) : (
-        <div
-          onClick={onPlayClick}
-          className="absolute inset-0 w-full h-full bg-black/90 flex flex-col items-center justify-center cursor-pointer p-4 group select-none text-center"
-        >
-          <div className="w-14 h-14 rounded-full bg-jd-burgundy text-white flex items-center justify-center mb-3 shadow-lg group-hover:scale-110 transition-transform duration-300">
-            <svg className="w-5 h-5 fill-current translate-x-0.5" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </div>
-          <span className="text-xs text-white bg-jd-burgundy/80 px-3 py-1 rounded-full font-bold tracking-wider mb-1">
-            Now watching: {name}
-          </span>
-          <span className="text-[10px] text-amber-100/90 font-medium uppercase tracking-widest">
-            {instrument}
-          </span>
-        </div>
-      )}
-    </div>
-    <div className="p-4 border-t border-gray-200 flex-grow">
-      <p className="font-bold text-jd-black text-base mb-1">{name}</p>
-      <p className="text-jd-burgundy text-xs font-medium uppercase tracking-widest mb-2">{instrument}</p>
-      <span className="text-xs text-gray-600 bg-gray-100 rounded-full px-3 py-1">{tenure}</span>
-    </div>
-  </div>
-);
+const facts = [
+  { label: 'Where', big: 'Kajang · KL · Online', small: 'Kajang home studio, Sri Hartamas studio, online lessons or limited home visits.', to: '/contact#where', go: 'Locations' },
+  { label: 'Who', big: 'All ages', small: 'Young children to adults. Complete beginners and returning players welcome.', to: '/about#teachers', go: 'Meet the teachers' },
+  { label: 'Fees', big: 'From RM45', small: 'Per 30-min lesson, or RM150 a month with Academy Membership in Kajang.', to: '#fees', go: 'See fees' },
+  { label: 'Start', big: 'Trial first', small: 'Message us on WhatsApp, pick a trial slot, come and play. Instruments provided.', to: '#start', go: 'How it works' },
+];
 
+const pillars = [
+  { title: 'Songs you love, first', text: 'Lessons are hands-on and performance-based: fundamentals learned through the music you actually want to play.' },
+  { title: 'Built for beginners', text: 'Personal attention at a pace that feels comfortable, for first-timers, casual learners and people returning after a break. No instrument needed to start.' },
+  { title: 'A stage when you’re ready', text: 'Academy concerts, open days and showcases give students something to work towards, without performance stress.' },
+];
 
-const Home = () => {
-  const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0);
-  const [activeVideoId, setActiveVideoId] = useState(null);
-  const testimonialScrollRef = useRef(null);
-
-  const handleTestimonialScroll = (e) => {
-    const container = e.currentTarget;
-    const child = container.children[0];
-    if (!child) return;
-
-    const itemWidth = child.offsetWidth + 24;
-    const scrollLeft = container.scrollLeft;
-
-    const index = Math.round(scrollLeft / itemWidth);
-    setActiveTestimonialIndex(Math.min(Math.max(index, 0), testimonials.length - 1));
-  };
-
-  return (
-    <div className="w-full bg-white text-jd-black">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex flex-col items-center justify-center min-h-[90vh]">
-        {/* Blurred background image */}
-        <img
-          src={heroBg}
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover scale-110"
-        />
-        {/* White gradient overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/55 via-white/45 to-white/55"></div>
-        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif leading-tight mb-8 text-jd-black">
-            MAKING MUSIC YOUR <br /> <span className="italic text-jd-burgundy">FAVORITE HOUR</span>
-          </h1>
-          <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Fun, stress-free music lessons in Kajang tailored to your style. Learn guitar, piano, drums, or vocals from friendly instructors who make every class inspiring.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="https://app.aoneschools.com/public/school/U2FsdGVkX199XQhZvkiBsMOriWUIFAJsDxv0wNjtOi1dpgzrFQSLN%252FnTCm9fokJr/online-student-registration"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-jd-burgundy text-white text-lg font-bold hover:bg-red-900 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
-            >
-              Start Your Musical Journey <ArrowRight size={20} />
-            </a>
-            <a
-              href="tel:0192139210"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white border-2 border-jd-burgundy text-jd-burgundy text-lg font-bold hover:bg-red-50 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
-            >
-              <Phone size={20} /> Call to Inquire
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* About Us Section */}
-      <section className="py-24 bg-jd-burgundy text-white">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-serif mb-6">Fall in love with playing, <span className="text-amber-100 italic">your way</span></h2>
-          <p className="max-w-3xl mx-auto text-lg text-white/90 mb-10 leading-relaxed">
-            We believe music lessons in Kajang should build confidence, not performance stress. As Kajang's premier music academy, we focus on deep student-teacher relationships, creating a comfortable space where instructors become mentors and friends.
-          </p>
-          <Link to="/about" className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-white text-jd-burgundy font-bold hover:bg-gray-100 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
-            Discover About Us <ArrowRight size={18} />
-          </Link>
-        </div>
-      </section>
-
-      {/* Student Life (Testimonials & Videos) Section */}
-      <section className="py-24 bg-white relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-jd-burgundy/20 blur-[120px] rounded-full pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
-          <div className="mb-16 text-center">
-            <h2 className="text-xs font-bold tracking-widest text-jd-burgundy mb-4 uppercase">
-              Real Journeys & Progress
-            </h2>
-            <h2 className="text-4xl md:text-5xl font-serif text-jd-black">
-              See Our Students <span className="text-jd-burgundy italic">in Action</span>
-            </h2>
-          </div>
-
-          {/* Desktop View: 2 Video Iframes */}
-          <div className="hidden md:grid md:grid-cols-2 gap-8 mb-12 max-w-5xl mx-auto">
-            {testimonials.map((t) => (
-              <TestimonialCard
-                key={t.id}
-                src={t.src}
-                name={t.name}
-                instrument={t.instrument}
-                tenure={t.tenure}
-                isActive={activeVideoId === t.id}
-                onPlayClick={() => setActiveVideoId(t.id)}
-              />
-            ))}
-          </div>
-
-          {/* Mobile View: Infinite Swipeable Track */}
-          <div className="block md:hidden mb-12 -mx-6 px-6">
-            <div
-              ref={testimonialScrollRef}
-              onScroll={handleTestimonialScroll}
-              className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"
-            >
-              {testimonials.map((t, i) => (
-                <div
-                  key={i}
-                  className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center"
-                >
-                  <TestimonialCard
-                    src={t.src}
-                    name={t.name}
-                    instrument={t.instrument}
-                    tenure={t.tenure}
-                    isActive={activeVideoId === t.id}
-                    onPlayClick={() => setActiveVideoId(t.id)}
-                  />
-                </div>
-              ))}
-            </div>
-            {/* Pagination Indicators */}
-            <div className="flex justify-center gap-2 mt-4">
-              {testimonials.map((_, i) => (
-                <span
-                  key={i}
-                  className={`w-2.5 h-2.5 rounded-full transition-colors duration-250 ${i === activeTestimonialIndex ? 'bg-jd-burgundy' : 'bg-gray-200'}`}
-                />
-              ))}
-            </div>
-          </div>
-
-          <Link to="/student-life" className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-jd-burgundy text-white font-bold hover:bg-red-900 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
-            Explore Full Student Life <ArrowRight size={18} />
-          </Link>
-        </div>
-      </section>
-
-      {/* Pricing & FAQ Section */}
-      <section className="py-24 bg-jd-burgundy text-white">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-xs font-bold tracking-widest text-white/70 mb-4 uppercase">Investment</h2>
-          <h2 className="text-4xl md:text-5xl font-serif mb-6">Tuition & <span className="text-amber-100 italic">Common Questions</span></h2>
-          <p className="max-w-3xl mx-auto text-lg text-white/90 mb-10 leading-relaxed">
-            Whether you want to learn in-person or online, we offer straightforward, stress-free lesson plan pricing tailored to your schedule.
-          </p>
-          <Link to="/pricing-faq" className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-white text-jd-burgundy font-bold hover:bg-gray-100 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
-            View Pricing & FAQ <ArrowRight size={18} />
-          </Link>
-        </div>
-      </section>
-
-      {/* Contact Us Section */}
-      <section className="py-24 bg-white border-t border-gray-200">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-serif text-jd-black mb-6">
-            Ready to <span className="text-jd-burgundy italic">Play?</span>
-          </h2>
-          <p className="text-lg text-gray-600 mb-10 leading-relaxed">
-            Connect directly with Jeevan to learn more about lesson schedules, locations, and open trial slots.
-          </p>
-          <Link to="/contact" className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-jd-burgundy text-white font-bold hover:bg-red-900 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
-            Contact Us Now <ArrowRight size={18} />
-          </Link>
-        </div>
-      </section>
-
-    </div>
+function Fact({ fact }) {
+  const content = (
+    <>
+      <span className="fact-label">{fact.label}</span>
+      <span className="fact-big">{fact.big}</span>
+      <span className="fact-small">{fact.small}</span>
+      <span className="fact-go">{fact.go} <ArrowIcon /></span>
+    </>
   );
-};
+  return fact.to.startsWith('#')
+    ? <a className="fact" href={fact.to}>{content}</a>
+    : <Link className="fact" to={fact.to}>{content}</Link>;
+}
+
+const Home = () => (
+  <>
+    {/* 1. Hero */}
+    <section className="hero" aria-labelledby="hero-title">
+      <div className="wrap hero-grid">
+        <div className="hero-copy">
+          <p className="hero-kicker">Music lessons in Kajang since 2020</p>
+          <h1 id="hero-title" className="hero-title">
+            <span className="line"><span>Play the songs</span></span>
+            <span className="line"><span>you’ve always</span></span>
+            <span className="line"><span>wanted to.</span></span>
+          </h1>
+          <p className="hero-sub">Guitar, piano, drum and vocal classes for kids, teens and adults in Kajang, Sri Hartamas and online.</p>
+          <div className="hero-cta">
+            <TrialButton size="xl" watch />
+            <span className="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          </div>
+          <p className="hero-note">Opens WhatsApp. Or call <a href={PHONE_TEL}>{PHONE_DISPLAY}</a></p>
+        </div>
+        <div className="hero-stack">
+          <figure className="shot shot-main"><img src={heroBand} alt="JD. Music Academy band performing on keyboard, drums, vocals and guitar" width="2000" height="1125" fetchPriority="high" /></figure>
+          <figure className="shot shot-drums"><img src={heroDrums} alt="Drummer performing at Open Day 2025" width="1200" height="800" /></figure>
+          <figure className="shot shot-guitar"><img src={heroGuitar} alt="Guitarists singing on stage at Open Day 2025" width="1200" height="800" /></figure>
+          <p className="stack-tag">Open Day 2025</p>
+        </div>
+      </div>
+    </section>
+
+    <div className="ticker" aria-hidden="true">
+      <div className="ticker-track">
+        {[0, 1].map(copy => ['Guitar', 'Piano', 'Drums', 'Vocals', 'Bass', 'Ukulele', 'Since 2020'].map(word => <span key={word + copy}>{word}</span>))}
+      </div>
+    </div>
+
+    {/* 2. Quick facts: where, who, fees, how to start */}
+    <section className="facts" aria-label="Quick facts">
+      <div className="wrap facts-grid">
+        {facts.map((fact, i) => (
+          <div key={fact.label} data-reveal style={{ '--i': i }} className="fact-wrap"><Fact fact={fact} /></div>
+        ))}
+      </div>
+    </section>
+
+    {/* 3. Real student videos */}
+    <VideoReel>
+      <TextLink to="/student-life">More student stories and photos</TextLink>
+    </VideoReel>
+
+    {/* 4. Why JD? */}
+    <section className="section why" aria-labelledby="why-title">
+      <div className="wrap why-grid">
+        <div className="founder-card">
+          <figure className="founder-photo" data-reveal>
+            <img src={founder.image} alt={`${founder.name}, director and founder of JD. Music Academy`} width="452" height="452" loading="lazy" />
+          </figure>
+          <figure className="founder-quote" data-reveal style={{ '--i': 2 }}>
+            <blockquote>Nurture passion, not pressure.</blockquote>
+            <figcaption>{founder.name}, {founder.role}</figcaption>
+          </figure>
+        </div>
+        <div className="why-copy" data-reveal>
+          <h2 id="why-title" className="display md">Why JD?</h2>
+          <p className="lede">Jeevan started JD. Music Academy in 2020 to offer something different: a personal, performance-based approach that helps students fall in love with music while building solid skills. Our teachers become mentors and friends.</p>
+          <ul className="pillars">
+            {pillars.map((p, i) => (
+              <li key={p.title}><b aria-hidden="true">{i + 1}</b><h3>{p.title}</h3><p>{p.text}</p></li>
+            ))}
+          </ul>
+          <div className="section-foot">
+            <TextLink to="/about">Meet Jeevan and the teachers</TextLink>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 5. Instrument selector */}
+    <section id="instruments" className="section picker" aria-labelledby="picker-title">
+      <div className="wrap">
+        <div className="head" data-reveal>
+          <h2 id="picker-title" className="display">Pick your instrument</h2>
+          <p className="on-dark">One-to-one music lessons in Kajang, Sri Hartamas and online. Tap a teacher to read their profile.</p>
+        </div>
+        <InstrumentPicker />
+        <p className="aside" data-reveal>Ukulele lessons in Kajang too. Just ask when you message.</p>
+      </div>
+    </section>
+
+    {/* 6. Performance */}
+    <section className="section stage" aria-labelledby="stage-title">
+      <div className="wrap">
+        <SectionHead id="stage-title" title="Then you get a stage">
+          <p>Live concerts, open days and showcases, whenever you’re ready for one.</p>
+        </SectionHead>
+      </div>
+      <div className="marquee" data-reveal>
+        {stageRows.map((row, r) => (
+          <ul key={r} className={`marquee-row${r ? ' reverse' : ''}`}>
+            {[...row, ...row].map((photo, i) => (
+              <li key={i} className={i >= row.length ? 'dup' : undefined} aria-hidden={i >= row.length || undefined}>
+                <img src={photo.src} alt={i >= row.length ? '' : photo.alt} width="900" height="600" loading="lazy" />
+                <span>{photo.tag}</span>
+              </li>
+            ))}
+          </ul>
+        ))}
+      </div>
+      <div className="wrap">
+        <Link to="/events-competitions" className="feature" data-reveal>
+          <figure className="feature-img"><img src={nextAce4.cover.src} alt={nextAce4.cover.alt} width="1800" height="1350" loading="lazy" /></figure>
+          <div className="feature-body">
+            <span className="tag">Latest showcase</span>
+            <h3>{nextAce4.title}</h3>
+            <ul className="meta-list">
+              <li><CalendarIcon /> {nextAce4.date}</li>
+              <li><PinIcon /> {nextAce4.location}</li>
+            </ul>
+            <p>Students on stage, with trophies and certificates to show for it. See the photos, the highlight video and what’s on next.</p>
+            <span className="text-link">Events &amp; competitions <ArrowIcon /></span>
+          </div>
+        </Link>
+        <div className="section-foot">
+          <TextLink to="/student-life#gallery">Browse every concert gallery</TextLink>
+        </div>
+      </div>
+    </section>
+
+    {/* 7. Fees */}
+    <section id="fees" className="section fees" aria-labelledby="fees-title">
+      <div className="wrap">
+        <SectionHead id="fees-title" title="Simple pricing">
+          <p>One-to-one lessons, once a week. Pick a studio and lesson length.</p>
+        </SectionHead>
+        <FeeExplorer />
+        <div className="section-foot">
+          <TextLink to="/pricing-faq">Group lessons, school &amp; church programmes</TextLink>
+        </div>
+      </div>
+    </section>
+
+    {/* 8. FAQ */}
+    <section id="faq" className="section faq" aria-labelledby="faq-title">
+      <div className="wrap faq-grid">
+        <div className="head" data-reveal>
+          <h2 id="faq-title" className="display">Quick answers</h2>
+          <TextLink to="/pricing-faq#faq">All questions</TextLink>
+        </div>
+        <Faq items={faqItems.filter(item => item.home)} />
+      </div>
+    </section>
+
+    {/* 9. Close */}
+    <div id="start">
+      <ClosingCTA />
+    </div>
+  </>
+);
 
 export default Home;

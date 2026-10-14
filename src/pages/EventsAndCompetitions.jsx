@@ -1,318 +1,143 @@
-import React, { useState, useEffect } from 'react';
-import { Calendar, Music, ArrowRight, Sparkles, MapPin, X, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useCallback, useState } from 'react';
 import guitarClasses1 from '../assets/events/guitarclasses1.webp';
 import guitarClasses2 from '../assets/events/guitarclasses2.webp';
+import PhotoGrid from '../components/PhotoGrid';
+import Lightbox from '../components/Lightbox';
+import { PageHero, ClosingCTA, SectionHead, TextLink } from '../components/ui';
+import { CalendarIcon, ChatIcon, ChevronLeft, ChevronRight, InstagramIcon, PinIcon } from '../components/icons';
+import { GROUP_GUITAR_URL, SOCIALS } from '../lib/contact';
 import { nextAce4 } from '../data/nextAce4';
 
-const whatsappUrl = "https://wa.me/60192139210?text=" + encodeURIComponent("Hi Jeevan! I came from your website and I am interested in your group guitar lessons and I would like to ask more about it!");
+const groupGuitar = {
+  title: 'Group Guitar Classes',
+  date: 'Every Saturday 2–3pm or Sunday 3–4pm',
+  location: 'Kajang Home Studio',
+  description: 'Learn guitar in a fun group setting. Master chords, basslines and rhythm techniques while jamming your favourite songs alongside other musicians.',
+  posters: [
+    { src: guitarClasses1, alt: 'Group Guitar Classes poster, page 1' },
+    { src: guitarClasses2, alt: 'Group Guitar Classes poster, page 2' },
+  ],
+};
 
-const eventsData = [
-  {
-    id: 1,
-    title: "Group Guitar Classes",
-    type: "current",
-    date: "Every Sat 2-3pm OR Sun 3-4pm",
-    location: "Kajang Home Studio",
-    description: "Learn guitar in a fun group setting! Master chords, basslines, and rhythm techniques while jamming your favorite songs alongside other musicians.",
-    posters: [guitarClasses1, guitarClasses2],
-    posterPlaceholder: "bg-neutral-200",
-    regLink: whatsappUrl
-  }
-];
+const instagram = SOCIALS.find(s => s.name === 'Instagram');
 
-const PosterCarousel = ({ images, title, onImageClick }) => {
+function PosterCarousel({ posters }) {
   const [index, setIndex] = useState(0);
-  const [aspectRatio, setAspectRatio] = useState(null);
-
-  // Preload every poster up front so switching slides never triggers a fresh,
-  // un-sized network fetch that collapses the layout mid-load.
-  useEffect(() => {
-    let cancelled = false;
-    images.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => {
-        if (!cancelled) {
-          setAspectRatio((prev) => prev ?? img.naturalWidth / img.naturalHeight);
-        }
-      };
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [images]);
-
-  const goTo = (i) => {
-    setIndex((i + images.length) % images.length);
-  };
-
-  const currentImage = images[index];
+  const [zoom, setZoom] = useState(false);
+  const go = useCallback(dir => setIndex(i => (i + dir + posters.length) % posters.length), [posters.length]);
+  const close = useCallback(() => setZoom(false), []);
+  const poster = posters[index];
 
   return (
-    <div className="w-full space-y-3">
-      <div
-        className="relative rounded-2xl overflow-hidden shadow-md bg-gray-50 group"
-        style={aspectRatio ? { aspectRatio } : undefined}
-      >
-        <img
-          src={currentImage}
-          alt={`${title} poster ${index + 1}`}
-          className={`w-full block cursor-pointer hover:scale-105 transition-transform duration-700 ${aspectRatio ? 'h-full object-cover' : 'h-auto'}`}
-          onClick={() => onImageClick(currentImage)}
-        />
-
-        {images.length > 1 && (
-          <>
-            <button
-              onClick={() => goTo(index - 1)}
-              className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 hover:bg-white text-jd-black shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
-              aria-label="Previous poster"
-            >
-              <ChevronLeft size={20} />
-            </button>
-            <button
-              onClick={() => goTo(index + 1)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 hover:bg-white text-jd-black shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
-              aria-label="Next poster"
-            >
-              <ChevronRight size={20} />
-            </button>
-          </>
-        )}
+    <div className="poster" data-reveal>
+      <div className="poster-frame">
+        <button type="button" className="zoom" onClick={() => setZoom(true)} aria-label={`Enlarge: ${poster.alt}`}>
+          <img key={poster.src} src={poster.src} alt="" width="794" height="1123" />
+        </button>
       </div>
-
-      {images.length > 1 && (
-        <div className="flex justify-center gap-2">
-          {images.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i)}
-              className={`h-2 rounded-full transition-all ${i === index ? 'w-6 bg-jd-burgundy' : 'w-2 bg-gray-300 hover:bg-gray-400'}`}
-              aria-label={`Go to poster ${i + 1}`}
-            />
-          ))}
+      {posters.length > 1 && (
+        <div className="poster-nav">
+          <button type="button" className="reel-btn" onClick={() => go(-1)} aria-label="Previous poster"><ChevronLeft /></button>
+          <span className="poster-dots" aria-live="polite">
+            {posters.map((p, i) => <span key={p.src} className={i === index ? 'on' : undefined} />)}
+            <span className="sr-only">Poster {index + 1} of {posters.length}</span>
+          </span>
+          <button type="button" className="reel-btn" onClick={() => go(1)} aria-label="Next poster"><ChevronRight /></button>
         </div>
       )}
+      {zoom && <Lightbox items={posters} index={index} onClose={close} onNavigate={go} label="Poster viewer" />}
     </div>
   );
-};
+}
 
-const EventsAndCompetitions = () => {
-  const [lightboxImage, setLightboxImage] = useState(null);
-  const currentEvents = eventsData.filter(event => event.type === 'current');
-  const upcomingEvents = eventsData.filter(event => event.type === 'upcoming');
+const EventsAndCompetitions = () => (
+  <>
+    <PageHero
+      kicker="Events & Competitions"
+      lines={['Stages to', 'aim for.']}
+      lead="Weekend group classes, concerts and showcases: real performance opportunities for students at every level."
+      photos={[
+        { ...nextAce4.cover, width: 1800, height: 1350 },
+        { src: nextAce4.photos[1].src, alt: nextAce4.photos[1].alt, width: 1350, height: 1800, position: '50% 30%' },
+      ]}
+      tag="ACE 4.0"
+    >
+      <a className="btn btn-spot btn-xl" href="#now">What’s on now</a>
+      <a className="btn btn-ghost-light" href="#ace">ACE 4.0 highlights</a>
+    </PageHero>
 
-  return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Header Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        {/* Soft Burgundy Blur Background */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-jd-burgundy/5 blur-[120px] rounded-full pointer-events-none"></div>
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl md:text-7xl font-serif text-jd-black mb-6 tracking-tight">
-            Events & <span className="text-jd-burgundy italic">Competitions</span>
-          </h1>
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-            Experience the thrill of live performance. Discover our ongoing workshops and prepare for upcoming showcases designed to elevate your musical journey.
-          </p>
-        </div>
-      </section>
-
-      {/* SECTION A: Happening Now / Ongoing */}
-      <section className="py-24 bg-jd-burgundy text-white relative overflow-hidden">
-        {/* Soft White Blur Background on Red */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white/5 blur-[120px] rounded-full pointer-events-none"></div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-4 mb-12 border-b border-amber-100/20 pb-4">
-            <div className="w-3 h-3 rounded-full bg-amber-400 animate-pulse shadow-[0_0_8px_rgba(251,191,36,0.8)]"></div>
-            <h2 className="text-3xl md:text-4xl font-serif text-white">Happening Now</h2>
+    {/* Happening now */}
+    <section id="now" className="section on-wine" aria-labelledby="now-title">
+      <div className="wrap">
+        <SectionHead id="now-title" title="Happening now">
+          <p className="on-dark">Registration is open. Message us to save a place.</p>
+        </SectionHead>
+        <article className="event">
+          <PosterCarousel posters={groupGuitar.posters} />
+          <div className="event-body" data-reveal>
+            <span className="live">Ongoing registration</span>
+            <h3>{groupGuitar.title}</h3>
+            <ul className="meta-list">
+              <li><CalendarIcon /> {groupGuitar.date}</li>
+              <li><PinIcon /> {groupGuitar.location}</li>
+            </ul>
+            <p>{groupGuitar.description}</p>
+            <a className="btn btn-spot" href={GROUP_GUITAR_URL} target="_blank" rel="noopener noreferrer"><ChatIcon /> Ask about group guitar</a>
           </div>
+        </article>
+      </div>
+    </section>
 
-          <div className="space-y-16">
-            {currentEvents.length > 0 ? (
-              currentEvents.map((event) => (
-                <div key={event.id} className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center lg:items-start bg-white rounded-3xl p-6 md:p-10 shadow-2xl border border-gray-100 text-jd-black">
-                  {/* Left: Large Visual Poster Slider */}
-                  <div className="w-full lg:w-1/2">
-                    {event.posters && event.posters.length > 0 ? (
-                      <PosterCarousel images={event.posters} title={event.title} onImageClick={setLightboxImage} />
-                    ) : (
-                      <div className={`rounded-2xl overflow-hidden shadow-md min-h-[300px] flex items-center justify-center bg-gray-100 text-gray-400 ${event.posterPlaceholder || ''}`}>
-                        <Music size={64} opacity={0.2} />
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Right: Details & CTA */}
-                  <div className="w-full lg:w-1/2 space-y-6">
-                    <span className="inline-block px-4 py-1.5 bg-red-50 text-jd-burgundy rounded-full text-sm font-semibold tracking-wide uppercase">
-                      Ongoing Registration
-                    </span>
-                    <h3 className="text-3xl md:text-4xl font-bold text-jd-black leading-tight">
-                      {event.title}
-                    </h3>
-
-                    <div className="space-y-3 text-gray-600 font-medium">
-                      <div className="flex items-center gap-3">
-                        <Calendar className="text-jd-burgundy" size={20} />
-                        <span>{event.date}</span>
-                      </div>
-                      {event.location && (
-                        <div className="flex items-center gap-3">
-                          <MapPin className="text-jd-burgundy" size={20} />
-                          <span>{event.location}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    <p className="text-gray-600 text-lg leading-relaxed">
-                      {event.description}
-                    </p>
-
-                    <div className="pt-6">
-                      <a
-                        href={event.regLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-jd-burgundy text-white rounded-full font-medium hover:bg-red-900 transition-colors shadow-lg hover:shadow-xl w-full sm:w-auto"
-                      >
-                        <MessageCircle size={20} /> Chat on WhatsApp
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p className="text-white/70 italic">No ongoing events at the moment.</p>
-            )}
+    {/* Upcoming */}
+    <section className="section" aria-labelledby="upcoming-title">
+      <div className="wrap">
+        <SectionHead id="upcoming-title" title="Coming up" />
+        <div className="empty-state" data-reveal>
+          <span className="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          <div>
+            <h3>The next stage is being built</h3>
+            <p>We’re tuning up our next big event. Follow us on Instagram for early announcements, or ask Jeevan when you message.</p>
+            <p><a className="text-link" href={instagram.url} target="_blank" rel="noopener noreferrer"><InstagramIcon /> {instagram.handle}</a></p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      {/* SECTION B: Upcoming Events & Competitions */}
-      <section className="py-24 bg-white text-jd-black relative overflow-hidden border-t border-gray-100">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[300px] bg-jd-burgundy/5 blur-[120px] rounded-full pointer-events-none"></div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-4 mb-12 border-b border-gray-200 pb-4">
-            <h2 className="text-3xl md:text-4xl font-serif text-jd-black">Upcoming Events</h2>
+    {/* Past highlight: ACE 4.0 */}
+    <section id="ace" className="section on-white" aria-labelledby="ace-title">
+      <div className="wrap">
+        <div className="head" data-reveal>
+          <div>
+            <p className="eyebrow">Past highlight · completed</p>
+            <h2 id="ace-title" className="display md">{nextAce4.title}</h2>
           </div>
-
-          {upcomingEvents.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              {upcomingEvents.map((event) => (
-                <div key={event.id} className="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-md hover:shadow-lg transition-shadow group flex flex-col h-full">
-                  {/* Poster Area if available */}
-                  {event.poster && (
-                    <div 
-                      className="w-full bg-gray-50 flex items-center justify-center overflow-hidden border-b border-gray-100 flex-shrink-0 cursor-pointer"
-                      onClick={() => setLightboxImage(event.poster)}
-                    >
-                      <img src={event.poster} alt={event.title} className="w-full h-auto block group-hover:scale-102 transition-transform duration-500" />
-                    </div>
-                  )}
-                  {/* Content Area */}
-                  <div className="p-8 flex flex-col justify-between flex-grow">
-                    <div>
-                      <div className="flex justify-between items-start mb-6">
-                        <span className="px-3 py-1 bg-red-50 text-jd-burgundy rounded-full text-sm font-semibold uppercase">
-                          {event.badge || "Coming Soon"}
-                        </span>
-                        <Calendar className="text-gray-400 group-hover:text-jd-burgundy transition-colors" size={24} />
-                      </div>
-                      <h3 className="text-2xl font-bold text-jd-black mb-3">{event.title}</h3>
-                      <p className="text-jd-burgundy font-medium mb-4">{event.date}</p>
-                      <p className="text-gray-600 mb-8 line-clamp-3">{event.description}</p>
-                    </div>
-
-                    {event.regLink && (
-                      <a
-                        href={event.regLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center text-jd-burgundy font-semibold hover:text-red-900 transition-colors self-start mt-auto"
-                      >
-                        {event.ctaLabel || "Learn More"} <ArrowRight size={16} className="ml-2" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            /* EMPTY STATE FALLBACK */
-            <div className="bg-gray-50 rounded-3xl p-12 text-center border border-gray-100">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white shadow-sm mb-6 text-jd-burgundy">
-                <Music size={32} />
-              </div>
-              <h3 className="text-2xl font-serif text-jd-black mb-4">More stages being built...</h3>
-              <p className="text-gray-600 max-w-xl mx-auto text-lg leading-relaxed">
-                Stay tuned! We are currently tuning up our next big stage event. Check back soon or follow our social media channels for early announcements.
-              </p>
-            </div>
-          )}
+          <ul className="meta-list ace-meta">
+            <li><CalendarIcon /> {nextAce4.date}</li>
+            <li><PinIcon /> {nextAce4.location}</li>
+          </ul>
         </div>
-      </section>
-      <section className="py-24 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-serif text-jd-black mb-10">Past Competition Highlights</h2>
-          <div className="bg-white rounded-3xl p-6 md:p-10 shadow-md border border-gray-100">
-            <span className="inline-block px-3 py-1 bg-red-50 text-jd-burgundy rounded-full text-sm font-semibold uppercase mb-4">Completed</span>
-            <h3 className="text-3xl font-bold text-jd-black mb-4">{nextAce4.title}</h3>
-            <div className="flex flex-wrap gap-x-6 gap-y-3 text-gray-600 mb-5">
-              <p className="flex items-center gap-2"><Calendar size={20} className="text-jd-burgundy" />{nextAce4.date}</p>
-              <p className="flex items-center gap-2"><MapPin size={20} className="text-jd-burgundy" />{nextAce4.location}</p>
-            </div>
-            <p className="text-gray-600 text-lg mb-8">{nextAce4.description}</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {nextAce4.photos.map((photo) => (
-                <button key={photo.src} type="button" onClick={() => setLightboxImage(photo.src)} aria-label={`Enlarge photo: ${photo.alt}`} className="rounded-2xl overflow-hidden bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-jd-burgundy">
-                  <img src={photo.src} alt={photo.alt} loading="lazy" className="w-full h-72 object-contain hover:scale-105 transition-transform duration-300" />
-                </button>
-              ))}
-            </div>
-            <div className="mt-10">
-              <h4 className="text-xl font-bold text-jd-black mb-4">A Moment from ACE 4.0</h4>
-              <video controls playsInline preload="none" poster={nextAce4.videoPoster} aria-label="Who Is The Next ACE 4.0 video highlight" className="w-full max-w-sm max-h-[70vh] rounded-2xl bg-black mx-auto">
-                <source src={nextAce4.video} type="video/mp4" />
-                Your browser does not support video playback. <a href={nextAce4.video}>Download the video</a>.
-              </video>
+        <p className="lede" data-reveal>{nextAce4.description}</p>
+        <div className="ace-photos" data-reveal>
+          <PhotoGrid items={nextAce4.photos} label="ACE 4.0 photos" />
+        </div>
+        <div className="ace-video" data-reveal>
+          <video controls playsInline preload="none" poster={nextAce4.videoPoster.src} aria-label="Who Is The Next ACE 4.0 video highlight">
+            <source src={nextAce4.video} type="video/mp4" />
+            Your browser does not support video playback. <a href={nextAce4.video}>Download the video</a>.
+          </video>
+          <div>
+            <h3>A moment from ACE 4.0</h3>
+            <p>Press play for the highlight from the day.</p>
+            <div className="section-foot">
+              <TextLink to="/student-life#gallery">More concerts and competitions in the gallery</TextLink>
             </div>
           </div>
         </div>
-      </section>
-      {/* PREMIUM IMAGE LIGHTBOX MODAL */}
-      {lightboxImage && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md transition-all duration-300 p-4"
-          onClick={() => setLightboxImage(null)}
-        >
-          {/* Close Button */}
-          <button
-            onClick={() => setLightboxImage(null)}
-            className="absolute top-6 right-6 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all shadow-md hover:scale-105"
-            aria-label="Close lightbox"
-          >
-            <X size={24} />
-          </button>
+      </div>
+    </section>
 
-          {/* Main Image Container */}
-          <div
-            className="relative max-h-[85vh] max-w-[90vw] flex flex-col items-center justify-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={lightboxImage}
-              alt="Enlarged poster"
-              className="max-h-[75vh] max-w-full object-contain rounded-2xl border border-white/10 shadow-2xl"
-            />
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
+    <ClosingCTA lines={['Your stage', 'starts here.']} />
+  </>
+);
 
 export default EventsAndCompetitions;

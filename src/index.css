@@ -1,18 +1,5 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply bg-white text-jd-black antialiased font-sans;
-  }
-}
-
-.glow-burgundy {
-  background: radial-gradient(circle, rgba(109,0,26,0.5) 0%, rgba(0,0,0,0) 60%);
-}
-
-.bg-glass {
-  @apply bg-white/5 backdrop-blur-md border border-white/10;
-}
+/* The site's design system lives in styles/site.css (imported after this file). */

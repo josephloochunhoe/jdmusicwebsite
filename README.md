@@ -15,6 +15,24 @@ The build renders all six public routes into full HTML, including titles, descri
 
 Page metadata and the list of public URLs live in `src/site.js`. When adding a page, add both its React route and metadata entry. The build fails if a listed route does not render its content. Set `VITE_SITE_URL` to the actual public HTTPS domain before building if it differs from `https://www.jd-musicacademy.com`. Submit `/sitemap.xml` in Google Search Console after deployment. If replacing an older site, map its existing indexed URLs to the appropriate new pages with permanent redirects before switching the domain.
 
+## Design system and content
+
+The 2026 redesign carries the stage identity of the new landing page across every route: burgundy `#6D001A` with stage-light amber `#FFB938`, Big Shoulders Display headlines over DM Sans, real performance photography and coordinated motion.
+
+| What | Where |
+| --- | --- |
+| Colours, type, spacing, every component style and all animation | `src/styles/site.css` (tokens in `:root`; motion only inside the `prefers-reduced-motion: no-preference` block) |
+| Fonts (self-hosted, SIL OFL licences alongside) | `public/fonts` |
+| WhatsApp number and prefilled messages, phone, email, socials, registration link | `src/lib/contact.js` |
+| Teachers and bios | `src/data/team.js` |
+| Instrument selector, student videos (Google Drive IDs) | `src/data/lessons.js` |
+| Lesson rates, plan conditions, group and programme prices | `src/data/pricing.js` |
+| FAQ (also feeds the FAQ structured data on `/pricing-faq`) | `src/data/faq.js` |
+| Gallery and ACE 4.0 photos | `src/data/galleryData.js`, `src/data/nextAce4.js` |
+| Shared header, footer, hero, closing call to action | `src/components/` |
+
+Gallery photos are served from `src/assets/gallery-web` (a grid thumbnail and a lightbox-size WebP for each original in `src/assets/gallery`). When adding photos, export a ~760 px `-thumb.webp` and an ~1800 px `.webp`, then add an entry with the thumbnail's width and height. Scroll reveals are added by `src/components/Motion.jsx` after hydration only, so the static HTML is always fully visible; without JavaScript every instrument panel, rate and programme is shown.
+
 ## Google Analytics
 
 The production site uses the existing JD.Music GA4 web stream (`G-3SHJQNBENP`). `VITE_GA_MEASUREMENT_ID` can override it if the property changes later.

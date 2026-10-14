@@ -1,474 +1,61 @@
-import React, { useState, useRef } from 'react';
-import { Image, ArrowRight, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import openDayBand from '../assets/gallery-web/openday2025/openday25_1.webp';
+import openDayKeys from '../assets/gallery-web/openday2025/openday25_9.webp';
+import VideoReel from '../components/VideoReel';
+import PhotoGrid from '../components/PhotoGrid';
+import { PageHero, TrialButton, ClosingCTA, SectionHead, TextLink } from '../components/ui';
 import { galleryCategories, galleryItems } from '../data/galleryData';
 
-const videoTestimonials = [
-  {
-    id: 1,
-    src: "https://drive.google.com/file/d/1ORgfANzL_HDM2FNJJe8-kjJGa8Y5bjOR/preview",
-    name: "Sahnjaayz",
-    instrument: "Drums",
-    tenure: "⏱ 4 years with us"
-  },
-  {
-    id: 2,
-    src: "https://drive.google.com/file/d/1bvQYk7DzgKA_xNmo_-6MSYV_OfdxAV1E/preview",
-    name: "Athaliya",
-    instrument: "Guitar",
-    tenure: "⏱ 2 years with us"
-  },
-  {
-    id: 3,
-    src: "https://drive.google.com/file/d/1d-xArepU9MD-ACsdrgy5-YL83rSRr7la/preview",
-    name: "Hareesh",
-    instrument: "Guitar",
-    tenure: "⏱ 5 months with us"
-  },
-  {
-    id: 4,
-    src: "https://drive.google.com/file/d/1kLiZQxkLiU5O64jjdX-JxPA61qAo7a5W/preview",
-    name: "Andrea",
-    instrument: "Piano",
-    tenure: "⏱ 5 months with us"
-  },
-  {
-    id: 5,
-    src: "https://drive.google.com/file/d/1aJEFAKeUM8KSZU2scc3-IwXH-yYE_n54/preview",
-    name: "Alyssa",
-    instrument: "Guitar",
-    tenure: "⏱ 1 year with us"
-  },
-  {
-    id: 6,
-    src: "https://drive.google.com/file/d/12sIPRYxrMqOELbjJ_b9I6jAQgEmhI-GG/preview",
-    name: "Kamal",
-    instrument: "Drums",
-    tenure: "⏱ 9 months with us"
-  },
-];
+const byCategory = Object.fromEntries(galleryCategories.map(c => [c, galleryItems.filter(item => item.category === c)]));
 
-const TestimonialVideoCard = ({ id, src, name, instrument, tenure, isActive, onPlayClick }) => (
-  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform flex flex-col h-full">
-    <div className="relative aspect-video bg-gray-900">
-      {isActive ? (
-        <iframe
-          src={src}
-          title="Video Testimonial"
-          allow="autoplay"
-          allowFullScreen
-          className="absolute inset-0 w-full h-full border-0"
-        />
-      ) : (
-        <div
-          onClick={onPlayClick}
-          className="absolute inset-0 w-full h-full bg-black/90 flex flex-col items-center justify-center cursor-pointer p-4 group select-none text-center"
-        >
-          <div className="w-14 h-14 rounded-full bg-jd-burgundy text-white flex items-center justify-center mb-3 shadow-lg group-hover:scale-110 transition-transform duration-300">
-            <svg className="w-5 h-5 fill-current translate-x-0.5" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </div>
-          <span className="text-xs text-white bg-jd-burgundy/80 px-3 py-1 rounded-full font-bold tracking-wider mb-1">
-            Now watching: {name}
-          </span>
-          <span className="text-[10px] text-amber-100/90 font-medium uppercase tracking-widest">
-            {instrument}
-          </span>
-        </div>
-      )}
-    </div>
-    <div className="p-4 border-t border-gray-200 flex-grow">
-      <p className="font-bold text-jd-black text-base mb-1">{name}</p>
-      <p className="text-jd-burgundy text-xs font-medium uppercase tracking-widest mb-2">{instrument}</p>
-      <span className="text-xs text-gray-600 bg-gray-100 rounded-full px-3 py-1">{tenure}</span>
-    </div>
-  </div>
-);
-
-// Component structured cleanly for Student Life & Gallery Features
 const StudentLife = () => {
-  // 1. COMPONENT STATE & SCREEN DYNAMICS
-  const [activeCategory, setActiveCategory] = useState(galleryCategories[0]);
-  const [visibleCount, setVisibleCount] = useState(6);
-  const [lightboxImage, setLightboxImage] = useState(null);
-  const [activeVideoId, setActiveVideoId] = useState(null);
-  const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0);
-  const testimonialScrollRef = useRef(null);
-
-  const handleTestimonialScroll = (e) => {
-    const container = e.currentTarget;
-    const child = container.children[0];
-    if (!child) return;
-
-    const itemWidth = child.offsetWidth + 24;
-    const scrollLeft = container.scrollLeft;
-
-    const index = Math.round(scrollLeft / itemWidth);
-    setActiveTestimonialIndex(Math.min(Math.max(index, 0), videoTestimonials.length - 1));
-  };
-
-  // Filtering dynamic grid based on category state
-  const filteredGalleryItems = galleryItems.filter(item => item.category === activeCategory);
-  const displayedItems = filteredGalleryItems.slice(0, visibleCount);
-
-  // Lightbox loop navigation helpers
-  const handlePrevImage = (e) => {
-    e.stopPropagation();
-    if (!lightboxImage) return;
-    const currentIndex = filteredGalleryItems.findIndex(item => item.id === lightboxImage.id);
-    if (currentIndex > 0) {
-      setLightboxImage(filteredGalleryItems[currentIndex - 1]);
-    } else {
-      setLightboxImage(filteredGalleryItems[filteredGalleryItems.length - 1]);
-    }
-  };
-
-  const handleNextImage = (e) => {
-    e.stopPropagation();
-    if (!lightboxImage) return;
-    const currentIndex = filteredGalleryItems.findIndex(item => item.id === lightboxImage.id);
-    if (currentIndex < filteredGalleryItems.length - 1) {
-      setLightboxImage(filteredGalleryItems[currentIndex + 1]);
-    } else {
-      setLightboxImage(filteredGalleryItems[0]);
-    }
-  };
-
-  // Keyboard navigation listener
-  React.useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (!lightboxImage) return;
-      if (e.key === 'Escape') setLightboxImage(null);
-      if (e.key === 'ArrowLeft') handlePrevImage(e);
-      if (e.key === 'ArrowRight') handleNextImage(e);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxImage, filteredGalleryItems]);
-
-  // Dynamic row-multiple calculator
-  const getRowSize = () => {
-    if (typeof window === 'undefined') return 6;
-    const width = window.innerWidth;
-    if (width < 640) return 3;  // Mobile (1 col) -> 3 items initially / load increments
-    if (width < 1024) return 4; // Tablet (2 col) -> 2 rows = 4 items
-    return 6;                   // Desktop (3 col) -> 2 rows = 6 items
-  };
-
-  // Set initial visible count based on active screen size on mount and scroll to top
-  React.useEffect(() => {
-    setVisibleCount(getRowSize());
-    window.scrollTo(0, 0);
-  }, []);
-
-  // Handle resize dynamically to preserve exact row grids
-  React.useEffect(() => {
-    const handleResize = () => {
-      const rowSize = getRowSize();
-      setVisibleCount((prev) => {
-        const currentRows = Math.ceil(prev / rowSize);
-        return Math.max(rowSize, currentRows * rowSize);
-      });
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Handle Category Change & Reset to dynamic 2-row count
-  const handleCategoryChange = (category) => {
-    setActiveCategory(category);
-    setVisibleCount(getRowSize());
-  };
-
-  // 2. CONTENT DATA MODELS
+  const [category, setCategory] = useState(galleryCategories[0]);
+  const [changed, setChanged] = useState(false);
+  const items = byCategory[category];
 
   return (
-    <div className="w-full bg-white text-jd-black">
-      {/* HERO HEADER */}
-      <section className="pt-32 pb-16 bg-white relative overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[300px] bg-jd-burgundy/5 blur-[120px] rounded-full pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
-          <h1 className="text-5xl md:text-7xl font-serif mb-6 text-jd-black leading-tight">
-            Student <span className="text-jd-burgundy italic">Life</span>
-          </h1>
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            See what our students are up to! From cool events to fun classroom moments, here's a peek into life at our academy.
-          </p>
-        </div>
-      </section>
-      {/* PHOTO GALLERY FILTER BAR & DYNAMIC IMAGE GRID */}
-      <section className="py-24 bg-jd-burgundy text-white relative overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[300px] bg-white/5 blur-[120px] rounded-full pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="mb-16 text-center">
-            <h2 className="text-3xl md:text-4xl font-serif text-white">
-              Moments of <span className="text-amber-100 italic">Inspiration</span>
-            </h2>
-            <p className="text-white/90 max-w-2xl mx-auto mt-4 text-sm md:text-base leading-relaxed">
-              Flip through our favorite moments! Take a look at our classes and stage performances.
-            </p>
-          </div>
+    <>
+      <PageHero
+        kicker="Student Life"
+        lines={['Lessons, then', 'the spotlight.']}
+        lead="Classroom moments, concerts, open days and competitions. Here’s what learning at JD. looks like."
+        photos={[
+          { src: openDayBand, alt: 'Student band performing at Open Day 2025', width: 1800, height: 1200 },
+          { src: openDayKeys, alt: 'Smiling keyboard player at Open Day 2025', width: 1800, height: 1200, position: '55% 50%' },
+        ]}
+        tag="Open Day 2025"
+      >
+        <a className="btn btn-spot btn-xl" href="#gallery">Browse the gallery</a>
+        <TrialButton tone="ghost-light" label="Book a trial lesson" />
+      </PageHero>
 
-          {/* DYNAMIC RESPONSIVE FILTER BAR */}
-          {/* Mobile dropdown selector */}
-          <div className="block md:hidden mb-8">
-            <label htmlFor="category-select" className="sr-only">Select Category</label>
-            <select
-              id="category-select"
-              value={activeCategory}
-              onChange={(e) => handleCategoryChange(e.target.value)}
-              className="w-full bg-white border border-gray-200 text-jd-black rounded-2xl px-4 py-3.5 text-sm font-semibold shadow-sm focus:outline-none focus:ring-2 focus:ring-jd-burgundy cursor-pointer"
-            >
-              {galleryCategories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </div>
+      <VideoReel title="In their own words" lead="Six students on what lessons at JD. are like." id="videos" />
 
-          {/* Desktop/Tablet Horizontal layout */}
-          <div
-            className="hidden md:flex items-center justify-center flex-wrap gap-2.5 pb-6 mb-12 border-b border-white/10"
-          >
-            {galleryCategories.map((category) => {
-              const isActive = activeCategory === category;
-              return (
-                <button
-                  key={category}
-                  onClick={() => handleCategoryChange(category)}
-                  className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 ${isActive
-                    ? 'bg-white text-jd-burgundy border border-white shadow-sm'
-                    : 'bg-white/10 border border-white/20 text-white hover:bg-white/20 shadow-[0_1px_2px_rgba(0,0,0,0.02)]'
-                    }`}
-                >
-                  {category}
+      <section id="gallery" className="section on-white" aria-labelledby="gallery-title">
+        <div className="wrap">
+          <SectionHead id="gallery-title" title="Moments on stage">
+            <p>Pick an event. Tap any photo to see it full size.</p>
+          </SectionHead>
+          <ul className="filter-chips" aria-label="Gallery events" data-reveal>
+            {galleryCategories.map(c => (
+              <li key={c}>
+                <button type="button" aria-pressed={c === category} onClick={() => { setCategory(c); setChanged(true); }}>
+                  {c}<span className="n">{byCategory[c].length}</span>
                 </button>
-              );
-            })}
-          </div>
-
-          {/* DYNAMIC IMAGE GRID */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {displayedItems.map((item) => {
-              const hasValidSrc = typeof item.src === 'string' && item.src.trim() !== '';
-              return (
-                <div
-                  key={item.id}
-                  onClick={() => hasValidSrc && setLightboxImage(item)}
-                  className={`group relative bg-white border border-white/10 shadow-lg rounded-3xl overflow-hidden hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-auto ${hasValidSrc ? 'cursor-pointer' : ''
-                    }`}
-                >
-                  {/* Visual Area */}
-                  <div className="relative overflow-hidden w-full h-auto flex-shrink-0">
-                    {item.type === 'video' ? (
-                      <video controls playsInline preload="none" poster={item.poster} aria-label={item.alt} onClick={(e) => e.stopPropagation()} className="w-full max-h-[500px] bg-black">
-                        <source src={item.src} type="video/mp4" />
-                        Your browser does not support video playback. <a href={item.src}>Download the video</a>.
-                      </video>
-                    ) : hasValidSrc ? (
-                      <img
-                        src={item.src}
-                        alt={item.alt}
-                        className="w-full h-auto block group-hover:scale-105 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="w-full min-h-[240px] flex flex-col items-center justify-center p-6 bg-gradient-to-b from-white to-gray-50 relative">
-                        <div className="w-14 h-14 rounded-full bg-jd-burgundy/10 text-jd-burgundy flex items-center justify-center mb-3">
-                          <Image size={28} className="opacity-80" />
-                        </div>
-                        <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
-                          Moment Capture
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Empty Grid State (Fallback) */}
-          {filteredGalleryItems.length === 0 && (
-            <div className="text-center py-20 bg-white/5 border border-white/10 rounded-3xl p-8">
-              <div className="w-16 h-16 rounded-full bg-white/10 text-white/40 flex items-center justify-center mx-auto mb-4">
-                <Image size={32} />
-              </div>
-              <h3 className="text-lg font-bold text-white mb-1">No Moments Found</h3>
-              <p className="text-sm text-white/70">
-                Check back soon! We are actively adding memories to the "{activeCategory}" library.
-              </p>
-            </div>
-          )}
-
-          {/* LAZY LOAD "VIEW MORE" BUTTON */}
-          {visibleCount < filteredGalleryItems.length && (
-            <div className="mt-16 text-center">
-              <button
-                onClick={() => setVisibleCount(prev => prev + getRowSize())}
-                className="inline-flex items-center justify-center px-10 py-3.5 rounded-full bg-white text-jd-burgundy text-sm font-bold hover:bg-gray-50 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
-              >
-                View More Media
-              </button>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* STUDENT TESTIMONIALS SECTION */}
-      <section className="py-24 bg-white text-jd-black relative overflow-hidden border-t border-gray-100">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-jd-burgundy/5 blur-[120px] rounded-full pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif text-jd-black mb-4">
-              See Our Students <span className="text-jd-burgundy italic">in Action</span>
-            </h2>
-            <p className="text-sm text-gray-600 leading-relaxed">
-              Real video stories from the students who make our studio feel like home.
-            </p>
-          </div>
-
-          {/* Desktop View: 2 Video Iframes */}
-          <div className="hidden md:grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {videoTestimonials.map((t) => (
-              <TestimonialVideoCard
-                key={t.id}
-                id={t.id}
-                src={t.src}
-                name={t.name}
-                instrument={t.instrument}
-                tenure={t.tenure}
-                isActive={activeVideoId === t.id}
-                onPlayClick={() => setActiveVideoId(t.id)}
-              />
+              </li>
             ))}
+          </ul>
+          <div className={`gallery-grid${changed ? ' is-active' : ''}`} key={category}>
+            <PhotoGrid items={items} initial={9} step={9} label={`${category} photos`} />
           </div>
-
-          {/* Mobile View: Swipeable Track */}
-          <div className="block md:hidden -mx-6 px-6">
-            <div
-              ref={testimonialScrollRef}
-              onScroll={handleTestimonialScroll}
-              className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 scrollbar-none"
-            >
-              {videoTestimonials.map((t, i) => (
-                <div
-                  key={i}
-                  className="w-[85vw] sm:w-[400px] flex-shrink-0 snap-center"
-                >
-                  <TestimonialVideoCard
-                    id={t.id}
-                    src={t.src}
-                    name={t.name}
-                    instrument={t.instrument}
-                    tenure={t.tenure}
-                    isActive={activeVideoId === t.id}
-                    onPlayClick={() => setActiveVideoId(t.id)}
-                  />
-                </div>
-              ))}
-            </div>
-            {/* Pagination Indicators */}
-            <div className="flex justify-center gap-2 mt-4">
-              {videoTestimonials.map((_, i) => (
-                <span
-                  key={i}
-                  className={`w-2.5 h-2.5 rounded-full transition-colors duration-250 ${i === activeTestimonialIndex ? 'bg-jd-burgundy' : 'bg-gray-200'}`}
-                />
-              ))}
-            </div>
+          <div className="section-foot">
+            <TextLink to="/events-competitions">What’s happening now: events &amp; competitions</TextLink>
           </div>
         </div>
       </section>
 
-      {/* FINAL PAGE ACTION CTA */}
-      <section className="py-24 bg-jd-burgundy text-white relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white/5 blur-[120px] rounded-full pointer-events-none"></div>
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <h2 className="text-3xl md:text-4xl font-serif text-white mb-6">
-            Become Part of <span className="text-amber-100 italic">Our Success Stories</span>
-          </h2>
-          <p className="text-base md:text-lg text-white/90 mb-10 leading-relaxed max-w-2xl mx-auto">
-            Want to make some music and cool memories with us? Sign up for a class or drop us a message to get started!
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="https://app.aoneschools.com/public/school/U2FsdGVkX199XQhZvkiBsMOriWUIFAJsDxv0wNjtOi1dpgzrFQSLN%252FnTCm9fokJr/online-student-registration"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white text-jd-burgundy font-bold hover:bg-amber-50 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
-            >
-              Register Now <ArrowRight size={18} />
-            </a>
-            <Link
-              to="/contact"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-transparent border border-white/30 text-white font-bold hover:bg-white/10 transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
-            >
-              Contact Us <ArrowRight size={18} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* PREMIUM IMAGE LIGHTBOX MODAL */}
-      {
-        lightboxImage && (
-          <div
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md transition-all duration-300 p-4"
-            onClick={() => setLightboxImage(null)}
-          >
-            {/* Close Button */}
-            <button
-              onClick={() => setLightboxImage(null)}
-              className="absolute top-6 right-6 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all shadow-md hover:scale-105"
-              aria-label="Close lightbox"
-            >
-              <X size={24} />
-            </button>
-
-            {/* Left Chevron Navigation */}
-            {filteredGalleryItems.length > 1 && (
-              <button
-                onClick={handlePrevImage}
-                className="absolute left-4 md:left-8 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all shadow-md hover:scale-105"
-                aria-label="Previous media"
-              >
-                <ChevronLeft size={28} />
-              </button>
-            )}
-
-            {/* Right Chevron Navigation */}
-            {filteredGalleryItems.length > 1 && (
-              <button
-                onClick={handleNextImage}
-                className="absolute right-4 md:right-8 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all shadow-md hover:scale-105"
-                aria-label="Next media"
-              >
-                <ChevronRight size={28} />
-              </button>
-            )}
-
-            {/* Main Image Container */}
-            <div
-              className="relative max-h-[85vh] max-w-[90vw] flex flex-col items-center justify-center"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {lightboxImage.type === 'video' ? (
-                <video key={lightboxImage.src} controls playsInline preload="metadata" poster={lightboxImage.poster} aria-label={lightboxImage.alt} className="max-h-[75vh] max-w-full rounded-2xl bg-black">
-                  <source src={lightboxImage.src} type="video/mp4" />
-                  Your browser does not support video playback. <a href={lightboxImage.src}>Download the video</a>.
-                </video>
-              ) : <img
-                src={lightboxImage.src}
-                alt={lightboxImage.alt}
-                className="max-h-[75vh] max-w-full object-contain rounded-2xl border border-white/10 shadow-2xl"
-              />}
-            </div>
-          </div>
-        )
-      }
-    </div >
+      <ClosingCTA lines={['Your story', 'starts here.']} />
+    </>
   );
 };
 

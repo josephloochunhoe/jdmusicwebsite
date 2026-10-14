@@ -1,54 +1,69 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import logoImg from '../assets/logo.png';
+import { TRIAL_URL, REGISTRATION_URL } from '../lib/contact';
+
+const links = [
+  { to: '/about', label: 'About' },
+  { to: '/student-life', label: 'Student Life' },
+  { to: '/events-competitions', label: 'Events' },
+  { to: '/pricing-faq', label: 'Pricing & FAQ' },
+  { to: '/contact', label: 'Contact' },
+];
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const toggleRef = useRef(null);
+  const { pathname } = useLocation();
 
-  const toggleMenu = () => setIsOpen(!isOpen);
-  const closeMenu = () => setIsOpen(false);
+  // Close the menu after navigating, on Escape, and when the layout switches to desktop.
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    setOpen(false);
+  }
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKey = e => {
+      if (e.key === 'Escape') { setOpen(false); toggleRef.current?.focus(); }
+    };
+    const wide = window.matchMedia('(min-width: 961px)');
+    const onWide = () => setOpen(false);
+    document.addEventListener('keydown', onKey);
+    wide.addEventListener('change', onWide);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      wide.removeEventListener('change', onWide);
+    };
+  }, [open]);
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center text-2xl font-serif font-bold tracking-tighter" onClick={closeMenu}>
-          <img src={logoImg} alt="JD. Music Academy Logo" className="h-8 w-auto mr-2" />
-          <span>JD. <span className="text-jd-burgundy">Music Academy</span></span>
+    <header className="site-header">
+      <a className="skip" href="#main">Skip to content</a>
+      <div className="wrap header-inner">
+        <Link to="/" className="brand" aria-label="JD. Music Academy, home">
+          <img src={logoImg} alt="" width="36" height="36" />
+          <span>JD. Music Academy</span>
         </Link>
-        <div className="hidden md:flex space-x-2">
-          <Link to="/about" className="px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition-colors">About Us</Link>
-          <Link to="/student-life" className="px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition-colors">Student Life</Link>
-          <Link to="/events-competitions" className="px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition-colors">Events & Competitions</Link>
-          <Link to="/pricing-faq" className="px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition-colors">Pricing & FAQ</Link>
-          <Link to="/contact" className="px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition-colors">Contact Us</Link>
-        </div>
-        <div className="flex items-center space-x-4">
-          <a
-            href="https://app.aoneschools.com/public/school/U2FsdGVkX199XQhZvkiBsMOriWUIFAJsDxv0wNjtOi1dpgzrFQSLN%252FnTCm9fokJr/online-student-registration"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden md:inline-flex px-6 py-2 rounded-full bg-jd-black text-white font-semibold text-sm hover:bg-gray-800 transition-colors shadow-sm border border-white/10"
-          >
-            Register Now
-          </a>
-          <button className="md:hidden p-2 text-jd-black hover:text-jd-burgundy transition-colors" onClick={toggleMenu} aria-label="Toggle Menu">
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
+        <button
+          ref={toggleRef}
+          className="menu-toggle"
+          type="button"
+          aria-expanded={open}
+          aria-controls="navigation"
+          onClick={() => setOpen(o => !o)}
+        >
+          {open ? 'Close' : 'Menu'}
+        </button>
+        <nav id="navigation" className={`site-nav${open ? ' is-open' : ''}`} aria-label="Main">
+          {links.map(link => (
+            <NavLink key={link.to} to={link.to} className="nav-link">{link.label}</NavLink>
+          ))}
+          <a className="nav-register" href={REGISTRATION_URL} target="_blank" rel="noopener noreferrer">Online registration</a>
+          <a className="nav-cta" href={TRIAL_URL} target="_blank" rel="noopener noreferrer">Book a trial</a>
+        </nav>
       </div>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-white border-b border-gray-200 shadow-lg px-6 py-4 flex flex-col space-y-4">
-          <Link to="/about" className="text-lg font-medium hover:text-jd-burgundy transition-colors" onClick={closeMenu}>About Us</Link>
-          <Link to="/student-life" className="text-lg font-medium hover:text-jd-burgundy transition-colors" onClick={closeMenu}>Student Life</Link>
-          <Link to="/events-competitions" className="text-lg font-medium hover:text-jd-burgundy transition-colors" onClick={closeMenu}>Events & Competitions</Link>
-          <Link to="/pricing-faq" className="text-lg font-medium hover:text-jd-burgundy transition-colors" onClick={closeMenu}>Pricing & FAQ</Link>
-          <Link to="/contact" className="text-lg font-medium hover:text-jd-burgundy transition-colors" onClick={closeMenu}>Contact Us</Link>
-        </div>
-      )}
-    </nav>
+    </header>
   );
 };
 

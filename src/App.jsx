@@ -4,7 +4,10 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import SEO from './components/SEO';
 import Analytics from './components/Analytics';
+import Motion from './components/Motion';
 import NotFound from './pages/NotFound';
+import { TRIAL_URL } from './lib/contact';
+import { ChatIcon } from './components/icons';
 
 const lazyPages = {
   Home: lazy(() => import('./pages/Home')),
@@ -15,56 +18,78 @@ const lazyPages = {
   Contact: lazy(() => import('./pages/Contact')),
 };
 
-// Shown briefly while a page's code loads on a fresh/direct visit.
-// Kept minimal and on a white background so there is no flash of an
-// unstyled or mismatched-color screen while the chunk downloads.
+// Shown briefly while a page's code loads on client-side navigation.
 function PageLoader() {
   return (
-    <div className="w-full min-h-[60vh] flex items-center justify-center bg-white">
-      <div className="w-10 h-10 border-4 border-jd-burgundy/20 border-t-jd-burgundy rounded-full animate-spin" />
+    <div className="page-loader" role="status">
+      <span className="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+      <span className="sr-only">Loading</span>
     </div>
   );
 }
 
-// Helper component to restore scroll position to top on route change
-function ScrollToTop() {
-  const { pathname } = useLocation();
-
+// Scroll to the top on a new page, or to the #section named in the link
+// (waiting briefly for a lazily loaded page to render it).
+function ScrollManager() {
+  const { pathname, hash } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
+    // Instant jumps: the page-wide smooth scrolling is for in-page links only.
+    if (!hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      return undefined;
+    }
+    let frame;
+    let tries = 0;
+    const find = () => {
+      const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+      if (target) {
+        target.scrollIntoView({ block: 'start', behavior: 'instant' });
+        if (target.tabIndex < 0 && !target.matches('a, button, input, textarea, select')) target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
+      } else if (tries++ < 120) frame = requestAnimationFrame(find);
+    };
+    find();
+    return () => cancelAnimationFrame(frame);
+  }, [pathname, hash]);
   return null;
+}
+
+// Floating "Book a trial" bar on phones. It hides while a large inline trial button is on screen.
+function MobileTrialBar() {
+  const { pathname } = useLocation();
+  const [hidden, setHidden] = useState(true);
+  useEffect(() => {
+    if (!('IntersectionObserver' in window)) return undefined;
+    const visible = new Set();
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => (e.isIntersecting ? visible.add(e.target) : visible.delete(e.target)));
+      setHidden(visible.size > 0);
+    });
+    const observeAll = () => document.querySelectorAll('[data-inline-cta]').forEach(el => io.observe(el));
+    observeAll();
+    const mo = new MutationObserver(observeAll);
+    mo.observe(document.getElementById('root'), { childList: true, subtree: true });
+    return () => { io.disconnect(); mo.disconnect(); };
+  }, [pathname]);
+  return (
+    <a className={`mobile-cta${hidden ? ' is-hidden' : ''}`} href={TRIAL_URL} target="_blank" rel="noopener noreferrer" tabIndex={hidden ? -1 : undefined} aria-hidden={hidden || undefined}>
+      <ChatIcon /> Book a trial lesson
+    </a>
+  );
 }
 
 function App({ routeComponents = lazyPages }) {
   const { Home, About, StudentLife, EventsAndCompetitions, PricingFaq, Contact } = routeComponents;
-  const [showFloatingCTA, setShowFloatingCTA] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Show floating CTA when scrolled past 80vh (approximate height of hero section)
-      if (window.scrollY > window.innerHeight * 0.8) {
-        setShowFloatingCTA(true);
-      } else {
-        setShowFloatingCTA(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
     <>
       <SEO />
       <Analytics />
-      <ScrollToTop />
-      <div className="min-h-screen bg-white text-jd-black font-sans selection:bg-jd-burgundy selection:text-white flex flex-col">
+      <ScrollManager />
+      <Motion />
+      <div className="site">
         <Navbar />
-        
-        {/* Main content wrapper */}
-        <main className="flex-grow">
+        <main id="main" tabIndex="-1">
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -77,20 +102,8 @@ function App({ routeComponents = lazyPages }) {
             </Routes>
           </Suspense>
         </main>
-
         <Footer />
-
-        {/* Floating CTA */}
-        <a 
-          href="https://app.aoneschools.com/public/school/U2FsdGVkX199XQhZvkiBsMOriWUIFAJsDxv0wNjtOi1dpgzrFQSLN%252FnTCm9fokJr/online-student-registration" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className={`fixed bottom-6 md:fixed md:bottom-24 right-6 z-50 px-8 py-4 rounded-full bg-jd-black text-white font-bold shadow-2xl border-2 border-white/20 hover:bg-gray-800 transition-all duration-300 flex items-center gap-2 ${
-            showFloatingCTA ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-16 opacity-0 scale-95 pointer-events-none'
-          }`}
-        >
-          Register Now
-        </a>
+        <MobileTrialBar />
       </div>
     </>
   );
