@@ -90,7 +90,7 @@ const PricingFaq = () => {
         </div>
       </section>
 
-      <section id="faq" className="section faq" aria-labelledby="faq-title">
+      <section id="faq" className="section faq" aria-labelledby="faq-title" data-cta="faq">
         <div className="wrap faq-grid">
           <div className="head" data-reveal>
             <h2 id="faq-title" className="display">Frequently asked</h2>

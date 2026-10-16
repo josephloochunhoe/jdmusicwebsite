@@ -42,7 +42,7 @@ export function SectionHead({ id, title, children, className = '' }) {
 export function PageHero({ kicker, lines, lead, children, photos = [], tag }) {
   const [main, second] = photos;
   return (
-    <section className="hero page-hero" aria-labelledby="page-title">
+    <section className="hero page-hero" aria-labelledby="page-title" data-cta="hero">
       <div className="wrap hero-grid page-hero-grid">
         <div className="hero-copy">
           {kicker && <p className="hero-kicker">{kicker}</p>}
@@ -80,7 +80,7 @@ export function ContactLinks({ compact = false }) {
     ...SOCIALS.map(s => ({ name: s.name, detail: s.handle, href: s.url, Icon: socialIcons[s.name], external: true })),
   ];
   return (
-    <ul className={`contact-row${compact ? ' is-compact' : ''}`} aria-label="Contact JD. Music Academy">
+    <ul className={`contact-row${compact ? ' is-compact' : ''}`} aria-label="Contact JD. Music Academy" data-cta="contact_links">
       {links.map(({ name, detail, href, Icon, external }) => (
         <li key={name}>
           <a className="contact-link" href={href} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
@@ -96,7 +96,7 @@ export function ContactLinks({ compact = false }) {
 // Closing band used on every page: the three-step trial process and every contact route.
 export function ClosingCTA({ lines = ['Your first song', 'starts here.'], children }) {
   return (
-    <section className="closing" aria-labelledby="closing-title">
+    <section className="closing" aria-labelledby="closing-title" data-cta="closing">
       <div className="wrap">
         <h2 id="closing-title" className="closing-title" data-reveal>
           {lines.map(line => <span key={line}>{line}</span>)}

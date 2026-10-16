@@ -55,6 +55,21 @@ Open your property in Google Analytics and select a date range:
 | Google, social media, an article or another website | Traffic acquisition, using Session source / medium |
 | Referring URLs when provided by the browser | An Exploration using Page referrer; filter to external sources |
 | Visitors currently browsing | Realtime |
+| "Book a trial" button clicks | Engagement → Events, event `book_trial_click` (see below) |
+
+### "Book a trial" clicks
+
+Every button that opens WhatsApp with the trial-lesson message sends a `book_trial_click` event (header, hero, instrument selector, teacher profiles, closing section, contact tiles, footer, mobile bar, FAQ and Contact page). General-question, group-guitar and programme WhatsApp links are not counted. The event carries two details:
+
+- `cta_location`: which button, e.g. `hero`, `header`, `instrument_selector`, `teacher_profile`, `closing`, `contact_links`, `footer`, `mobile_bar`, `faq`, `contact_page`
+- `instrument`: `guitar`, `piano`, `drum`, `vocal`, `bass`, or `not_chosen` for the general trial button
+
+The page it happened on is recorded automatically. Click totals appear under **Reports → Engagement → Events** without any setup (allow 24–48 hours; use Realtime to check sooner). Two optional one-time settings in GA4 Admin make it more useful:
+
+1. **Data display → Custom definitions → Create custom dimension**: add event-scoped dimensions with the event parameters `cta_location` and `instrument`, so the breakdowns appear in reports and Explorations. They apply only from the day they are created.
+2. **Data display → Events**: mark `book_trial_click` as a **key event** to see it alongside traffic sources (which channels lead to trial clicks).
+
+A click means someone opened WhatsApp with the trial message, not that they sent it. Clicks are tracked under the same rules as page views (production domain only, no personal data).
 
 For example, `google / organic` is unpaid Google search, `example.com / referral` is traffic referred by another site, and `(direct) / (none)` means no source was available. On internal navigation, page referrer becomes the previous page; Traffic acquisition is the right place to see where the visit originated.
 

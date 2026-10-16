@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createAnalytics, analyticsUrl } from '../src/lib/analytics.js';
+import { createAnalytics, analyticsUrl, trialClick } from '../src/lib/analytics.js';
 
 const siteUrl = 'https://www.jd-musicacademy.com';
 function setup(overrides = {}) {
@@ -58,4 +58,31 @@ test('direct arrivals have an empty referrer; non-web URLs are not collected', (
   tracker.pageView('/', 'Home');
   assert.equal(events()[0][2].page_referrer, '');
   assert.equal(analyticsUrl('javascript:alert(1)', siteUrl), '');
+});
+
+test('trial clicks are counted only after a tracked page view, with location and instrument', () => {
+  const { browser, tracker, events } = setup();
+  tracker.event('book_trial_click', { cta_location: 'hero', instrument: 'not_chosen' });
+  assert.equal(events().length, 0, 'nothing before the page view decides tracking is allowed');
+  tracker.pageView('/', 'Home');
+  tracker.event('book_trial_click', { cta_location: 'instrument_selector', instrument: 'guitar' });
+  const click = events().find(item => item[1] === 'book_trial_click');
+  assert.deepEqual(click[2], { cta_location: 'instrument_selector', instrument: 'guitar', send_to: 'G-TEST12345' });
+  const preview = setup();
+  preview.browser.location = new URL('https://jdmusic-preview.vercel.app/');
+  preview.tracker.pageView('/', 'Home');
+  preview.tracker.event('book_trial_click', {});
+  assert.equal(preview.events().length, 0);
+  assert.ok(browser.dataLayer.length > 0);
+});
+
+test('recognises trial WhatsApp links and their instrument, ignoring other links', async () => {
+  const { trialUrl, TRIAL_URL, GENERAL_URL, GROUP_GUITAR_URL, PROGRAMMES_URL } = await import('../src/lib/contact.js');
+  assert.deepEqual(trialClick(TRIAL_URL), { instrument: 'not_chosen' });
+  for (const instrument of ['guitar', 'piano', 'drum', 'vocal', 'bass']) {
+    assert.deepEqual(trialClick(trialUrl(instrument)), { instrument });
+  }
+  for (const href of [GENERAL_URL, GROUP_GUITAR_URL, PROGRAMMES_URL, 'tel:+60192139210', 'https://example.com/?text=book%20a%20trial%20lesson', 'not a url']) {
+    assert.equal(trialClick(href), null, href);
+  }
 });

@@ -64,7 +64,7 @@ const About = () => (
         <SectionHead id="teachers-title" title="Meet your teachers">
           <p>Five instructors across guitar, piano and keyboard, drums, vocals and bass.</p>
         </SectionHead>
-        <ul className="teacher-grid">
+        <ul className="teacher-grid" data-cta="teacher_profile">
           {teachers.map((t, i) => (
             <li key={t.slug} id={`teacher-${t.slug}`} className="teacher" data-reveal style={{ '--i': i % 3 }}>
               <div className="teacher-top">

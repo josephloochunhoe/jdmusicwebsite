@@ -31,7 +31,7 @@ const Contact = () => (
 
     <section className="section on-blush" aria-label="Ways to contact us">
       <div className="wrap contact-grid">
-        <div className="contact-main" data-reveal>
+        <div className="contact-main" data-reveal data-cta="contact_page">
           <h2>Book a trial lesson</h2>
           <p>Send a WhatsApp message with a few details and Jeevan will suggest open trial slots.</p>
           <ul className="checklist">

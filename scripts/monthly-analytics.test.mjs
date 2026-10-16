@@ -19,7 +19,7 @@ const context = {
   },
 };
 vm.createContext(context);
-vm.runInContext(`${source}\n;globalThis.__test = { isLastDayInTimeZone_, reportRangeFor_, dateRangeForApi_, isExternalReferrer_, escapeHtml_, emailRecipients_, validateConfiguration_ };`, context);
+vm.runInContext(`${source}\n;globalThis.__test = { isLastDayInTimeZone_, reportRangeFor_, dateRangeForApi_, isExternalReferrer_, escapeHtml_, emailRecipients_, validateConfiguration_, summarizeTrialClicks_, htmlReport_, plainTextReport_ };`, context);
 const helpers = context.__test;
 
 test('keeps the primary recipient and adds distinct copy recipients', () => {
@@ -55,4 +55,19 @@ test('keeps only external web referrers and safely escapes report values', () =>
   assert.equal(helpers.isExternalReferrer_('https://www.jd-musicacademy.com/about'), false);
   assert.equal(helpers.isExternalReferrer_('javascript:alert(1)'), false);
   assert.equal(helpers.escapeHtml_('<script>"x" & y</script>'), '&lt;script&gt;&quot;x&quot; &amp; y&lt;/script&gt;');
+});
+
+test('totals trial clicks across pages and shows them in both email formats', () => {
+  const trials = helpers.summarizeTrialClicks_([{ page: '/', clicks: 12 }, { page: '/pricing-faq', clicks: 5 }, { page: '/about', clicks: 1 }]);
+  assert.equal(trials.total, 18);
+  const summary = { visitors: 100, sessions: 120, views: 300 };
+  const html = helpers.htmlReport_('2026-10-01 to 2026-10-30', summary, [], [], [], false, trials);
+  assert.match(html, /Trial button clicks/);
+  assert.match(html, />18</);
+  assert.match(html, /\/pricing-faq/);
+  const text = helpers.plainTextReport_('2026-10-01 to 2026-10-30', summary, [], [], [], trials);
+  assert.match(text, /Trial button clicks: 18/);
+  const empty = helpers.summarizeTrialClicks_([]);
+  assert.equal(empty.total, 0);
+  assert.match(helpers.htmlReport_('p', summary, [], [], [], false, empty), /No data available yet/);
 });

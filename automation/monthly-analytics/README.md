@@ -2,7 +2,8 @@
 
 This Google Apps Script emails a JD.Music analytics summary on the last
 calendar day of every month, including February. It includes visitors,
-sessions, page views, top pages, traffic sources, and external referring pages.
+sessions, page views, "Book a trial" button clicks (total and by page), top pages,
+traffic sources, and external referring pages.
 The recipient and GA4 Property ID stay in private Apps Script properties, not
 in this public repository.
 
@@ -47,3 +48,11 @@ address as `REPORT_CC_EMAIL` in Project Settings → Script properties. Keep
 copy recipient on its next monthly send; no extra trigger is needed. Run
 `sendTestAnalyticsEmail` once to verify both recipients receive the same report.
 Updating the GitHub repository does not update a deployed Apps Script project.
+
+## Add trial-click reporting to an existing automation
+
+The website sends a `book_trial_click` event for every "Book a trial" WhatsApp
+button. To include it in the email, replace the deployed `Code.gs` with this
+version (no new properties or triggers are needed) and run
+`sendTestAnalyticsEmail` once. The figure starts from the date the website
+version with click tracking goes live; earlier months show 0.

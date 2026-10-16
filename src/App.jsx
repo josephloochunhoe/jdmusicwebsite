@@ -72,7 +72,7 @@ function MobileTrialBar() {
     return () => { io.disconnect(); mo.disconnect(); };
   }, [pathname]);
   return (
-    <a className={`mobile-cta${hidden ? ' is-hidden' : ''}`} href={TRIAL_URL} target="_blank" rel="noopener noreferrer" tabIndex={hidden ? -1 : undefined} aria-hidden={hidden || undefined}>
+    <a data-cta="mobile_bar" className={`mobile-cta${hidden ? ' is-hidden' : ''}`} href={TRIAL_URL} target="_blank" rel="noopener noreferrer" tabIndex={hidden ? -1 : undefined} aria-hidden={hidden || undefined}>
       <ChatIcon /> Book a trial lesson
     </a>
   );

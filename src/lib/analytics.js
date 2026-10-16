@@ -17,6 +17,19 @@ export function analyticsUrl(value, base, includeCampaign = false) {
   }
 }
 
+// Recognises the site's "book a trial" WhatsApp links (see src/lib/contact.js) and
+// returns the instrument named in the prefilled message, without reading anything else.
+export function trialClick(href) {
+  try {
+    const url = new URL(href);
+    if (url.hostname !== 'wa.me') return null;
+    const match = (url.searchParams.get('text') || '').match(/book a trial(?: ([a-z]+))? lesson/i);
+    return match ? { instrument: match[1] ? match[1].toLowerCase() : 'not_chosen' } : null;
+  } catch {
+    return null;
+  }
+}
+
 export function createAnalytics({ browser, measurementId, siteUrl, enabled }) {
   let previousPath;
   let previousUrl;
@@ -52,6 +65,11 @@ export function createAnalytics({ browser, measurementId, siteUrl, enabled }) {
       browser.gtag('event', 'page_view', { ...parameters, send_to: measurementId });
       previousPath = path;
       previousUrl = location;
+    },
+    // Only after a page view has been counted, so the same domain/preview rules apply.
+    event(name, parameters = {}) {
+      if (!initialized) return;
+      browser.gtag('event', name, { ...parameters, send_to: measurementId });
     },
   };
 }

@@ -27,7 +27,7 @@ export default function InstrumentPicker() {
   };
 
   return (
-    <div className="picker-ui">
+    <div className="picker-ui" data-cta="instrument_selector">
       <div className="tabs" role="tablist" aria-label="Instruments" data-reveal>
         {instruments.map((inst, i) => (
           <button

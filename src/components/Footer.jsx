@@ -13,7 +13,7 @@ const pages = [
 ];
 
 const Footer = () => (
-  <footer className="site-footer">
+  <footer className="site-footer" data-cta="footer">
     <div className="wrap footer-grid">
       <div className="footer-brand">
         <Link to="/" className="brand">

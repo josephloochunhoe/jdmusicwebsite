@@ -70,7 +70,7 @@ function Fact({ fact }) {
 const Home = () => (
   <>
     {/* 1. Hero */}
-    <section className="hero" aria-labelledby="hero-title">
+    <section className="hero" aria-labelledby="hero-title" data-cta="hero">
       <div className="wrap hero-grid">
         <div className="hero-copy">
           <p className="hero-kicker">Music lessons in Kajang since 2020</p>

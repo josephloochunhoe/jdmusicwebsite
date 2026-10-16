@@ -10,6 +10,8 @@ const LAST_SENT_KEY = 'monthlyAnalyticsLastSent';
 const PROPERTY_ID_KEY = 'GA4_PROPERTY_ID';
 const RECIPIENT_KEY = 'REPORT_RECIPIENT_EMAIL';
 const CC_KEY = 'REPORT_CC_EMAIL';
+// Sent by the website when someone clicks a "Book a trial" WhatsApp button.
+const TRIAL_EVENT = 'book_trial_click';
 
 /**
  * Run once after copying this project into Google Apps Script.
@@ -80,6 +82,7 @@ function sendAnalyticsEmail_(now, isTest, privateConfig) {
   const pages = fetchTopPages_(range, privateConfig.propertyId);
   const sources = fetchTopSources_(range, privateConfig.propertyId);
   const referrers = fetchExternalReferrers_(range, privateConfig.propertyId);
+  const trials = fetchTrialClicks_(range, privateConfig.propertyId);
   const period = `${range.startDate} to ${range.endDate}`;
   const subject = `${isTest ? '[TEST] ' : ''}${CONFIG.reportName} — ${range.label}`;
 
@@ -87,8 +90,8 @@ function sendAnalyticsEmail_(now, isTest, privateConfig) {
     ...emailRecipients_(privateConfig),
     subject,
     name: 'JD.Music Analytics',
-    body: plainTextReport_(period, summary, pages, sources, referrers),
-    htmlBody: htmlReport_(period, summary, pages, sources, referrers, isTest),
+    body: plainTextReport_(period, summary, pages, sources, referrers, trials),
+    htmlBody: htmlReport_(period, summary, pages, sources, referrers, isTest, trials),
   });
 }
 
@@ -136,6 +139,25 @@ function fetchExternalReferrers_(range, propertyId) {
     limit: 100,
   }, propertyId), ['referrer', 'views']);
   return rows.filter((row) => isExternalReferrer_(row.referrer)).slice(0, 10);
+}
+
+function fetchTrialClicks_(range, propertyId) {
+  const pages = rowsFromReport_(runReport_({
+    dateRanges: [dateRangeForApi_(range)],
+    dimensions: [{ name: 'pagePath' }],
+    metrics: [{ name: 'eventCount' }],
+    dimensionFilter: { filter: { fieldName: 'eventName', stringFilter: { matchType: 'EXACT', value: TRIAL_EVENT } } },
+    orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+    limit: 50,
+  }, propertyId), ['page', 'clicks']);
+  return summarizeTrialClicks_(pages);
+}
+
+function summarizeTrialClicks_(pages) {
+  return {
+    total: pages.reduce((sum, row) => sum + row.clicks, 0),
+    pages: pages.slice(0, 10),
+  };
 }
 
 function runReport_(request, propertyId) {
@@ -186,7 +208,7 @@ function isExternalReferrer_(value) {
   return host !== CONFIG.siteHost;
 }
 
-function htmlReport_(period, summary, pages, sources, referrers, isTest) {
+function htmlReport_(period, summary, pages, sources, referrers, isTest, trials) {
   const card = (label, value) =>
     `<td style="padding:16px;background:#f6f3f1;border-radius:10px;text-align:center">` +
     `<div style="font-size:24px;font-weight:700">${formatNumber_(value)}</div>` +
@@ -203,15 +225,16 @@ function htmlReport_(period, summary, pages, sources, referrers, isTest) {
   return `<!doctype html><html><body style="font-family:Arial,sans-serif;color:#191919;max-width:720px;margin:auto;padding:24px">` +
     `${isTest ? '<p style="padding:10px;background:#fff3cd"><strong>Test email:</strong> the monthly schedule has not fired.</p>' : ''}` +
     `<h1 style="font-size:24px">JD.Music website analytics</h1><p style="color:#666">${escapeHtml_(period)} · Data through yesterday</p>` +
-    `<table style="width:100%;border-spacing:8px"><tr>${card('Visitors', summary.visitors)}${card('Sessions', summary.sessions)}${card('Page views', summary.views)}</tr></table>` +
+    `<table style="width:100%;border-spacing:8px"><tr>${card('Visitors', summary.visitors)}${card('Sessions', summary.sessions)}${card('Page views', summary.views)}${card('Trial button clicks', trials.total)}</tr></table>` +
+    `<h2 style="font-size:18px;margin-top:28px">“Book a trial” clicks by page</h2>${table(['Page', 'Clicks'], trials.pages)}` +
     `<h2 style="font-size:18px;margin-top:28px">Top pages</h2>${table(['Page', 'Views', 'Visitors'], pages)}` +
     `<h2 style="font-size:18px;margin-top:28px">Traffic sources</h2>${table(['Source / medium', 'Sessions', 'Visitors'], sources)}` +
     `<h2 style="font-size:18px;margin-top:28px">External referring pages</h2>${table(['Referrer', 'Views'], referrers)}` +
-    `<p style="font-size:11px;color:#777;margin-top:28px">Google Analytics can take up to 72 hours to finish processing recent activity. Referring pages appear only when the visitor's browser provides them.</p>` +
+    `<p style="font-size:11px;color:#777;margin-top:28px">Google Analytics can take up to 72 hours to finish processing recent activity. Referring pages appear only when the visitor's browser provides them. Trial clicks count taps on a “Book a trial” button that opens WhatsApp, not messages actually sent.</p>` +
     `</body></html>`;
 }
 
-function plainTextReport_(period, summary, pages, sources, referrers) {
+function plainTextReport_(period, summary, pages, sources, referrers, trials) {
   const list = (rows) => rows.length
     ? rows.map((row) => Object.values(row).join(' — ')).join('\n')
     : 'No data available yet.';
@@ -220,6 +243,8 @@ function plainTextReport_(period, summary, pages, sources, referrers) {
     `Visitors: ${formatNumber_(summary.visitors)}`,
     `Sessions: ${formatNumber_(summary.sessions)}`,
     `Page views: ${formatNumber_(summary.views)}`,
+    `Trial button clicks: ${formatNumber_(trials.total)}`,
+    '', '"Book a trial" clicks by page', list(trials.pages),
     '', 'Top pages', list(pages),
     '', 'Traffic sources', list(sources),
     '', 'External referring pages', list(referrers),

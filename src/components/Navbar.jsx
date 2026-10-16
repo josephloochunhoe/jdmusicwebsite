@@ -38,7 +38,7 @@ const Navbar = () => {
   }, [open]);
 
   return (
-    <header className="site-header">
+    <header className="site-header" data-cta="header">
       <a className="skip" href="#main">Skip to content</a>
       <div className="wrap header-inner">
         <Link to="/" className="brand" aria-label="JD. Music Academy, home">
