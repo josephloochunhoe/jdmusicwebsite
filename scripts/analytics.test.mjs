@@ -82,7 +82,7 @@ test('recognises trial WhatsApp links and their instrument, ignoring other links
   for (const instrument of ['guitar', 'piano', 'drum', 'vocal', 'bass']) {
     assert.deepEqual(trialClick(trialUrl(instrument)), { instrument });
   }
-  for (const href of [GENERAL_URL, GROUP_GUITAR_URL, PROGRAMMES_URL, 'tel:+60192139210', 'https://example.com/?text=book%20a%20trial%20lesson', 'not a url']) {
+  for (const href of [GENERAL_URL, GROUP_GUITAR_URL, PROGRAMMES_URL, 'tel:+60174370443', 'https://example.com/?text=book%20a%20trial%20lesson', 'not a url']) {
     assert.equal(trialClick(href), null, href);
   }
 });
