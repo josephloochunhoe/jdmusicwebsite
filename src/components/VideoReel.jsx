@@ -21,7 +21,7 @@ function VideoCard({ video, index }) {
         />
       ) : (
         <button className="vid-btn" type="button" onClick={() => setPlaying(true)} aria-label={`Play ${video.name}’s video, ${video.instrument.toLowerCase()}`}>
-          <img src={video.cover} alt="" width="540" height="960" loading="lazy" />
+          <img src={video.cover} alt={`${video.name}, ${video.instrument.toLowerCase()} student at JD. Music Academy`} width="540" height="960" loading="lazy" decoding="async" />
           <span className="play"><PlayIcon /></span>
         </button>
       )}

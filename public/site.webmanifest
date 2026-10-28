@@ -1,0 +1,19 @@
+{
+  "name": "JD. Music Academy",
+  "short_name": "JD. Music",
+  "description": "Music classes in Kajang for guitar, piano, drums, vocals, bass and ukulele.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FFF7F2",
+  "theme_color": "#2E0009",
+  "lang": "en-MY",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "sizes": "500x500",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

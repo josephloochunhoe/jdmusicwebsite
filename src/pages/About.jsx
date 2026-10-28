@@ -7,9 +7,9 @@ import { trialUrl } from '../lib/contact';
 const About = () => (
   <>
     <PageHero
-      kicker="About JD. Music Academy · since 2020"
+      kicker="Kajang music school · since 2020"
       lines={['Teachers who', 'become mentors.']}
-      lead="A Kajang music academy built on song-first, performance-based lessons and close student–teacher relationships."
+      lead="A Kajang music school for guitar, piano, drums, vocals and bass, built on song-first lessons and close student–teacher relationships."
       photos={[
         { src: teamGroup, alt: 'The JD. Music Academy team and students together', width: 2000, height: 1333 },
         { src: heroGuitar, alt: 'Guitarists singing on stage at Open Day 2025', width: 1200, height: 800, position: '30% 40%' },
@@ -28,7 +28,7 @@ const About = () => (
           <h2 id="story-title" className="display md">Passion, not pressure.</h2>
         </div>
         <div className="story-copy" data-reveal>
-          <p>Founded in 2020, JD. Music Academy teaches through a vibrant, performance-based approach. Hands-on classes make instrument fundamentals enjoyable by teaching students through the songs they love.</p>
+          <p>Founded in 2020, JD. Music Academy in Kajang teaches guitar, piano, drums, vocals and bass through a vibrant, performance-based approach. Hands-on classes make instrument fundamentals enjoyable by teaching students through the songs they love.</p>
           <p>With personal attention from our instructors, we put close relationships first, so every student feels inspired, supported and confident. Lessons should build confidence, not performance stress.</p>
           <div className="cards-2">
             <div className="mini-card">
@@ -48,7 +48,7 @@ const About = () => (
     <section id="teacher-jeevan" className="section on-wine" aria-labelledby="founder-title">
       <div className="wrap founder">
         <figure className="founder-photo" data-reveal>
-          <img src={founder.image} alt={founder.name} width="452" height="452" loading="lazy" />
+          <img src={founder.image} alt={founder.name} width="452" height="452" loading="lazy" decoding="async" />
         </figure>
         <div data-reveal>
           <p className="role">{founder.role}</p>
@@ -62,13 +62,13 @@ const About = () => (
     <section id="teachers" className="section on-blush" aria-labelledby="teachers-title">
       <div className="wrap">
         <SectionHead id="teachers-title" title="Meet your teachers">
-          <p>Five instructors across guitar, piano and keyboard, drums, vocals and bass.</p>
+          <p>Five instructors for guitar, piano and keyboard, drums, vocals and bass, teaching in Kajang, Sri Hartamas and online.</p>
         </SectionHead>
         <ul className="teacher-grid" data-cta="teacher_profile">
           {teachers.map((t, i) => (
             <li key={t.slug} id={`teacher-${t.slug}`} className="teacher" data-reveal style={{ '--i': i % 3 }}>
               <div className="teacher-top">
-                <img src={t.image} alt={t.name} width="96" height="96" loading="lazy" />
+                <img src={t.image} alt={t.name} width="96" height="96" loading="lazy" decoding="async" />
                 <div>
                   <h3>{t.name}</h3>
                   <ul className="chips" aria-label="Teaches">{t.instruments.map(inst => <li key={inst}>{inst}</li>)}</ul>
@@ -93,7 +93,7 @@ const About = () => (
         <div className="crew-grid">
           {crew.map(c => (
             <article key={c.slug} className="crew" data-reveal>
-              <img src={c.image} alt={c.name} width="88" height="88" loading="lazy" />
+              <img src={c.image} alt={c.name} width="88" height="88" loading="lazy" decoding="async" />
               <div>
                 <h3>{c.name}</h3>
                 <p className="role">{c.role}</p>

@@ -23,5 +23,12 @@ export function render(url) {
     head.push(tag);
     return '';
   });
+  html = html.replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g, tag => {
+    head.push(tag);
+    return '';
+  });
+  const lcp = html.match(/<img\b[^>]*\bfetchpriority="high"[^>]*>/i);
+  const lcpSrc = lcp?.[0].match(/\bsrc="([^"]+)"/);
+  if (lcpSrc) head.unshift(`<link rel="preload" as="image" href="${lcpSrc[1]}" fetchpriority="high">`);
   return { html, head: head.join('\n') };
 }

@@ -7,7 +7,7 @@ import { founder } from '../data/team';
 const socialIcons = { Instagram: InstagramIcon, TikTok: TikTokIcon, Facebook: FacebookIcon };
 
 const places = [
-  { name: 'Kajang Home Studio', text: 'Our home base for in-person lessons and weekend group guitar classes.' },
+  { name: 'Kajang Home Studio', text: 'Our home base in Kajang, Selangor, for in-person lessons and weekend group guitar classes.' },
   { name: 'Sri Hartamas Studio, KL', text: 'Partner location for students in the Kuala Lumpur area.' },
   { name: 'Online', text: 'Lessons from wherever you are.' },
   { name: 'Your home, school or community space', text: 'Limited home visits and programmes within the Klang Valley. Travel charges may apply.' },
@@ -16,9 +16,9 @@ const places = [
 const Contact = () => (
   <>
     <PageHero
-      kicker="Contact"
+      kicker="Kajang studio"
       lines={['Talk to', 'Jeevan.']}
-      lead="Questions about lessons, studios, available slots or a free trial? Message our director on WhatsApp: it’s the quickest way to reach us."
+      lead="Questions about music classes in Kajang, studios, available slots or a free trial? Message our director on WhatsApp: it’s the quickest way to reach us."
       photos={[
         { src: heroGuitar, alt: 'Guitarists singing on stage at Open Day 2025', width: 1200, height: 800, position: '30% 40%' },
         { src: founder.image, alt: `${founder.name}, director`, width: 452, height: 452, position: '50% 20%' },
