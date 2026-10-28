@@ -1,10 +1,10 @@
 // One place for every phone number, message and outbound link on the site.
-export const PHONE_DISPLAY = '019-213 9210';
-export const PHONE_TEL = 'tel:+60192139210';
+export const PHONE_DISPLAY = '017-437 0443';
+export const PHONE_TEL = 'tel:+60174370443';
 export const EMAIL = 'jdmusicacademy0320@gmail.com';
 export const REGISTRATION_URL = 'https://app.aoneschools.com/public/school/U2FsdGVkX199XQhZvkiBsMOriWUIFAJsDxv0wNjtOi1dpgzrFQSLN%252FnTCm9fokJr/online-student-registration';
 
-export const whatsappUrl = message => `https://wa.me/60192139210?text=${encodeURIComponent(message)}`;
+export const whatsappUrl = message => `https://wa.me/60174370443?text=${encodeURIComponent(message)}`;
 
 const SIGN_OFF = '(Sent from the JD. Music Academy website)';
 
