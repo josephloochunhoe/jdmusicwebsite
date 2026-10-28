@@ -13,7 +13,7 @@ const organization = {
   description: pages['/'].description,
   foundingDate: '2020',
   founder: { '@type': 'Person', name: 'Jeevan Devamarcus' },
-  telephone: '+60192139210',
+  telephone: '+60174370443',
   email: 'jdmusicacademy0320@gmail.com',
   address: { '@type': 'PostalAddress', addressLocality: 'Kajang', addressRegion: 'Selangor', addressCountry: 'MY' },
   areaServed: ['Kajang', 'Sri Hartamas, Kuala Lumpur', 'Klang Valley'],
