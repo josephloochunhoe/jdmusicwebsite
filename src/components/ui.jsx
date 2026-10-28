@@ -61,7 +61,7 @@ export function PageHero({ kicker, lines, lead, children, photos = [], tag }) {
             </figure>
             {second && (
               <figure className="shot shot-b">
-                <img src={second.src} alt={second.alt} width={second.width} height={second.height} style={second.position ? { objectPosition: second.position } : undefined} />
+                <img src={second.src} alt={second.alt} width={second.width} height={second.height} decoding="async" style={second.position ? { objectPosition: second.position } : undefined} />
               </figure>
             )}
             {tag && <p className="stack-tag">{tag}</p>}

@@ -20,7 +20,7 @@ const Footer = () => (
           <img src={logoImg} alt="" width="36" height="36" />
           <span>JD. Music Academy</span>
         </Link>
-        <p>Performance-based music lessons for all ages since 2020. Kajang home studio, Sri Hartamas studio and online.</p>
+        <p>Guitar, piano, drum, vocal, bass and ukulele lessons in Kajang since 2020, plus a Sri Hartamas studio and online classes.</p>
         <a className="btn btn-spot btn-sm" href={TRIAL_URL} target="_blank" rel="noopener noreferrer">Book a trial lesson</a>
       </div>
       <nav className="footer-col" aria-label="Footer">

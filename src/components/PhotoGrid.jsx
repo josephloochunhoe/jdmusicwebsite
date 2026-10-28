@@ -16,7 +16,7 @@ export default function PhotoGrid({ items, initial = items.length, step = 9, lab
         {shown.map((item, i) => (
           <li key={item.id ?? item.src}>
             <button type="button" className="tile" onClick={() => setOpen(i)} aria-label={`${item.type === 'video' ? 'Play' : 'Enlarge'}: ${item.alt}`}>
-              <img src={item.thumb} alt="" width={item.width} height={item.height} loading="lazy" decoding="async" />
+              <img src={item.thumb} alt={item.alt} width={item.width} height={item.height} loading="lazy" decoding="async" />
               {item.type === 'video' && <span className="play"><PlayIcon /></span>}
             </button>
           </li>

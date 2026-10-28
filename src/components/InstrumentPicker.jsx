@@ -57,7 +57,7 @@ export default function InstrumentPicker() {
             hidden={i !== active}
           >
             <figure className="panel-img">
-              <img src={inst.image} alt={inst.alt} width="1400" height="933" loading="lazy" style={inst.position ? { objectPosition: inst.position } : undefined} />
+              <img src={inst.image} alt={inst.alt} width="1400" height="933" loading="lazy" decoding="async" style={inst.position ? { objectPosition: inst.position } : undefined} />
             </figure>
             <div className="panel-body">
               <h3>{inst.title}</h3>
@@ -69,7 +69,7 @@ export default function InstrumentPicker() {
                   return (
                     <li key={slug}>
                       <Link to={`/about#teacher-${slug}`} aria-label={`Meet ${t.name}`}>
-                        <img src={t.image} alt="" width="96" height="96" loading="lazy" />
+                        <img src={t.image} alt="" width="96" height="96" loading="lazy" decoding="async" />
                         {t.name.split(' ')[0]}
                       </Link>
                     </li>

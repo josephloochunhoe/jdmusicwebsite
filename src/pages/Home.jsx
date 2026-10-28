@@ -79,7 +79,7 @@ const Home = () => (
             <span className="line"><span>you’ve always</span></span>
             <span className="line"><span>wanted to.</span></span>
           </h1>
-          <p className="hero-sub">Guitar, piano, drum and vocal classes for kids, teens and adults in Kajang, Sri Hartamas and online.</p>
+          <p className="hero-sub">Guitar, piano, drum, vocal, bass and ukulele classes for kids, teens and adults in Kajang, Sri Hartamas and online.</p>
           <div className="hero-cta">
             <TrialButton size="xl" watch />
             <span className="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
@@ -88,8 +88,8 @@ const Home = () => (
         </div>
         <div className="hero-stack">
           <figure className="shot shot-main"><img src={heroBand} alt="JD. Music Academy band performing on keyboard, drums, vocals and guitar" width="2000" height="1125" fetchPriority="high" /></figure>
-          <figure className="shot shot-drums"><img src={heroDrums} alt="Drummer performing at Open Day 2025" width="1200" height="800" /></figure>
-          <figure className="shot shot-guitar"><img src={heroGuitar} alt="Guitarists singing on stage at Open Day 2025" width="1200" height="800" /></figure>
+          <figure className="shot shot-drums"><img src={heroDrums} alt="Drummer performing at Open Day 2025" width="1200" height="800" decoding="async" /></figure>
+          <figure className="shot shot-guitar"><img src={heroGuitar} alt="Guitarists singing on stage at Open Day 2025" width="1200" height="800" decoding="async" /></figure>
           <p className="stack-tag">Open Day 2025</p>
         </div>
       </div>
@@ -110,6 +110,27 @@ const Home = () => (
       </div>
     </section>
 
+    <section id="kajang" className="section on-blush" aria-labelledby="kajang-title">
+      <div className="wrap split">
+        <div data-reveal>
+          <p className="eyebrow">Kajang, Selangor</p>
+          <h2 id="kajang-title" className="display md">Music lessons in Kajang</h2>
+        </div>
+        <div className="story-copy" data-reveal>
+          <p>JD. Music Academy teaches music classes in Kajang for kids, teens and adults. Piano lessons, guitar classes, drums, vocals, bass and ukulele are held at our Kajang home studio, with a partner studio in Sri Hartamas and lessons online.</p>
+          <p>Looking for a music school near Bangi, Semenyih or Cheras? Our home base is in Kajang. Book a trial there, ask about Sri Hartamas or online lessons, or check whether a limited home visit in the Klang Valley is available.</p>
+          <ul className="checklist">
+            <li>Piano and keyboard lessons</li>
+            <li>Guitar classes, including weekend groups at the Kajang studio</li>
+            <li>Drums, vocals, bass and ukulele</li>
+          </ul>
+          <div className="section-foot">
+            <a className="text-link" href="#instruments">Choose an instrument <ArrowIcon /></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     {/* 3. Real student videos */}
     <VideoReel>
       <TextLink to="/student-life">More student stories and photos</TextLink>
@@ -120,7 +141,7 @@ const Home = () => (
       <div className="wrap why-grid">
         <div className="founder-card">
           <figure className="founder-photo" data-reveal>
-            <img src={founder.image} alt={`${founder.name}, director and founder of JD. Music Academy`} width="452" height="452" loading="lazy" />
+            <img src={founder.image} alt={`${founder.name}, director and founder of JD. Music Academy`} width="452" height="452" loading="lazy" decoding="async" />
           </figure>
           <figure className="founder-quote" data-reveal style={{ '--i': 2 }}>
             <blockquote>Nurture passion, not pressure.</blockquote>
@@ -129,7 +150,7 @@ const Home = () => (
         </div>
         <div className="why-copy" data-reveal>
           <h2 id="why-title" className="display md">Why JD?</h2>
-          <p className="lede">Jeevan started JD. Music Academy in 2020 to offer something different: a personal, performance-based approach that helps students fall in love with music while building solid skills. Our teachers become mentors and friends.</p>
+          <p className="lede">Jeevan started JD. Music Academy in Kajang in 2020 to offer something different: a personal, performance-based approach that helps students fall in love with music while building solid skills. Our teachers become mentors and friends.</p>
           <ul className="pillars">
             {pillars.map((p, i) => (
               <li key={p.title}><b aria-hidden="true">{i + 1}</b><h3>{p.title}</h3><p>{p.text}</p></li>
@@ -147,7 +168,7 @@ const Home = () => (
       <div className="wrap">
         <div className="head" data-reveal>
           <h2 id="picker-title" className="display">Pick your instrument</h2>
-          <p className="on-dark">One-to-one music lessons in Kajang, Sri Hartamas and online. Tap a teacher to read their profile.</p>
+          <p className="on-dark">One-to-one piano, guitar, drum, vocal and bass lessons in Kajang, Sri Hartamas and online. Tap a teacher to read their profile.</p>
         </div>
         <InstrumentPicker />
         <p className="aside" data-reveal>Ukulele lessons in Kajang too. Just ask when you message.</p>
@@ -166,7 +187,7 @@ const Home = () => (
           <ul key={r} className={`marquee-row${r ? ' reverse' : ''}`}>
             {[...row, ...row].map((photo, i) => (
               <li key={i} className={i >= row.length ? 'dup' : undefined} aria-hidden={i >= row.length || undefined}>
-                <img src={photo.src} alt={i >= row.length ? '' : photo.alt} width="900" height="600" loading="lazy" />
+                <img src={photo.src} alt={i >= row.length ? '' : photo.alt} width="900" height="600" loading="lazy" decoding="async" />
                 <span>{photo.tag}</span>
               </li>
             ))}
@@ -175,7 +196,7 @@ const Home = () => (
       </div>
       <div className="wrap">
         <Link to="/events-competitions" className="feature" data-reveal>
-          <figure className="feature-img"><img src={nextAce4.cover.src} alt={nextAce4.cover.alt} width="1800" height="1350" loading="lazy" /></figure>
+          <figure className="feature-img"><img src={nextAce4.cover.src} alt={nextAce4.cover.alt} width="1800" height="1350" loading="lazy" decoding="async" /></figure>
           <div className="feature-body">
             <span className="tag">Latest showcase</span>
             <h3>{nextAce4.title}</h3>

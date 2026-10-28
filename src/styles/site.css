@@ -355,6 +355,7 @@ html:not(.js) .fee-controls { display: none; }
 .on-white { background: #fff; }
 .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 6vw, 5rem); align-items: start; }
 .story-copy p + p { margin-top: 1rem; }
+.story-copy .checklist { margin-top: 1.25rem; }
 .story-copy { font-size: 1.15rem; color: var(--muted); }
 .cards-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 2rem; }
 .mini-card { background: #fff; border-radius: 20px; padding: 1.5rem; border: 1.5px solid var(--line); }

@@ -12,7 +12,7 @@ const groupGuitar = {
   title: 'Group Guitar Classes',
   date: 'Every Saturday 2–3pm or Sunday 3–4pm',
   location: 'Kajang Home Studio',
-  description: 'Learn guitar in a fun group setting. Master chords, basslines and rhythm techniques while jamming your favourite songs alongside other musicians.',
+  description: 'Learn guitar in a group at our Kajang home studio. Master chords, basslines and rhythm techniques while jamming your favourite songs alongside other musicians.',
   posters: [
     { src: guitarClasses1, alt: 'Group Guitar Classes poster, page 1' },
     { src: guitarClasses2, alt: 'Group Guitar Classes poster, page 2' },
@@ -32,7 +32,7 @@ function PosterCarousel({ posters }) {
     <div className="poster" data-reveal>
       <div className="poster-frame">
         <button type="button" className="zoom" onClick={() => setZoom(true)} aria-label={`Enlarge: ${poster.alt}`}>
-          <img key={poster.src} src={poster.src} alt="" width="794" height="1123" />
+          <img key={poster.src} src={poster.src} alt={poster.alt} width="794" height="1123" loading="lazy" decoding="async" />
         </button>
       </div>
       {posters.length > 1 && (
@@ -53,9 +53,9 @@ function PosterCarousel({ posters }) {
 const EventsAndCompetitions = () => (
   <>
     <PageHero
-      kicker="Events & Competitions"
+      kicker="Events in Kajang"
       lines={['Stages to', 'aim for.']}
-      lead="Weekend group classes, concerts and showcases: real performance opportunities for students at every level."
+      lead="Weekend group guitar classes at our Kajang home studio, plus concerts and showcases for students at every level."
       photos={[
         { ...nextAce4.cover, width: 1800, height: 1350 },
         { src: nextAce4.photos[1].src, alt: nextAce4.photos[1].alt, width: 1350, height: 1800, position: '50% 30%' },

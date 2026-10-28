@@ -16,9 +16,9 @@ const StudentLife = () => {
   return (
     <>
       <PageHero
-        kicker="Student Life"
+        kicker="Student life in Kajang"
         lines={['Lessons, then', 'the spotlight.']}
-        lead="Classroom moments, concerts, open days and competitions. Here’s what learning at JD. looks like."
+        lead="Guitar, piano, drum and vocal students at our Kajang academy: classroom moments, concerts, open days and competitions."
         photos={[
           { src: openDayBand, alt: 'Student band performing at Open Day 2025', width: 1800, height: 1200 },
           { src: openDayKeys, alt: 'Smiling keyboard player at Open Day 2025', width: 1800, height: 1200, position: '55% 50%' },

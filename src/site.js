@@ -1,5 +1,7 @@
 export const SITE_URL = (import.meta.env.VITE_SITE_URL || 'https://www.jd-musicacademy.com').replace(/\/$/, '');
 export const SITE_NAME = 'JD. Music Academy';
+// Structured data only. Visible phone and WhatsApp links live in src/lib/contact.js.
+export const SCHEMA_TELEPHONE = '+60174370443';
 export const SHARE_IMAGE = {
   path: '/images/og-music-lessons-kajang.jpg',
   width: 1200,
@@ -10,28 +12,34 @@ export const SHARE_IMAGE = {
 // Shared by metadata, analytics and the static build.
 export const pages = {
   '/': {
-    title: 'Music Lessons in Kajang: Guitar, Piano, Drums & Vocals | JD. Music Academy',
-    description: 'Music lessons in Kajang for kids, teens and adults. Guitar, piano, drum, vocal and bass classes, plus Sri Hartamas and online lessons. Book a trial on WhatsApp.',
+    crumb: 'Home',
+    title: 'Music Classes in Kajang | Piano, Guitar & Drums | JD. Music Academy',
+    description: 'Music classes in Kajang for kids, teens and adults. Piano lessons, guitar classes, drums, vocals, bass and ukulele. Kajang studio, Sri Hartamas and online.',
   },
   '/about': {
-    title: 'Meet Our Music Teachers in Kajang | JD. Music Academy',
-    description: 'Meet founder Jeevan Devamarcus and the teachers behind JD. Music Academy: friendly, performance-based guitar, piano, drum, vocal and bass lessons in Kajang.',
+    crumb: 'About',
+    title: 'Music Teachers in Kajang | Piano & Guitar | JD. Music Academy',
+    description: 'Meet Jeevan Devamarcus and the JD. Music Academy teachers. Guitar, piano, drum, vocal and bass lessons in Kajang, with performance-based classes since 2020.',
   },
   '/student-life': {
-    title: 'Student Performances & Stories | JD. Music Academy',
-    description: 'Watch JD. Music Academy students in their own words and browse photos from our live concerts, open days, VDrums and competitions in Kajang.',
+    crumb: 'Student Life',
+    title: 'Student Concerts in Kajang | JD. Music Academy',
+    description: 'Watch Kajang music students in their own words, and browse concert, open day and competition photos from guitar, piano, drum and vocal classes.',
   },
   '/events-competitions': {
-    title: 'Music Events & Competitions | JD. Music Academy',
-    description: 'Weekend group guitar classes in Kajang, upcoming events and highlights from Who Is The Next ACE 4.0. Performance opportunities with JD. Music Academy.',
+    crumb: 'Events',
+    title: 'Guitar Classes in Kajang | Events | JD. Music Academy',
+    description: 'Weekend group guitar classes at the Kajang home studio, Saturdays 2–3pm or Sundays 3–4pm, plus concerts and Who Is The Next ACE highlights.',
   },
   '/pricing-faq': {
-    title: 'Music Lesson Prices & FAQs | JD. Music Academy',
-    description: 'Music lesson fees in Kajang and Sri Hartamas: memberships from RM150/month or RM45 per lesson, plus group and school programmes. Answers to common questions.',
+    crumb: 'Pricing & FAQ',
+    title: 'Music Lesson Fees in Kajang | JD. Music Academy',
+    description: 'Kajang music lesson fees from RM45 a lesson or RM150 a month, plus Sri Hartamas rates, group classes and school programmes. Common questions answered.',
   },
   '/contact': {
-    title: 'Contact JD. Music Academy | Music Lessons in Kajang',
-    description: 'Contact JD. Music Academy to ask about music lessons, studio locations, available slots or a trial. Reach our team by WhatsApp, phone or email.',
+    crumb: 'Contact',
+    title: 'Contact a Music School in Kajang | JD. Music Academy',
+    description: 'Contact JD. Music Academy about music classes in Kajang. Ask about piano, guitar, drums, vocals, bass or ukulele, or book a trial on WhatsApp.',
   },
 };
 export const notFound = {
