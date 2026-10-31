@@ -32,7 +32,6 @@ const PricingFaq = () => {
   return (
     <>
       <PageHero
-        kicker="Kajang lesson fees"
         lines={['Fees and', 'questions,', 'answered.']}
         lead="One-to-one piano, guitar, drum, vocal and bass lessons from RM45 a lesson or RM150 a month in Kajang, plus group lessons and programmes for schools, churches and communities."
         photos={[{ src: keysLesson, alt: 'A keyboard student and teacher at Open Day 2025', width: 1400, height: 933 }]}
