@@ -13,33 +13,33 @@ export const SHARE_IMAGE = {
 export const pages = {
   '/': {
     crumb: 'Home',
-    title: 'Music Classes in Kajang | Piano, Guitar & Drums | JD. Music Academy',
-    description: 'Music classes in Kajang for kids, teens and adults. Piano lessons, guitar classes, drums, vocals, bass and ukulele. Kajang studio, Sri Hartamas and online.',
+    title: 'Music Classes in Kajang & Sri Hartamas | JD. Music Academy',
+    description: 'Music classes in Kajang and Sri Hartamas for kids, teens and adults. Piano lessons, guitar classes, drums, vocals, bass and ukulele, plus online.',
   },
   '/about': {
     crumb: 'About',
-    title: 'Music Teachers in Kajang | Piano & Guitar | JD. Music Academy',
-    description: 'Meet Jeevan Devamarcus and the JD. Music Academy teachers. Guitar, piano, drum, vocal and bass lessons in Kajang, with performance-based classes since 2020.',
+    title: 'Music Teachers in Kajang & Sri Hartamas | JD. Music Academy',
+    description: 'Meet Jeevan Devamarcus and the JD. Music Academy teachers. Guitar, piano, drum, vocal and bass lessons in Kajang and Sri Hartamas, since 2020.',
   },
   '/student-life': {
     crumb: 'Student Life',
-    title: 'Student Concerts in Kajang | JD. Music Academy',
-    description: 'Watch Kajang music students in their own words, and browse concert, open day and competition photos from guitar, piano, drum and vocal classes.',
+    title: 'Student Concerts in Kajang & Sri Hartamas | JD. Music Academy',
+    description: 'Watch students in their own words, and browse concert, open day and competition photos from classes in Kajang and Sri Hartamas.',
   },
   '/events-competitions': {
     crumb: 'Events',
-    title: 'Guitar Classes in Kajang | Events | JD. Music Academy',
-    description: 'Weekend group guitar classes at the Kajang home studio, Saturdays 2–3pm or Sundays 3–4pm, plus concerts and Who Is The Next ACE highlights.',
+    title: 'Events in Kajang & Sri Hartamas | JD. Music Academy',
+    description: 'Weekend group guitar classes at the Kajang home studio, plus concerts and showcases. Music lessons in Kajang and Sri Hartamas.',
   },
   '/pricing-faq': {
     crumb: 'Pricing & FAQ',
-    title: 'Music Lesson Fees in Kajang | JD. Music Academy',
-    description: 'Kajang music lesson fees from RM45 a lesson or RM150 a month, plus Sri Hartamas rates, group classes and school programmes. Common questions answered.',
+    title: 'Lesson Fees in Kajang & Sri Hartamas | JD. Music Academy',
+    description: 'Lesson fees in Kajang and Sri Hartamas. Kajang lessons from RM45 or RM150 a month, with separate Sri Hartamas rates, plus group and school programmes.',
   },
   '/contact': {
     crumb: 'Contact',
-    title: 'Contact a Music School in Kajang | JD. Music Academy',
-    description: 'Contact JD. Music Academy about music classes in Kajang. Ask about piano, guitar, drums, vocals, bass or ukulele, or book a trial on WhatsApp.',
+    title: 'Contact Us in Kajang & Sri Hartamas | JD. Music Academy',
+    description: 'Contact JD. Music Academy about music classes in Kajang and Sri Hartamas. Ask about piano, guitar, drums, vocals, bass or ukulele, or book a trial.',
   },
 };
 export const notFound = {

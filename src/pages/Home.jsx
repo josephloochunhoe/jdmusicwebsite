@@ -73,7 +73,7 @@ const Home = () => (
     <section className="hero" aria-labelledby="hero-title" data-cta="hero">
       <div className="wrap hero-grid">
         <div className="hero-copy">
-          <p className="hero-kicker">Music lessons in Kajang since 2020</p>
+          <p className="hero-kicker">Music lessons in Kajang & Sri Hartamas since 2020</p>
           <h1 id="hero-title" className="hero-title">
             <span className="line"><span>Play the songs</span></span>
             <span className="line"><span>you’ve always</span></span>
@@ -113,12 +113,12 @@ const Home = () => (
     <section id="kajang" className="section on-blush" aria-labelledby="kajang-title">
       <div className="wrap split">
         <div data-reveal>
-          <p className="eyebrow">Kajang, Selangor</p>
-          <h2 id="kajang-title" className="display md">Music lessons in Kajang</h2>
+          <p className="eyebrow">Kajang & Sri Hartamas</p>
+          <h2 id="kajang-title" className="display md">Music lessons in Kajang & Sri Hartamas</h2>
         </div>
         <div className="story-copy" data-reveal>
-          <p>JD. Music Academy teaches music classes in Kajang for kids, teens and adults. Piano lessons, guitar classes, drums, vocals, bass and ukulele are held at our Kajang home studio, with a partner studio in Sri Hartamas and lessons online.</p>
-          <p>Looking for a music school near Bangi, Semenyih or Cheras? Our home base is in Kajang. Book a trial there, ask about Sri Hartamas or online lessons, or check whether a limited home visit in the Klang Valley is available.</p>
+          <p>JD. Music Academy teaches music classes in Kajang and Sri Hartamas for kids, teens and adults. Piano, guitar, drums, vocals, bass and ukulele are held at the Kajang home studio and the Sri Hartamas studio, with lessons online too.</p>
+          <p>Looking for a music school near Bangi, Semenyih or Cheras? We teach at both studios. Online lessons and limited home visits in the Klang Valley are available too.</p>
           <ul className="checklist">
             <li>Piano and keyboard lessons</li>
             <li>Guitar classes, including weekend groups at the Kajang studio</li>
@@ -171,7 +171,7 @@ const Home = () => (
           <p className="on-dark">One-to-one piano, guitar, drum, vocal and bass lessons in Kajang, Sri Hartamas and online. Tap a teacher to read their profile.</p>
         </div>
         <InstrumentPicker />
-        <p className="aside" data-reveal>Ukulele lessons in Kajang too. Just ask when you message.</p>
+        <p className="aside" data-reveal>Ukulele lessons in Kajang and Sri Hartamas too. Just ask when you message.</p>
       </div>
     </section>
 
