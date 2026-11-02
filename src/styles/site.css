@@ -262,13 +262,14 @@ html:not(.js) .fee-controls { display: none; }
 .seg button { font: inherit; font-weight: 700; color: var(--wine); background: none; border: 0; border-radius: 999px; padding: .55rem 1.15rem; cursor: pointer; transition: background-color .25s, color .25s; }
 .seg button[aria-pressed="true"] { background: var(--wine); color: #fff; }
 .seg button:not([aria-pressed="true"]):hover { background: var(--blush); }
-.fee-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+.fee-cards { display: grid; grid-template-columns: minmax(0, 36rem); gap: 1.25rem; }
 .fee-card { background: #fff; border-radius: 24px; padding: clamp(1.5rem, 3vw, 2.4rem); transition: transform .3s var(--ease); }
 .fee-card:hover { transform: translateY(-4px); }
 .fee-card.featured { background: var(--wine); color: #fff; --focus: var(--spot); }
 .fee-tag { font-weight: 700; font-size: .9rem; color: var(--wine); margin: 0; }
 .featured .fee-tag { color: var(--spot); }
 .fee-card h3 { font-family: var(--display); text-transform: uppercase; font-size: 2.2rem; line-height: 1; margin-top: .35rem; }
+.fee-card h3:first-child { margin-top: 0; }
 .price { display: flex; align-items: baseline; gap: .2rem; margin: 1rem 0 1.2rem; font-family: var(--display); font-weight: 900; line-height: .85; overflow: hidden; }
 .price .cur { font-size: 2rem; }
 .price .amt { font-size: clamp(4.5rem, 9vw, 7rem); display: inline-block; }
