@@ -16,9 +16,9 @@ const places = [
 const Contact = () => (
   <>
     <PageHero
-      kicker="Kajang studio"
+      kicker="Kajang & Sri Hartamas"
       lines={['Talk to', 'Jeevan.']}
-      lead="Questions about music classes in Kajang, studios, available slots or a free trial? Message our director on WhatsApp: it’s the quickest way to reach us."
+      lead="Questions about music classes in Kajang or Sri Hartamas, studios, available slots or a free trial? Message our director on WhatsApp: it’s the quickest way to reach us."
       photos={[
         { src: heroGuitar, alt: 'Guitarists singing on stage at Open Day 2025', width: 1200, height: 800, position: '30% 40%' },
         { src: founder.image, alt: `${founder.name}, director`, width: 452, height: 452, position: '50% 20%' },

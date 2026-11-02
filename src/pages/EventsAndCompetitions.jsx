@@ -53,9 +53,9 @@ function PosterCarousel({ posters }) {
 const EventsAndCompetitions = () => (
   <>
     <PageHero
-      kicker="Events in Kajang"
+      kicker="Events in Kajang & Sri Hartamas"
       lines={['Stages to', 'aim for.']}
-      lead="Weekend group guitar classes at our Kajang home studio, plus concerts and showcases for students at every level."
+      lead="Weekend group guitar classes at our Kajang home studio, plus concerts and showcases. Lessons run in Kajang and Sri Hartamas."
       photos={[
         { ...nextAce4.cover, width: 1800, height: 1350 },
         { src: nextAce4.photos[1].src, alt: nextAce4.photos[1].alt, width: 1350, height: 1800, position: '50% 30%' },

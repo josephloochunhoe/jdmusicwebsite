@@ -32,15 +32,32 @@ const organization = {
   founder: { '@type': 'Person', name: 'Jeevan Devamarcus' },
   telephone: SCHEMA_TELEPHONE,
   email: EMAIL,
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Kajang',
-    addressRegion: 'Selangor',
-    addressCountry: 'MY',
-  },
+  // Two studios, same level of detail. No street address is published for either.
+  location: [
+    {
+      '@type': 'Place',
+      name: 'Kajang Home Studio',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Kajang',
+        addressRegion: 'Selangor',
+        addressCountry: 'MY',
+      },
+    },
+    {
+      '@type': 'Place',
+      name: 'Sri Hartamas Studio',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Sri Hartamas',
+        addressRegion: 'Kuala Lumpur',
+        addressCountry: 'MY',
+      },
+    },
+  ],
   areaServed: [
     { '@type': 'City', name: 'Kajang', containedInPlace: { '@type': 'AdministrativeArea', name: 'Selangor' } },
-    { '@type': 'Place', name: 'Sri Hartamas, Kuala Lumpur' },
+    { '@type': 'Place', name: 'Sri Hartamas', containedInPlace: { '@type': 'City', name: 'Kuala Lumpur' } },
     { '@type': 'Place', name: 'Klang Valley' },
   ],
   contactPoint: {
@@ -56,7 +73,7 @@ const organization = {
     name: 'Music lessons',
     itemListElement: [
       ...instruments.map(inst => course(inst.key === 'vocals' ? 'Vocal lessons' : `${inst.title} lessons`, inst.text)),
-      course('Ukulele lessons', 'Ukulele lessons in Kajang. Ask when you message.'),
+      course('Ukulele lessons', 'Ukulele lessons in Kajang and Sri Hartamas. Ask when you message.'),
       course('Weekend group guitar classes', 'Group guitar classes at the Kajang Home Studio, every Saturday 2–3pm or Sunday 3–4pm.'),
     ],
   },

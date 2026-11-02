@@ -7,9 +7,9 @@ import { trialUrl } from '../lib/contact';
 const About = () => (
   <>
     <PageHero
-      kicker="Kajang music school · since 2020"
+      kicker="Kajang & Sri Hartamas · since 2020"
       lines={['Teachers who', 'become mentors.']}
-      lead="A Kajang music school for guitar, piano, drums, vocals and bass, built on song-first lessons and close student–teacher relationships."
+      lead="A music school in Kajang and Sri Hartamas for guitar, piano, drums, vocals and bass, built on song-first lessons and close student–teacher relationships."
       photos={[
         { src: teamGroup, alt: 'The JD. Music Academy team and students together', width: 2000, height: 1333 },
         { src: heroGuitar, alt: 'Guitarists singing on stage at Open Day 2025', width: 1200, height: 800, position: '30% 40%' },
@@ -28,7 +28,7 @@ const About = () => (
           <h2 id="story-title" className="display md">Passion, not pressure.</h2>
         </div>
         <div className="story-copy" data-reveal>
-          <p>Founded in 2020, JD. Music Academy in Kajang teaches guitar, piano, drums, vocals and bass through a vibrant, performance-based approach. Hands-on classes make instrument fundamentals enjoyable by teaching students through the songs they love.</p>
+          <p>Founded in 2020, JD. Music Academy teaches guitar, piano, drums, vocals and bass in Kajang and Sri Hartamas through a vibrant, performance-based approach. Hands-on classes make instrument fundamentals enjoyable by teaching students through the songs they love.</p>
           <p>With personal attention from our instructors, we put close relationships first, so every student feels inspired, supported and confident. Lessons should build confidence, not performance stress.</p>
           <div className="cards-2">
             <div className="mini-card">

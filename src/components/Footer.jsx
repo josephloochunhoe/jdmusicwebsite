@@ -20,7 +20,7 @@ const Footer = () => (
           <img src={logoImg} alt="" width="36" height="36" />
           <span>JD. Music Academy</span>
         </Link>
-        <p>Guitar, piano, drum, vocal, bass and ukulele lessons in Kajang since 2020, plus a Sri Hartamas studio and online classes.</p>
+        <p>Guitar, piano, drum, vocal, bass and ukulele lessons in Kajang and Sri Hartamas since 2020, plus online classes.</p>
         <a className="btn btn-spot btn-sm" href={TRIAL_URL} target="_blank" rel="noopener noreferrer">Book a trial lesson</a>
       </div>
       <nav className="footer-col" aria-label="Footer">
@@ -43,7 +43,7 @@ const Footer = () => (
     </div>
     <div className="footer-base">
       <div className="wrap footer-base-inner">
-        <p>© {new Date().getFullYear()} JD. Music Academy. Music lessons in Kajang, Selangor.</p>
+        <p>© {new Date().getFullYear()} JD. Music Academy. Music lessons in Kajang & Sri Hartamas.</p>
         <a href="#main">Back to top</a>
       </div>
     </div>
