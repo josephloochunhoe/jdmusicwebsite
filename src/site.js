@@ -34,7 +34,7 @@ export const pages = {
   '/pricing-faq': {
     crumb: 'Pricing & FAQ',
     title: 'Lesson Fees in Kajang & Sri Hartamas | JD. Music Academy',
-    description: 'Lesson fees in Kajang and Sri Hartamas. Kajang lessons from RM45 or RM150 a month, with separate Sri Hartamas rates, plus group and school programmes.',
+    description: 'Lesson fees in Kajang and Sri Hartamas. Kajang Academy Membership from RM150 a month, with separate Sri Hartamas rates, plus group and school programmes.',
   },
   '/contact': {
     crumb: 'Contact',

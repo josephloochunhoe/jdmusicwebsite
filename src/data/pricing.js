@@ -1,7 +1,7 @@
-// One-to-one lesson rates (RM). Used by the fee explorer and the full rate table.
+// One-to-one Academy Membership rates (RM per month).
 export const RATES = {
-  kajang: { 30: { member: 150, flex: 45 }, 60: { member: 200, flex: 60 } },
-  hartamas: { 30: { member: 200, flex: 50 }, 60: { member: 400, flex: 100 } },
+  kajang: { 30: 150, 60: 200 },
+  hartamas: { 30: 200, 60: 400 },
 };
 
 export const STUDIOS = [
@@ -9,23 +9,15 @@ export const STUDIOS = [
   { key: 'hartamas', label: 'Sri Hartamas', name: 'Sri Hartamas Studio', note: 'Partner studio for students based in the Kuala Lumpur area.' },
 ];
 
-export const PLANS = {
-  member: {
-    label: 'Academy Membership',
-    tag: 'Recommended',
-    per: '/month',
-    perks: ['Your own reserved weekly slot', 'Priority scheduling', 'Up to 2 make-up lessons a month'],
-  },
-  flex: {
-    label: 'Flex Pass',
-    tag: 'Pay as you go',
-    per: '/lesson',
-    perks: ['Pay per class', 'Booked around teacher availability'],
-  },
+export const MEMBERSHIP = {
+  label: 'Academy Membership',
+  per: '/month',
+  perks: ['Your own reserved weekly slot', 'Priority scheduling', 'Up to 1 make-up lesson a month'],
 };
 
 export const RATE_NOTES = [
-  'Lessons are once a week. Membership is priced per month; Flex Pass per lesson.',
+  'Lessons are once a week. Academy Membership is priced per month.',
+  'Up to 1 make-up lesson a month.',
   'Online lessons and limited home visits are available: ask for rates.',
   'Additional travel charges apply based on distance from our base studios.',
 ];

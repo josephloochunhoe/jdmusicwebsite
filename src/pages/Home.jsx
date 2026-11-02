@@ -43,7 +43,7 @@ const stageRows = [
 const facts = [
   { label: 'Where', big: 'Kajang · KL · Online', small: 'Kajang home studio, Sri Hartamas studio, online lessons or limited home visits.', to: '/contact#where', go: 'Locations' },
   { label: 'Who', big: 'All ages', small: 'Young children to adults. Complete beginners and returning players welcome.', to: '/about#teachers', go: 'Meet the teachers' },
-  { label: 'Fees', big: 'From RM45', small: 'Per 30-min lesson, or RM150 a month with Academy Membership in Kajang.', to: '#fees', go: 'See fees' },
+  { label: 'Fees', big: 'RM150', small: 'A month for 30-minute Academy Membership in Kajang.', to: '#fees', go: 'See fees' },
   { label: 'Start', big: 'Trial first', small: 'Message us on WhatsApp, pick a trial slot, come and play. Instruments provided.', to: '#start', go: 'How it works' },
 ];
 
